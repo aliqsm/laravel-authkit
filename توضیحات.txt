@@ -1,0 +1,25 @@
+sweetAlert  نیازه نصب بشه
+
+npm install -D vite                 اینو چرا زدیم
+npm install -D laravel-vite-plugin
+
+
+  پیشفرض public/build آرگومان دوم یعنی از این مسید این فایل رو لود بکن و نه از مسیر
+@vite(['resources/js/auth/two-factor-challenge.js'], 'vendor/authkit/build')
+
+
+بررسی بشه منی فست و اینها چجوری کار میکنه و اصلا در حالت ویت در حالت عادی و پکیج باید چه  تغییراتی بدیم
+
+
+
+
+
+
+
+// ------------------------------------------
+// Views
+// ------------------------------------------
+تغییرات ویو هم بررسی بشه که چجوری باید ارث بری کنیم از لیوت اصلی
+
+$this->loadViewsFrom(__DIR__ . '/../resources/views', 'authkit');  =>  آرگومان دوم نیم اسپس هست
+@extends('authkit::layouts.auth')    =>   موقع فراخوانی

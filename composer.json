@@ -1,0 +1,32 @@
+{
+    "name": "aliqsm/laravel-authkit",
+    "description": "A reusable Laravel authentication package supporting web and API authentication, two-factor authentication, password reset, and email verification.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "laravel/framework": "^12.0 || ^13.0",
+        "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.31",
+        "pragmarx/google2fa": "^9.0",
+        "simplesoftwareio/simple-qrcode": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aliqsm\\LaravelAuthkit\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ali",
+            "email": "aliqsm2005@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aliqsm\\LaravelAuthkit\\AuthKitServiceProvider"
+            ]
+        }
+    }
+}
