@@ -14,7 +14,7 @@
         <div class="card-header py-3 d-flex align-items-center justify-content-between">
             <h3 class="m-0 fw-bold fs-18">ویرایش حساب</h3>
             <a href="{{ route('dashboard') }}" class="p-1">
-                <x-icons.arrow-left-icon color="var(--secondary)" />
+                <x-authkit::icons.arrow-left-icon color="var(--secondary)" />
             </a>
         </div>
 

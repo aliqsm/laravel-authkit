@@ -5,6 +5,7 @@ namespace Aliqsm\LaravelAuthkit;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\RateLimiter;
 
 class AuthKitServiceProvider extends ServiceProvider
@@ -35,7 +36,7 @@ class AuthKitServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/js' => resource_path('vendor/authkit/js'),
         ], 'authkit-assets');
 
-        
+
         // -------------------------------------
         // Views
         // -------------------------------------
@@ -45,6 +46,14 @@ class AuthKitServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/views' => resource_path('views/vendor/authkit'),
         ], 'authkit-views');
 
+
+        // -------------------------------------
+        // Component
+        // -------------------------------------
+        Blade::anonymousComponentPath(
+            __DIR__ . '/../resources/views/components',
+            'authkit'
+        );
 
         // -------------------------------------
         // Migrations

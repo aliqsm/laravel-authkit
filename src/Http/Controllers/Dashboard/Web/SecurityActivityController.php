@@ -17,7 +17,7 @@ class SecurityActivityController extends Controller
             ->limit(20)
             ->get();
 
-        return view('dashboard.security-activities.index', [
+        return view('authkit::dashboard.security-activities.index', [
             'activities' => $activities,
         ]);
     }

@@ -15,7 +15,7 @@
             </div>
 
             <a href="{{ route('dashboard') }}" class="p-1">
-                <x-icons.arrow-left-icon color="var(--secondary)" />
+                <x-authkit::icons.arrow-left-icon color="var(--secondary)" />
             </a>
         </div>
 
@@ -36,7 +36,7 @@
                 @endphp
                 <div class="d-flex align-items-start gap-3 p-3 border-bottom">
                     <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-3 bg-body-secondary" style="width: 44px; height: 44px;">
-                        <x-icons.security-icon :width="24" :height="24" color="var(--secondary)" />
+                        <x-authkit::icons.security-icon :width="24" :height="24" color="var(--secondary)" />
                     </div>
 
                     <div class="d-flex flex-column gap-2 flex-grow-1 overflow-hidden">

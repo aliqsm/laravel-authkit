@@ -18,7 +18,7 @@
         @if (config('authkit.features.update_profile_information', true))
             <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 py-4 border-bottom">
                 <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4 bg-light border border-secondary" style="width: 50px; height: 50px;">
-                    <x-icons.user-icon3 color="var(--secondary)" />
+                    <x-authkit::icons.user-icon3 color="var(--secondary)" />
                 </div>
 
                 <div class="flex-grow-1 min-w-0">
@@ -40,7 +40,7 @@
         @if (config('authkit.features.change_password', true))
             <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 py-4 border-bottom">
                 <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4 bg-light border border-secondary" style="width: 50px; height: 50px;">
-                    <x-icons.lock-icon color="var(--secondary)" />
+                    <x-authkit::icons.lock-icon color="var(--secondary)" />
                 </div>
 
                 <div class="flex-grow-1 min-w-0">
@@ -60,7 +60,7 @@
         <!-- ------------------------------------- -->
         <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 py-4 border-bottom">
             <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4 bg-light border border-secondary" style="width: 50px; height: 50px;">
-                <x-icons.monitor-mobbile-icon :width="28" :height="28" color="var(--secondary)" />
+                <x-authkit::icons.monitor-mobbile-icon :width="28" :height="28" color="var(--secondary)" />
             </div>
 
             <div class="flex-grow-1 min-w-0">
@@ -81,7 +81,7 @@
         @if (config('authkit.features.security_activities', true))
             <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 py-4 border-bottom">
                 <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4 bg-light border border-secondary" style="width: 50px; height: 50px;">
-                    <x-icons.security-safe-icon :width="28" :height="28" color="var(--secondary)" />
+                    <x-authkit::icons.security-safe-icon :width="28" :height="28" color="var(--secondary)" />
                 </div>
 
                 <div class="flex-grow-1 min-w-0">
@@ -102,7 +102,7 @@
         @if (config('authkit.features.two_factor_authentication', true))
             <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 py-4 border-bottom">
                 <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4 bg-light border border-secondary" style="width: 50px; height: 50px;">
-                    <x-icons.key-icon color="var(--secondary)" />
+                    <x-authkit::icons.key-icon color="var(--secondary)" />
                 </div>
 
                 <div class="flex-grow-1 min-w-0">
@@ -123,7 +123,7 @@
         <!-- ------------------------------------- -->
         <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 py-4">
             <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4 bg-danger-subtle" style="width: 50px; height: 50px;">
-                <x-icons.logout-icon :width="28" :height="28" color="var(--bs-danger)" />
+                <x-authkit::icons.logout-icon :width="28" :height="28" color="var(--bs-danger)" />
             </div>
 
             <div class="flex-grow-1 min-w-0">

@@ -16,7 +16,7 @@
             <label class="form-group rounded-3 fw-light p-14 d-flex align-items-center justify-content-between gap-2">
                 <input type="email" name="email" class="form-control rounded-0 border-0 p-0" placeholder=" " inputmode="email" required autocomplete="off">
                 <span class="form-label text-secondary fw-light fs-13">ایمیل</span>
-                <x-icons.sms-icon color="var(--secondary)" />
+                <x-authkit::icons.sms-icon color="var(--secondary)" />
             </label>
         </div>
         <small id="email_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>

@@ -43,7 +43,7 @@ class SessionController extends Controller
                 return $session;
             });
 
-        return view('dashboard.sessions.index', [
+        return view('authkit::dashboard.sessions.index', [
             'sessions' => $sessions,
         ]);
     }

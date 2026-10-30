@@ -22,12 +22,12 @@ class TwoFactorController extends Controller
     public function index(Request $request, SetupTwoFactorAction $action)
     {
         if ($request->user()->hasEnabledTwoFactorAuthentication()) {
-            return view('dashboard.2fa.manage');
+            return view('authkit::dashboard.2fa.manage');
         }
 
         $data = $action->execute($request);
 
-        return view('dashboard.2fa.setup', [
+        return view('authkit::dashboard.2fa.setup', [
             'qrImage' => QrCode::size(150)->generate($data['qrUrl']),
             'secret' => $data['secret']
         ]);
@@ -104,7 +104,7 @@ class TwoFactorController extends Controller
             return redirect()->route('login.form');
         }
 
-        return view('auth.2fa-challenge');
+        return view('authkit::auth.2fa-challenge');
     }
 
 

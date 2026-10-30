@@ -14,7 +14,7 @@ class ForgotPasswordController extends Controller
     // ------------------------------------
     public function show()
     {
-        return view('auth.forget-password');
+        return view('authkit::auth.forget-password');
     }
 
 

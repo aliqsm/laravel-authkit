@@ -14,7 +14,7 @@ class ResetPasswordController extends Controller
     // ------------------------------------
     public function show(Request $request)
     {
-        return view('auth.reset-password', [
+        return view('authkit::auth.reset-password', [
             'token' => $request->token,
             'email' => $request->email,
         ]);

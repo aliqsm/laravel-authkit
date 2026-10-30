@@ -15,7 +15,7 @@
         <div class="card-header py-3 d-flex align-items-center justify-content-between">
             <h3 class="m-0 fw-bold fs-18">فعال‌سازی احراز هویت دو مرحله‌ای</h3>
             <a href="{{ route('dashboard') }}" class="p-1">
-                <x-icons.arrow-left-icon color="var(--secondary)" />
+                <x-authkit::icons.arrow-left-icon color="var(--secondary)" />
             </a>
         </div>
 
@@ -43,7 +43,7 @@
                         <div class="mt-20 bg-light border border-light rounded-3 p-2 d-flex align-items-center justify-content-end gap-3">
                             <span id="secret-key" class="font-monospace overflow-x-auto" dir="ltr">{{ $secret }}</span>
                             <button type="button" id="copy-2fa-secret" class="bg-transparent border-0 flex-shrink-0 p-1" style="outline:none !important" data-secret="{{ $secret }}">
-                                <x-icons.copy-icon color="var(--secondary)" />
+                                <x-authkit::icons.copy-icon color="var(--secondary)" />
                             </button>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                             <label class="form-group rounded-3 fw-light p-14 d-flex align-items-center justify-content-between gap-2">
                                 <input type="text" name="code" class="form-control rounded-0 border-0 p-0 text-center" placeholder=" " maxlength="6" required autocomplete="off" inputmode="numeric" pattern="[0-9]{6}">
                                 <span class="form-label text-secondary fw-light fs-13">کد ۶ رقمی</span>
-                                <x-icons.key-icon color="var(--secondary)" />
+                                <x-authkit::icons.key-icon color="var(--secondary)" />
                             </label>
                             <small id="code_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
                         </div>

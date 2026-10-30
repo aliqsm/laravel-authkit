@@ -15,7 +15,7 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        return view('dashboard.profile.edit', [
+        return view('authkit::dashboard.profile.edit', [
             'user' => $user,
         ]);
     }

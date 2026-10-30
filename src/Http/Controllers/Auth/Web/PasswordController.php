@@ -14,7 +14,7 @@ class PasswordController extends Controller
     // ------------------------------------
     public function show()
     {
-        return view('auth.password-confirm');
+        return view('authkit::auth.password-confirm');
     }
 
     // ------------------------------------
@@ -39,7 +39,7 @@ class PasswordController extends Controller
     // ------------------------------------
     public function edit()
     {
-        return view('dashboard.password.change-password');
+        return view('authkit::dashboard.password.change-password');
     }
 
 

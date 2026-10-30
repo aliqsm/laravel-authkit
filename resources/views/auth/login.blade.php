@@ -19,7 +19,7 @@
                 <label class="form-group rounded-3 fw-light p-14 d-flex align-items-center justify-content-between gap-2">
                     <input type="email" name="email" class="form-control rounded-0 border-0 p-0" placeholder=" " value="reza@gmail.com" required autocomplete="off" autofocus>
                     <span class="form-label text-secondary fw-light fs-13">نام کاربری</span>
-                    <x-icons.user-icon3 color="var(--secondary)" />
+                    <x-authkit::icons.user-icon3 color="var(--secondary)" />
                 </label>
             </div>
             <small id="email_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
@@ -28,7 +28,7 @@
                 <label class="form-group rounded-3 fw-light p-14 d-flex align-items-center justify-content-between gap-2">
                     <input type="password" name="password" class="form-control rounded-0 border-0 p-0" placeholder=" " value="00" required autocomplete="off">
                     <span class="form-label text-secondary fw-light fs-13">گذرواژه</span>
-                    <x-icons.lock-icon color="var(--secondary)" />
+                    <x-authkit::icons.lock-icon color="var(--secondary)" />
                 </label>
             </div>
             <small id="password_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
@@ -55,7 +55,7 @@
             </div>
 
             <a href="{{ route('oauth.google.redirect') }}" class="btn border-secondary w-100 mt-16 py-14 rounded-3 fw-medium fs-14 d-flex align-items-center justify-content-center gap-2">
-                <x-icons.google-icon :width="20" :height="20" />
+                <x-authkit::icons.google-icon :width="20" :height="20" />
                 ورود با گوگل
             </a>
         @endif

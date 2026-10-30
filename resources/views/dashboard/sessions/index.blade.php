@@ -19,7 +19,7 @@
         <div class="card-header py-3 d-flex align-items-center justify-content-between">
             <h3 class="m-0 fw-bold fs-18">نشست های فعال</h3>
             <a href="{{ route('dashboard') }}" class="p-1">
-                <x-icons.arrow-left-icon color="var(--secondary)" />
+                <x-authkit::icons.arrow-left-icon color="var(--secondary)" />
             </a>
         </div>
 
@@ -30,9 +30,9 @@
                         <div class="d-flex align-items-center gap-2 border rounded-3 p-3 h-100">
                             <div class="d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px">
                                 @if ($session->device == 'iPhone' || $session->device == 'Android')
-                                    <x-icons.mobile-icon color="var(--secondary)" />
+                                    <x-authkit::icons.mobile-icon color="var(--secondary)" />
                                 @elseif ($session->device == 'Windows' || $session->device == 'Mac' || $session->device == 'Linux')
-                                    <x-icons.monitor-icon color="var(--secondary)" />
+                                    <x-authkit::icons.monitor-icon color="var(--secondary)" />
                                 @endif
                             </div>
 
@@ -90,7 +90,7 @@
                         <label class="form-group rounded-3 fw-light p-14 d-flex align-items-center justify-content-between gap-2">
                             <input type="password" name="password" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="off">
                             <span class="form-label text-secondary fw-light fs-13">گذرواژه</span>
-                            <x-icons.lock-icon color="var(--secondary)" />
+                            <x-authkit::icons.lock-icon color="var(--secondary)" />
                         </label>
                     </div>
                     <small id="password_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
