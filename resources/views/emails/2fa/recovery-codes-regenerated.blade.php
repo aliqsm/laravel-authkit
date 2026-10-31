@@ -1,5 +1,4 @@
-@extends('layouts.email')
-
+@extends('authkit::layouts.email')
 @section('title', 'هشدار امنیتی - تولید مجدد کدهای بازیابی')
 
 @section('content')

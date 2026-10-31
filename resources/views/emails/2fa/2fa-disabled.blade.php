@@ -1,4 +1,4 @@
-@extends('layouts.email')
+@extends('authkit::layouts.email')
 @section('title', 'هشدار امنیتی - غیرفعال شدن تأیید دومرحله‌ای')
 
 
