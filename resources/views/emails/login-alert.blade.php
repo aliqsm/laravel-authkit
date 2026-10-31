@@ -1,46 +1,25 @@
-@extends('layouts.email')
-@section('title', 'هشدار امنیتی ورود')
-
+@extends('authkit::layouts.email')
+@section('title', 'هشدار امنیتی - ورود به حساب کاربری')
 
 @section('content')
+    <div>
+        <p class="title">کاربر گرامی {{ $user->name ?? '' }}، سلام</p>
+        <p class="text">یک ورود جدید به حساب کاربری شما شناسایی شد.</p>
+        <p class="text">اگر این ورود توسط شما انجام شده باشد، نیازی به اقدام خاصی نیست.</p>
 
-    <h1 class="title">ورود جدید به حساب شما</h1>
 
-    <p style="margin-top:20px;">
-        سلام {{ $user->name ?? 'کاربر گرامی' }}،<br>
-        در تاریخ {{ \Carbon\Carbon::parse($data['time'] ?? now())->format('Y/m/d H:i') }}
-        یک ورود جدید به حساب کاربری شما شناسایی شده است.
-        جزئیات این ورود در ادامه آمده است.
-    </p>
-
-    <div class="details">
-        <div class="detail">
-            <span class="detail-label">آدرس IP:</span>
-            <span class="detail-value" dir="ltr">{{ $data['ip'] ?? '-' }}</span>
+        <div style="margin:15px 0; padding:1rem; background:#222; border-radius:1rem;">
+            <p class="text" style="margin:0;"><strong>آی‌پی:</strong> {{ $data['ip'] ?? '-' }}</p>
+            <p class="text" style="margin:0.5rem 0 0 0;"><strong>دستگاه:</strong> {{ $data['user_agent'] ?? '-' }}</p>
+            <p class="text" style="margin:0.5rem 0 0 0;"><strong>زمان:</strong> {{ $data['time'] ?? now() }}</p>
         </div>
 
-        <div class="detail">
-            <span class="detail-label">دستگاه و مرورگر:</span>
-            <span class="detail-value" dir="ltr">{{ $data['user_agent'] ?? '-' }}</span>
-        </div>
+        <p class="text" style="margin-top:20px;"> اگر این ورود توسط شما نبوده است، فوراً اقدامات زیر را انجام دهید:</p>
 
-        <div class="detail">
-            <span class="detail-label">زمان ورود:</span>
-            <span class="detail-value" dir="ltr">{{ \Carbon\Carbon::parse($data['time'] ?? now())->format('Y/m/d H:i') }}</span>
-        </div>
+        <ul class="text">
+            <li>تغییر رمز عبور حساب کاربری</li>
+            <li>خروج از همه دستگاه‌های فعال</li>
+            <li>بررسی امنیت حساب</li>
+        </ul>
     </div>
-
-    <p>
-        اگر این ورود توسط شما انجام نشده است، ممکن است شخص دیگری به حساب شما دسترسی پیدا کرده باشد.
-        برای محافظت از حساب خود اقدامات زیر را انجام دهید:
-    </p>
-
-    <ul class="actions">
-        <li>رمز عبور حساب خود را تغییر دهید.</li>
-        <li>نشست‌ها و دستگاه‌های فعال را بررسی و خاتمه دهید.</li>
-        <li>فعالیت‌های اخیر حساب خود را بررسی کنید.</li>
-    </ul>
-
-    <a href="{{ $data['security_url'] ?? '#' }}" target="_blank" class="button">بررسی امنیت حساب</a>
-
 @endsection
