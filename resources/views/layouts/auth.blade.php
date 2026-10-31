@@ -14,7 +14,7 @@
 
 <body>
     <div class="container-fluid px-0 px-md-2">
-        <div class="main-container container px-16 py-30 position-relative">
+        <div class="authkit-auth-layout container px-16 py-30 position-relative">
             @yield('content')
         </div>
     </div>

@@ -24,7 +24,7 @@
     <!-- Content -->
     <!-- --------------------------------- -->
     <div class="container-fluid p-0">
-        <div class="container w-100 py-5">
+        <div class="authkit-dashboard-layout container w-100 py-5">
             @yield('content')
         </div>
     </div>

@@ -6,7 +6,7 @@
 
 
 :root {
-    --white:#ffffff;
+    --white: #ffffff;
     --light: #f8fafc;
     --border: #d8dde1;
 
@@ -28,7 +28,14 @@ body {
     user-select: none;
 }
 
-.main-container {
+
+.authkit-auth-layout,
+.authkit-dashboard-layout {
+    font-family: inherit !important;
+}
+
+
+.authkit-auth-layout {
     width: calc(100% - 2rem);
     max-width: 340px !important;
     height: 100dvh !important;
