@@ -1,25 +1,41 @@
-@extends('authkit::layouts.email')
+@extends('layouts.email')
+
 @section('title', 'هشدار امنیتی - تولید مجدد کدهای بازیابی')
 
 @section('content')
-    <div>
-        <p class="title">کاربر گرامی {{ $user->name ?? '' }}، سلام</p>
-        <p class="text">کدهای بازیابی تأیید دو مرحله‌ای (2FA) حساب کاربری شما مجدداً تولید شدند.</p>
-        <p class="text">با انجام این عملیات، تمام کدهای بازیابی قبلی باطل شده‌اند و دیگر قابل استفاده نیستند.</p>
 
-        <div style="margin:15px 0; padding:1rem; background:#222; border-radius:1rem;">
-            <p class="text" style="margin:0;"><strong>آی‌پی:</strong> {{ $data['ip'] ?? '-' }}</p>
-            <p class="text" style="margin:0.5rem 0 0 0;"><strong>دستگاه:</strong> {{ $data['user_agent'] ?? '-' }}</p>
-            <p class="text" style="margin:0.5rem 0 0 0;"><strong>زمان:</strong> {{ $data['time'] ?? now() }}</p>
+    <h1 class="title">تولید مجدد کدهای بازیابی</h1>
+
+    <p style="margin-top:20px;">
+        سلام {{ $user->name ?? 'کاربر گرامی' }}،<br>
+        کدهای بازیابی تأیید دومرحله‌ای (2FA) حساب کاربری شما با موفقیت مجدداً تولید شدند.
+        با انجام این عملیات، تمام کدهای قبلی باطل شده‌اند و دیگر قابل استفاده نیستند.
+    </p>
+
+    <p style="margin-top:16px;">
+        توصیه می‌کنیم کدهای جدید را در مکانی امن نگهداری کنید و از در اختیار قرار دادن آن‌ها به دیگران خودداری کنید.
+    </p>
+
+    <div class="details">
+        <div class="detail">
+            <span class="detail-label">آدرس IP:</span>
+            <span class="detail-value" dir="ltr">{{ $data['ip'] ?? '-' }}</span>
         </div>
 
-        <p class="text" style="margin-top:20px;">اگر این عملیات توسط شما انجام نشده است، فوراً اقدامات زیر را انجام دهید:</p>
+        <div class="detail">
+            <span class="detail-label">دستگاه و مرورگر:</span>
+            <span class="detail-value" dir="ltr">{{ $data['user_agent'] ?? '-' }}</span>
+        </div>
 
-        <ul class="text">
-            <li>تغییر رمز عبور حساب کاربری</li>
-            <li>بررسی نشست‌های فعال (Devices)</li>
-            <li>بررسی وضعیت تأیید دو مرحله‌ای حساب</li>
-            <li>تماس با پشتیبانی در صورت نیاز</li>
-        </ul>
+        <div class="detail">
+            <span class="detail-label">زمان عملیات:</span>
+            <span class="detail-value" dir="ltr">{{ \Carbon\Carbon::parse($data['time'] ?? now())->format('Y/m/d H:i') }}</span>
+        </div>
     </div>
+
+    <p>
+        اگر این عملیات توسط شما انجام نشده است، برای محافظت از حساب خود رمز عبور را تغییر دهید،
+        نشست‌های فعال را بررسی کنید و در صورت نیاز با پشتیبانی تماس بگیرید.
+    </p>
+
 @endsection

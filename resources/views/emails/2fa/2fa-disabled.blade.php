@@ -1,28 +1,43 @@
-```blade
-@extends('authkit::layouts.email')
-
+@extends('layouts.email')
 @section('title', 'هشدار امنیتی - غیرفعال شدن تأیید دومرحله‌ای')
 
+
 @section('content')
-    <div>
-        <p class="title">کاربر گرامی {{ $user->name ?? '' }}، سلام</p>
 
-        <p class="text">تأیید دومرحله‌ای (2FA) حساب کاربری شما غیرفعال شد.</p>
-        <p class="text">با غیرفعال شدن این قابلیت، یک لایه امنیتی به محافظت از حساب شما کاهش یافته است.</p>
+    <h1 class="title">غیرفعال شدن تأیید دومرحله‌ای</h1>
 
-        <div style="margin:15px 0; padding:1rem; background:#222; border-radius:1rem;">
-            <p class="text" style="margin:0;"><strong>آی‌پی:</strong> {{ $data['ip'] ?? '-' }}</p>
-            <p class="text" style="margin:0.5rem 0 0 0;"><strong>دستگاه:</strong> {{ $data['user_agent'] ?? '-' }}</p>
-            <p class="text" style="margin:0.5rem 0 0 0;"><strong>زمان:</strong> {{ $data['time'] ?? now() }}</p>
+    <p style="margin-top:20px;">
+        سلام {{ $user->name ?? 'کاربر گرامی' }}،<br>
+        قابلیت تأیید دومرحله‌ای (2FA) حساب کاربری شما با موفقیت غیرفعال شد.
+        با غیرفعال شدن این قابلیت، یک لایه امنیتی از حساب شما حذف شده و ورود به حساب دیگر به این مرحله تأیید نیاز نخواهد داشت.
+    </p>
+
+    <div class="details">
+        <div class="detail">
+            <span class="detail-label">آدرس IP:</span>
+            <span class="detail-value" dir="ltr">{{ $data['ip'] ?? '-' }}</span>
         </div>
 
-        <p class="text" style="margin-top:20px;">اگر این تغییر را شما انجام نداده‌اید، توصیه می‌کنیم فوراً اقدامات زیر را انجام دهید:</p>
+        <div class="detail">
+            <span class="detail-label">دستگاه و مرورگر:</span>
+            <span class="detail-value" dir="ltr">{{ $data['user_agent'] ?? '-' }}</span>
+        </div>
 
-        <ul class="text">
-            <li>رمز عبور حساب خود را تغییر دهید.</li>
-            <li>نشست‌ها و دستگاه‌های فعال حساب خود را بررسی کنید.</li>
-            <li>تأیید دومرحله‌ای را مجدداً فعال کنید.</li>
-        </ul>
+        <div class="detail">
+            <span class="detail-label">زمان تغییر:</span>
+            <span class="detail-value" dir="ltr">{{ \Carbon\Carbon::parse($data['time'] ?? now())->format('Y/m/d H:i') }}</span>
+        </div>
     </div>
+
+    <p>
+        اگر این تغییر توسط شما انجام نشده است، ممکن است شخص دیگری به حساب شما دسترسی پیدا کرده باشد.
+        برای محافظت از حساب خود، توصیه می‌کنیم اقدامات زیر را در اسرع وقت انجام دهید:
+    </p>
+
+    <ul class="actions">
+        <li>رمز عبور حساب خود را تغییر دهید.</li>
+        <li>نشست‌ها و دستگاه‌های فعال را بررسی و خاتمه دهید.</li>
+        <li>تأیید دومرحله‌ای را مجدداً فعال کنید.</li>
+    </ul>
+
 @endsection
-```

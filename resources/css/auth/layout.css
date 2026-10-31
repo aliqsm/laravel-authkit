@@ -9,13 +9,10 @@
     --white: #ffffff;
     --light: #f8fafc;
     --border: #d8dde1;
-
     --dark: #111;
     --secondary: #5f4f5f;
-
     --danger: #DC3545;
     --danger-subtle: #FDECF0;
-
     --primary: #111;
 }
 
@@ -24,7 +21,7 @@
 /* Base Config */
 /* ------------------------------------- */
 body {
-    background: #FFFFFf;
+    background: #FFFFFF;
     user-select: none;
 }
 
