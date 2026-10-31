@@ -51,8 +51,11 @@ php artisan vendor:publish --tag=authkit-build   =>   پابلیش فایل ها
 
 
 // ------------------------------------------
-// پیش نیاز ها
+// Requirements
 // ------------------------------------------
+- Laravel 12+
+- Bootstrap 5.3+
+
 نصب بودن جدول نوتیفیکیشن
 php artisan make:notifications-table
 php artisan migrate
@@ -60,7 +63,6 @@ php artisan migrate
 
 برای اعمال تغییرات جدول یوزر هم باید 
 php artisan migrate 
-
 
 
 

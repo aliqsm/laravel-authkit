@@ -55,12 +55,12 @@ class SecurityEventNotification extends Notification implements ShouldQueue
     private function getView(): string
     {
         return match ($this->data['event']) {
-            'two_factor_enabled'      => 'emails.auth.2fa.2fa-enabled',
-            'two_factor_disabled'     => 'emails.auth.2fa.2fa-disabled',
-            '2fa_recovery_codes_regenerated' => 'emails.auth.2fa.recovery-codes-regenerated',
-            '2fa_recovery_codes_empty' => 'emails.auth.2fa.recovery-codes-empty',
-            'password_changed'  => 'emails.auth.password-changed',
-            'login_alert'       => 'emails.auth.login-alert',
+            'two_factor_enabled'      => 'emails.2fa.2fa-enabled',
+            'two_factor_disabled'     => 'emails.2fa.2fa-disabled',
+            '2fa_recovery_codes_regenerated' => 'emails.2fa.recovery-codes-regenerated',
+            '2fa_recovery_codes_empty' => 'emails.2fa.recovery-codes-empty',
+            'password_changed'  => 'emails.password-changed',
+            'login_alert'       => 'emails.login-alert',
             default             => throw new \InvalidArgumentException('Unknown security notification type.'),
         };
     }
