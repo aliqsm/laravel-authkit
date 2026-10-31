@@ -38,3 +38,25 @@ $this->loadViewsFrom(__DIR__ . '/../resources/views', 'authkit');  =>  آرگو�
 php artisan vendor:publish --tag=authkit-build   =>   پابلیش فایل های بیلد شده
 
 @vite(['resources/js/dashboard/terminate-other-sessions.js'], 'vendor/authkit/build')
+
+
+
+
+
+
+
+
+
+
+
+
+// ------------------------------------------
+// پیش نیاز ها
+// ------------------------------------------
+نصب بودن جدول نوتیفیکیشن
+php artisan make:notifications-table
+php artisan migrate
+
+
+برای اعمال تغییرات جدول یوزر هم باید 
+php artisan migrate 

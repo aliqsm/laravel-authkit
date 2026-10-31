@@ -33,8 +33,8 @@ export default defineConfig({
         }),
     ],
 
- build: {
-    manifest: 'manifest.json',
-    emptyOutDir: true,
-},
+    build: {
+        manifest: 'manifest.json',
+        emptyOutDir: true,
+    },
 });
