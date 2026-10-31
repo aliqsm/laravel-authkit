@@ -24,7 +24,6 @@
 /* Base Config */
 /* ------------------------------------- */
 body {
-    font-family: inherit;
     background: #FFFFFf;
     user-select: none;
 }
