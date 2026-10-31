@@ -35,3 +35,6 @@ $this->loadViewsFrom(__DIR__ . '/../resources/views', 'authkit');  =>  آرگو�
 بعد دیگه خود کاربر وقتی تغییر داد خودش با vite بیلد میگیره
 کاربر باید بیلد شده رو هم برای اینکه مروگر بهش دسترسی دشاته باشه باید پابلیش کنه اونم
 
+php artisan vendor:publish --tag=authkit-build   =>   پابلیش فایل های بیلد شده
+
+@vite(['resources/js/dashboard/terminate-other-sessions.js'], 'vendor/authkit/build')
