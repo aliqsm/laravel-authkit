@@ -4,18 +4,11 @@
 <head>
     <meta charset="utf-8">
     <style>
-        @font-face {
-            font-family: 'Shabnam';
-            src: url("{{ asset('assets/fonts/shabnam/Shabnam-Light.woff2') }}") format("woff2"),
-                font-weight: normal;
-            font-style: normal;
-        }
-
         body {
             margin: 0;
             padding: 0;
             background-color: #222;
-            font-family: 'Shabnam', Tahoma, Arial, sans-serif;
+            font-family: Tahoma, Arial, sans-serif;
             direction: rtl;
         }
 
