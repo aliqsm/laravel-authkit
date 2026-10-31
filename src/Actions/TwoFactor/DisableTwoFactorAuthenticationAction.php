@@ -2,9 +2,8 @@
 
 namespace Aliqsm\LaravelAuthkit\Actions\TwoFactor;
 
+use Aliqsm\LaravelAuthkit\Notifications\SecurityEventNotification;
 use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorAuthenticationNotEnabledException;
-use App\Models\User;
-use App\Notifications\SecurityEventNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -30,7 +29,7 @@ class DisableTwoFactorAuthenticationAction
         DB::transaction(function () use ($user, $request) {
 
             $userModel = config('auth.providers.users.model');
-$user = $userModel::lockForUpdate()->findOrFail($user->id);
+            $user = $userModel::lockForUpdate()->findOrFail($user->id);
             if (!$user->hasEnabledTwoFactorAuthentication()) {  // =>   بعد قفل دوباره وضعیت  رو بررسی میکنیم
                 throw new TwoFactorAuthenticationNotEnabledException();
             }

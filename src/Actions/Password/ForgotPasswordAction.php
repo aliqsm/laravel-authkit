@@ -2,7 +2,7 @@
 
 namespace Aliqsm\LaravelAuthkit\Actions\Password;
 
-use Aliqsm\LaravelAuthkit\PasswordResetLinkException;
+use Aliqsm\LaravelAuthkit\Exceptions\PasswordResetLinkException;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordAction

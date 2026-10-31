@@ -2,10 +2,9 @@
 
 namespace Aliqsm\LaravelAuthkit\Actions\Password;
 
-use Aliqsm\LaravelAuthkit\InvalidPasswordResetException;
-use Aliqsm\LaravelAuthkit\PasswordResetException;
-use App\Models\User;
-use App\Notifications\SecurityEventNotification;
+use Aliqsm\LaravelAuthkit\Exceptions\InvalidPasswordResetException;
+use Aliqsm\LaravelAuthkit\Notifications\SecurityEventNotification;
+use Aliqsm\LaravelAuthkit\Exceptions\PasswordResetException;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -26,7 +25,8 @@ class ResetPasswordAction
                 'password' => $data['password'],
                 'token' => $data['token'],
             ],
-            function (User $user, string $password) use ($ip, $userAgent, $now) {
+
+            function ($user, string $password) use ($ip, $userAgent, $now) {
                 // ------------------------------------
                 // Update Password and Remember Token
                 // ------------------------------------

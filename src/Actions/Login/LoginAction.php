@@ -2,7 +2,7 @@
 
 namespace Aliqsm\LaravelAuthkit\Actions\Login;
 
-use Aliqsm\LaravelAuthkit\Requests\LoginRequest;
+use Aliqsm\LaravelAuthkit\Http\Requests\Auth\LoginRequest;
 use Aliqsm\LaravelAuthkit\Notifications\SecurityEventNotification;
 use Aliqsm\LaravelAuthkit\Exceptions\InvalidCredentialsException;
 use Illuminate\Support\Facades\Auth;

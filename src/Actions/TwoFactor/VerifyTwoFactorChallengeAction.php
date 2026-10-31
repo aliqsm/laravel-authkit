@@ -6,13 +6,11 @@ use Aliqsm\LaravelAuthkit\TwoFactor\InvalidTwoFactorCodeException;
 use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorAuthenticationNotEnabledException;
 use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorChallengeInvalidException;
 use Aliqsm\LaravelAuthkit\Http\Requests\Auth\TwoFactorChallengeRequest;
-use App\Models\User;
-use App\Notifications\SecurityEventNotification;
+use Aliqsm\LaravelAuthkit\Notifications\SecurityEventNotification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\RateLimiter;
 use PragmaRX\Google2FA\Google2FA;
 
 class VerifyTwoFactorChallengeAction
