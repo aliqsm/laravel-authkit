@@ -35,7 +35,7 @@ class ResetPasswordNotification extends Notification  implements ShouldQueue
 
         return (new MailMessage)
             ->subject('بازیابی رمز عبور')
-            ->view('emails.reset-password', [
+            ->view('authkit::emails.reset-password', [
                 'user' => $notifiable,
                 'url' => $url,
             ]);

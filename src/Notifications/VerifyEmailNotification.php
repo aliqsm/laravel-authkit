@@ -31,7 +31,7 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
 
         return (new MailMessage)
             ->subject('تایید ایمیل حساب کاربری')
-            ->view('emails.verify-email', [
+            ->view('authkit::emails.verify-email', [
                 'user' => $notifiable,
                 'url' => $url,
             ]);
