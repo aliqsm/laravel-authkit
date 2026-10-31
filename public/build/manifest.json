@@ -9,7 +9,7 @@
     ]
   },
   "resources/css/auth/layout.css": {
-    "file": "assets/layout-8QTlkr4E.css",
+    "file": "assets/layout-CRRl7IR2.css",
     "src": "resources/css/auth/layout.css",
     "isEntry": true,
     "name": "layout",
@@ -43,18 +43,6 @@
     "names": [
       "padding.css"
     ]
-  },
-  "resources/css/fonts/shabnam/Shabnam-Bold.woff2": {
-    "file": "assets/Shabnam-Bold-C6MDpycz.woff2",
-    "src": "resources/css/fonts/shabnam/Shabnam-Bold.woff2"
-  },
-  "resources/css/fonts/shabnam/Shabnam-Light.woff2": {
-    "file": "assets/Shabnam-Light-C1deMUII.woff2",
-    "src": "resources/css/fonts/shabnam/Shabnam-Light.woff2"
-  },
-  "resources/css/fonts/shabnam/Shabnam-Medium.woff2": {
-    "file": "assets/Shabnam-Medium-DNmzH3VD.woff2",
-    "src": "resources/css/fonts/shabnam/Shabnam-Medium.woff2"
   },
   "resources/js/app.js": {
     "file": "assets/app-GtM1sxkV.js",
