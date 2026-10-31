@@ -1,7 +1,7 @@
 @extends('authkit::layouts.auth')
 @section('page_title', 'تأیید حساب کاربری')
 
-@vite(['resources/js/auth/verification-email.js'])
+@vite(['resources/js/auth/verification-email.js'], 'vendor/authkit/build')
 
 
 

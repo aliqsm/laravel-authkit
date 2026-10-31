@@ -5,7 +5,7 @@
 @extends('authkit::layouts.dashboard')
 @section('page_title', 'نشست ها')
 
-@vite(['resources/js/dashboard/terminate-other-sessions.js'])
+@vite(['resources/js/dashboard/terminate-other-sessions.js'], 'vendor/authkit/build')
 
 
 

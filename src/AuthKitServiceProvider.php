@@ -37,6 +37,12 @@ class AuthKitServiceProvider extends ServiceProvider
         ], 'authkit-assets');
 
 
+        $this->publishes([
+            __DIR__ . '/../public/build' => public_path('vendor/authkit/build'),
+        ], 'authkit-build');
+
+
+
         // -------------------------------------
         // Views
         // -------------------------------------

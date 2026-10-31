@@ -2,7 +2,8 @@
 @section('page_title', 'ویرایش حساب')
 
 
-@vite('resources/js/dashboard/update-profile.js')
+@vite('resources/js/dashboard/update-profile.js', 'vendor/authkit/build')
+
 
 @section('content')
 

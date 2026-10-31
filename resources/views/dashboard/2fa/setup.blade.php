@@ -1,7 +1,7 @@
 @extends('authkit::layouts.dashboard')
 @section('page_title', 'فعال‌سازی تایید دو مرحله‌ای')
 
-@vite(['resources/js/auth/two-factor-setup.js'])
+@vite(['resources/js/auth/two-factor-setup.js'], 'vendor/authkit/build')
 
 
 

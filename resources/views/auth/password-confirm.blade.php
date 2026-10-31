@@ -1,7 +1,7 @@
 @extends('authkit::layouts.auth')
 @section('page_title', 'تأیید رمز عبور')
 
-@vite(['resources/js/auth/password-confirm.js'])
+@vite(['resources/js/auth/password-confirm.js'], 'vendor/authkit/build')
 
 
 

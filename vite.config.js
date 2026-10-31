@@ -32,4 +32,9 @@ export default defineConfig({
             buildDirectory: 'build',
         }),
     ],
+
+    build: {
+        manifest: true,
+        emptyOutDir: true,
+    },
 });

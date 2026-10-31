@@ -1,7 +1,7 @@
 @extends('authkit::layouts.auth')
 @section('page_title', 'ورود')
 
-@vite(['resources/js/auth/login.js'])
+@vite(['resources/js/auth/login.js'], 'vendor/authkit/build')
 
 
 

@@ -1,7 +1,7 @@
 @extends('authkit::layouts.auth')
 @section('page_title', 'بازنشانی رمز عبور')
 
-@vite(['resources/js/auth/reset-password.js'])
+@vite(['resources/js/auth/reset-password.js'], 'vendor/authkit/build')
 
 
 
