@@ -15,7 +15,6 @@ export default defineConfig({
                 'resources/css/custom-class/padding.css',
                 'resources/css/auth/layout.css',
 
-
                 // --------------------------------------
                 // JS
                 // --------------------------------------
@@ -37,4 +36,9 @@ export default defineConfig({
             buildDirectory: 'build',
         }),
     ],
+
+    build: {
+        manifest: 'manifest.json',
+        emptyOutDir: true,
+    },
 });
