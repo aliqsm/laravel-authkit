@@ -25,13 +25,15 @@ AuthKit از دو حالت **Web** و **API** پشتیبانی می‌کند. د
 - PHP 8.2 یا بالاتر
 - Laravel 12 یا 13
 - Composer
----
----
 
 
 
----
----
+<br>
+<br>
+
+
+
+
 ## نصب و راه‌اندازی
 
 
@@ -79,17 +81,17 @@ php artisan make:notifications-table
 php artisan migrate
 ```
 
----
----
+
+
+
+
+<br>
+<br>
 
 
 
 
 
-
-
----
----
 
 ## تنظیمات و سفارشی‌سازی
 
@@ -212,7 +214,6 @@ php artisan vendor:publish --tag=authkit-build
 
 فایل‌های آماده CSS و JavaScript را در مسیر `public/vendor/authkit/build` قرار می‌دهد. این فایل‌ها برای اجرای رابط کاربری AuthKit استفاده می‌شوند.
 
----
 
 
 
@@ -220,7 +221,15 @@ php artisan vendor:publish --tag=authkit-build
 
 
 
----
+<br>
+<br>
+
+
+
+
+
+
+
 ## راه‌اندازی سرویس‌های جانبی
 
 
@@ -248,7 +257,6 @@ GOOGLE_REDIRECT_URI=
 
 آدرس `GOOGLE_REDIRECT_URI` باید با آدرس Callback ثبت‌شده در تنظیمات OAuth گوگل یکسان باشد.
 
----
 
 
 
@@ -256,14 +264,14 @@ GOOGLE_REDIRECT_URI=
 
 
 
+<br>
+<br>
 
 
 
 
 
 
-
----
 
 ## مسیرها (Routes)
 
@@ -367,21 +375,19 @@ AuthKit مسیرهای موردنیاز احراز هویت و مدیریت حس
 - برخی مسیرها با غیرفعال کردن قابلیت مربوطه در تنظیمات `features` ثبت نمی‌شوند.
 - مسیرهای Google، ثبت‌نام، بازیابی رمز عبور و احراز هویت دومرحله‌ای به فعال بودن قابلیت مربوطه وابسته‌اند.
 
----
+
+
+
+
+
+<br>
+<br>
 
 
 
 
 
 
-
-
-
-
-
-
-
----
 
 ## راه‌اندازی API و احراز هویت با Sanctum
 
