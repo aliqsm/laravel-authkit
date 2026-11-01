@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="shortcut icon" href="{{ asset('assets/media/image/favicon.png') }}">
-    <title>{{ env('APP_NAME') }}</title>
     <meta name="theme-color" content="#5867dd">
-    <title>@yield('page_title')</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="{{ asset('assets/media/image/favicon.png') }}">
+    <title>@yield('page_title')</title>
+
+    @vite('resources/css/app.css')
     @vite(['resources/css/app.css', 'resources/css/auth/layout.css', 'resources/js/app.js'], 'vendor/authkit/build')
 </head>
 

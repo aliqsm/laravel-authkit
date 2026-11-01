@@ -27,7 +27,7 @@ class AuthKitServiceProvider extends ServiceProvider
             __DIR__ . '/../config/authkit.php' => config_path('authkit.php'),
         ], 'authkit-config');
 
-
+        
         // -------------------------------------
         // Source Assets
         // -------------------------------------
@@ -36,11 +36,13 @@ class AuthKitServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/js' => resource_path('vendor/authkit/js'),
         ], 'authkit-assets');
 
-
         $this->publishes([
             __DIR__ . '/../public/build' => public_path('vendor/authkit/build'),
         ], 'authkit-build');
 
+        $this->publishes([
+            __DIR__ . '/../public/fonts' => public_path('vendor/authkit/fonts'),
+        ], 'authkit-fonts');
 
 
         // -------------------------------------

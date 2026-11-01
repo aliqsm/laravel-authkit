@@ -8,6 +8,8 @@
     <title>{{ env('APP_NAME') }}</title>
     <meta name="theme-color" content="#5867dd">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    @vite('resources/css/app.css')
     @vite(['resources/css/app.css', 'resources/css/auth/layout.css', 'resources/js/app.js', 'resources/js/auth/logout.js'], 'vendor/authkit/build')
 </head>
 
