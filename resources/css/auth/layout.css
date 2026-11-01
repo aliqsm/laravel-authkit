@@ -1,3 +1,24 @@
+@font-face {
+    font-family: 'AuthKitFont';
+    src: url('../../../public/fonts/shabnam/Shabnam-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'AuthKitFont';
+    src: url('../../../public/fonts/shabnam/Shabnam-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'AuthKitFont';
+    src: url('../../../public/fonts/shabnam/Shabnam-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -17,20 +38,11 @@
 }
 
 
-/* ------------------------------------- */
-/* Base Config */
-/* ------------------------------------- */
 body {
+    font-family: 'AuthKitFont' !important;
     background: #FFFFFF;
     user-select: none;
 }
-
-
-.authkit-auth-layout,
-.authkit-dashboard-layout {
-    font-family: inherit !important;
-}
-
 
 .authkit-auth-layout {
     width: calc(100% - 2rem);
@@ -38,7 +50,7 @@ body {
     height: 100dvh !important;
 }
 
-button {
+.authkit-auth-layout button {
     outline: none !important;
 }
 
@@ -47,32 +59,32 @@ button {
 /* ------------------------------------- */
 /* Form */
 /* ------------------------------------- */
-.is-invalid {
+.authkit-auth-layout .is-invalid {
     border-color: var(--danger) !important;
 }
 
-.form-group {
+.authkit-auth-layout .form-group {
     border: 1px solid var(--border);
     cursor: pointer;
     transition: all 0.1s;
 }
 
 /* یعنی اگه داخلش فوکوس شد */
-.form-group:focus-within {
+.authkit-auth-layout .form-group:focus-within {
     border-color: var(--dark);
 }
 
-.form-control {
+.authkit-auth-layout .form-control {
     box-shadow: unset !important;
     outline: none;
     cursor: pointer;
 }
 
-.form-control::placeholder {
+.authkit-auth-layout .form-control::placeholder {
     color: var(--secondary);
 }
 
-.form-label {
+.authkit-auth-layout .form-label {
     position: absolute;
     top: 50%;
     right: 1rem;
@@ -83,8 +95,8 @@ button {
 
 
 /* این باید همین باشه و فرم پلیس هلدر خالی داشته باشه */
-.form-control:focus+.form-label,
-.form-control:not(:placeholder-shown)+.form-label {
+.authkit-auth-layout .form-control:focus+.form-label,
+.authkit-auth-layout .form-control:not(:placeholder-shown)+.form-label {
     top: 0;
     background-color: var(--white);
     right: 0.6rem;
@@ -94,7 +106,7 @@ button {
 }
 
 
-.form-check-label {
+.authkit-auth-layout .form-check-label {
     cursor: pointer !important;
 }
 
@@ -105,32 +117,29 @@ button {
 /* ---------------------------------------- */
 /* Overwrite Bootstrap Classes */
 /* ---------------------------------------- */
-.text-dark {
+.authkit-auth-layout .text-dark {
     color: var(--dark) !important;
 }
 
-.text-secondary {
+.authkit-auth-layout .text-secondary {
     color: var(--secondary) !important;
 }
 
-.text-primary {
+.authkit-auth-layout .text-primary {
     color: var(--primary) !important;
 }
 
 
-
-
-.bg-light {
+.authkit-auth-layout .bg-light {
     background-color: var(--light) !important;
 }
 
-.border {
+.authkit-auth-layout .border {
     border-color: var(--border) !important;
 }
 
 
-
-.btn-primary {
+.authkit-auth-layout .btn-primary {
     background-color: var(--primary) !important;
     color: var(--white) !important;
     border: none !important;
