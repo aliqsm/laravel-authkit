@@ -9,9 +9,26 @@
 
     <style>
         @font-face {
-            font-family: 'shabnam';
-            src: url('./assets/fonts/shabnam/Shabnam-Medium.woff2') format('woff2');
+            font-family: 'AuthKitFont';
+            src: url('{{ asset('vendor/authkit/fonts/shabnam/Shabnam-Light.woff2') }}') format('woff2');
+            font-weight: 300;
+            font-display: swap;
         }
+
+        @font-face {
+            font-family: 'AuthKitFont';
+            src: url('{{ asset('vendor/authkit/fonts/shabnam/Shabnam-Medium.woff2') }}') format('woff2');
+            font-weight: 500;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'AuthKitFont';
+            src: url('{{ asset('vendor/authkit/fonts/shabnam/Shabnam-Bold.woff2') }}') format('woff2');
+            font-weight: 700;
+            font-display: swap;
+        }
+
 
         * {
             box-sizing: border-box;
@@ -23,7 +40,7 @@
             padding: 24px 12px;
             background: #111;
             color: #fff;
-            font-family: shabnam, Tahoma, sans-serif;
+            font-family: 'AuthKitFont', Tahoma, sans-serif;
             direction: rtl;
         }
 
@@ -145,4 +162,5 @@
     </div>
 
 </body>
+
 </html>
