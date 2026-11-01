@@ -54,4 +54,8 @@ php artisan vendor:publish --tag=authkit-build   =>   پابلیش فایل ها
 - php artisan migrate                    ===>    برای اعمال تغییرات جدول یوزر هم باید 
 - use HasAuthKit;                        ===>    در مدل یوزر این تریت اضافه بشه
 
-- php artisan vendor:publish --tag=authkit-build
+
+php artisan vendor:publish --tag=authkit-config
+php artisan vendor:publish --tag=authkit-views
+php artisan vendor:publish --tag=authkit-assets
+php artisan vendor:publish --tag=authkit-build

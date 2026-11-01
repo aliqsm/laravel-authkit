@@ -1,4 +1,3 @@
-
 <?php
 
 use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\SocialiteController;
@@ -24,7 +23,7 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         // Dashboard
         // -------------------------------------
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('throttle:my_auth_pages');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('throttle:authkit_pages');
 
 
         // -------------------------------------
@@ -32,8 +31,8 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.update_profile_information', true)) {
             Route::prefix('/profile')->group(function () {
-                Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('throttle:my_auth_pages');
-                Route::put('/', [ProfileController::class, 'update'])->name('profile.update')->middleware('throttle:update_profile');
+                Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('throttle:authkit_pages');
+                Route::put('/', [ProfileController::class, 'update'])->name('profile.update')->middleware('throttle:authkit_update_profile');
             });
         }
 
@@ -41,14 +40,14 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         // Sessions
         // -------------------------------------
-        Route::get('/sessions', [SessionController::class, 'index'])->name('dashboard.sessions.index')->middleware('throttle:my_auth_pages');
+        Route::get('/sessions', [SessionController::class, 'index'])->name('dashboard.sessions.index')->middleware('throttle:authkit_pages');
 
 
         // -------------------------------------
         // Security Activities
         // -------------------------------------
         if (config('authkit.features.security_activities', true)) {
-            Route::get('/security-activities', [SecurityActivityController::class, 'index'])->name('dashboard.security-activities.index')->middleware('throttle:my_auth_pages');
+            Route::get('/security-activities', [SecurityActivityController::class, 'index'])->name('dashboard.security-activities.index')->middleware('throttle:authkit_pages');
         }
 
 
@@ -57,8 +56,8 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.change_password', true)) {
             Route::prefix('change-password')->middleware('password.confirm')->group(function () {
-                Route::get('/', [PasswordController::class, 'edit'])->name('password.edit')->middleware('throttle:my_auth_pages');
-                Route::post('/', [PasswordController::class, 'update'])->name('password.change')->middleware('throttle:change_password');
+                Route::get('/', [PasswordController::class, 'edit'])->name('password.edit')->middleware('throttle:authkit_pages');
+                Route::post('/', [PasswordController::class, 'update'])->name('password.change')->middleware('throttle:authkit_change_password');
             });
         }
     });
@@ -72,8 +71,8 @@ Route::middleware('web')->group(function () {
         // Login
         // -------------------------------------
         Route::prefix('login')->group(function () {
-            Route::get('/', [LoginController::class, 'show'])->name('login.form')->middleware('throttle:my_auth_pages');
-            Route::post('/', [LoginController::class, 'login'])->name('login')->middleware('throttle:login');
+            Route::get('/', [LoginController::class, 'show'])->name('login.form')->middleware('throttle:authkit_pages');
+            Route::post('/', [LoginController::class, 'login'])->name('login')->middleware('throttle:authkit_login');
         });
 
 
@@ -81,7 +80,7 @@ Route::middleware('web')->group(function () {
         // Login/Register With Oauth
         // -------------------------------------
         if (config('authkit.features.google_login', true)) {
-            Route::prefix('oauth/google')->middleware('throttle:my_auth_pages')->group(function () {
+            Route::prefix('oauth/google')->middleware('throttle:authkit_pages')->group(function () {
                 Route::get('/redirect', [SocialiteController::class, 'redirectToGoogle'])->name('oauth.google.redirect');
                 Route::get('/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('oauth.google.callback');
             });
@@ -93,8 +92,8 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.registration', true)) {
             Route::prefix('register')->group(function () {
-                Route::get('/', [RegisterController::class, 'show'])->name('register.form')->middleware('throttle:my_auth_pages');
-                Route::post('/', [RegisterController::class, 'register'])->name('register')->middleware('throttle:register');
+                Route::get('/', [RegisterController::class, 'show'])->name('register.form')->middleware('throttle:authkit_pages');
+                Route::post('/', [RegisterController::class, 'register'])->name('register')->middleware('throttle:authkit_register');
             });
         }
 
@@ -104,8 +103,8 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.password_reset', true)) {
             Route::prefix('forgot-password')->group(function () {
-                Route::get('/', [ForgotPasswordController::class, 'show'])->name('password.request')->middleware('throttle:my_auth_pages');
-                Route::post('/', [ForgotPasswordController::class, 'forgotPassword'])->name('password.email')->middleware('throttle:forgot_password');
+                Route::get('/', [ForgotPasswordController::class, 'show'])->name('password.request')->middleware('throttle:authkit_pages');
+                Route::post('/', [ForgotPasswordController::class, 'forgotPassword'])->name('password.email')->middleware('throttle:authkit_forgot_password');
             });
         }
 
@@ -115,21 +114,21 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.two_factor_authentication', true)) {
             Route::prefix('2fa/challenge')->group(function () {
-                Route::get('/', [TwoFactorController::class, 'show'])->name('two-factor.challenge')->middleware('throttle:my_auth_pages');
-                Route::post('/', [TwoFactorController::class, 'verify'])->name('two-factor.verify')->middleware('throttle:two_factor_verify');
+                Route::get('/', [TwoFactorController::class, 'show'])->name('two-factor.challenge')->middleware('throttle:authkit_pages');
+                Route::post('/', [TwoFactorController::class, 'verify'])->name('two-factor.verify')->middleware('throttle:authkit_two_factor_verify');
             });
         }
     });
 
 
-    
+
     // -------------------------------------
     // Password Reset (Guest + Authenticated)
     // -------------------------------------
     if (config('authkit.features.password_reset', true)) {
         Route::prefix('reset-password')->group(function () {
-            Route::get('/{token}', [ResetPasswordController::class, 'show'])->name('password.reset')->middleware('throttle:my_auth_pages');
-            Route::post('/', [ResetPasswordController::class, 'resetPassword'])->name('password.update')->middleware('throttle:reset_password');
+            Route::get('/{token}', [ResetPasswordController::class, 'show'])->name('password.reset')->middleware('throttle:authkit_pages');
+            Route::post('/', [ResetPasswordController::class, 'resetPassword'])->name('password.update')->middleware('throttle:authkit_reset_password');
         });
     }
 
@@ -141,16 +140,16 @@ Route::middleware('web')->group(function () {
         // Email Verification
         // -------------------------------------
         Route::prefix('email')->group(function () {
-            Route::get('/verify', [EmailController::class, 'showVerificationNotice'])->name('verification.notice')->middleware('throttle:my_auth_pages');
-            Route::post('/verification-notification', [EmailController::class, 'resendVerificationEmail'])->name('verification.send')->middleware('throttle:resend_verification_email');
-            Route::get('/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('verification.verify')->middleware(['signed', 'throttle:verification_verify']);;
+            Route::get('/verify', [EmailController::class, 'showVerificationNotice'])->name('verification.notice')->middleware('throttle:authkit_pages');
+            Route::post('/verification-notification', [EmailController::class, 'resendVerificationEmail'])->name('verification.send')->middleware('throttle:authkit_resend_verification_email');
+            Route::get('/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('verification.verify')->middleware(['signed', 'throttle:authkit_verification_verify']);;
         });
 
 
         // -------------------------------------
         // Logout
         // -------------------------------------
-        Route::prefix('logout')->middleware('throttle:logout')->group(function () {
+        Route::prefix('logout')->middleware('throttle:authkit_logout')->group(function () {
             Route::post('/', [LogoutController::class, 'logout'])->name('logout');
             Route::post('/logout-other-devices', [LogoutController::class, 'logoutOtherDevices'])->name('sessions.destroy');
         });
@@ -160,8 +159,8 @@ Route::middleware('web')->group(function () {
         // Confirm Password
         // -------------------------------------
         Route::prefix('confirm-password')->group(function () {
-            Route::get('/', [PasswordController::class, 'show'])->name('password.confirm')->middleware('throttle:my_auth_pages');
-            Route::post('/', [PasswordController::class, 'store'])->name('password.confirm.verify')->middleware('throttle:password_confirm');
+            Route::get('/', [PasswordController::class, 'show'])->name('password.confirm')->middleware('throttle:authkit_pages');
+            Route::post('/', [PasswordController::class, 'store'])->name('password.confirm.verify')->middleware('throttle:authkit_password_confirm');
         });
 
 
@@ -170,7 +169,7 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         // برای وقتی که کاربر با گوگل ثبت نام کرده و رمز عبورش رو نمیدونه
         if (config('authkit.features.password_reset', true)) {
-            Route::post('/password/send-reset-link', [ForgotPasswordController::class, 'sendResetLinkForAuthenticatedUser'])->name('password.send-reset-link')->middleware('throttle:forgot_password');
+            Route::post('/password/send-reset-link', [ForgotPasswordController::class, 'sendResetLinkForAuthenticatedUser'])->name('password.send-reset-link')->middleware('throttle:authkit_forgot_password');
         }
 
 
@@ -179,10 +178,10 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.two_factor_authentication', true)) {
             Route::prefix('2fa')->middleware('password.confirm')->group(function () {
-                Route::get('/', [TwoFactorController::class, 'index'])->name('two-factor.index')->middleware('throttle:my_auth_pages');
-                Route::post('/enable', [TwoFactorController::class, 'enable'])->name('two-factor.enable')->middleware('throttle:two_factor_enable');
-                Route::post('/disable', [TwoFactorController::class, 'disable'])->name('two-factor.disable')->middleware('throttle:two_factor_disable');
-                Route::post('/regenerate', [TwoFactorController::class, 'regenerate'])->name('two-factor.recovery-code.regenerate')->middleware('throttle:two_factor_generate_recovery_code');
+                Route::get('/', [TwoFactorController::class, 'index'])->name('two-factor.index')->middleware('throttle:authkit_pages');
+                Route::post('/enable', [TwoFactorController::class, 'enable'])->name('two-factor.enable')->middleware('throttle:authkit_two_factor_enable');
+                Route::post('/disable', [TwoFactorController::class, 'disable'])->name('two-factor.disable')->middleware('throttle:authkit_two_factor_disable');
+                Route::post('/regenerate', [TwoFactorController::class, 'regenerate'])->name('two-factor.recovery-code.regenerate')->middleware('throttle:authkit_two_factor_generate_recovery_code');
             });
         }
     });

@@ -10,12 +10,10 @@ use Illuminate\Support\Facades\RateLimiter;
 
 class AuthKitServiceProvider extends ServiceProvider
 {
-
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/authkit.php', 'authkit');
     }
-
 
 
     public function boot(): void
@@ -23,133 +21,178 @@ class AuthKitServiceProvider extends ServiceProvider
         // -------------------------------------
         // Config
         // -------------------------------------
-        $this->publishes([__DIR__ . '/../config/authkit.php' => config_path('authkit.php'),], 'authkit-config');
+        $this->publishes([
+            __DIR__ . '/../config/authkit.php' => config_path('authkit.php'),
+        ], 'authkit-config');
 
-        
+
         // -------------------------------------
         // Source Assets
         // -------------------------------------
-        $this->publishes([ __DIR__ . '/../resources/css' => resource_path('vendor/authkit/css'), __DIR__ . '/../resources/js' => resource_path('vendor/authkit/js')], 'authkit-assets');
-        $this->publishes([ __DIR__ . '/../public/build' => public_path('vendor/authkit/build')], 'authkit-build');
-        $this->publishes([ __DIR__ . '/../public/fonts' => public_path('vendor/authkit/fonts')], 'authkit-fonts');
+        $this->publishes([
+            __DIR__ . '/../resources/css' => resource_path('vendor/authkit/css'),
+            __DIR__ . '/../resources/js' => resource_path('vendor/authkit/js'),
+        ], 'authkit-assets');
+
+        $this->publishes([
+            __DIR__ . '/../public/build' => public_path('vendor/authkit/build'),
+        ], 'authkit-build');
 
 
         // -------------------------------------
         // Views & Components
         // -------------------------------------
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'authkit');
-        $this->publishes([__DIR__ . '/../resources/views' => resource_path('views/vendor/authkit')], 'authkit-views');
-        Blade::anonymousComponentPath(__DIR__ . '/../resources/views/components', 'authkit');
+
+        $this->publishes([
+            __DIR__ . '/../resources/views' => resource_path('views/vendor/authkit'),
+        ], 'authkit-views');
+
+        Blade::anonymousComponentPath(
+            __DIR__ . '/../resources/views/components',
+            'authkit'
+        );
 
 
         // -------------------------------------
         // Migrations
         // -------------------------------------
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->publishesMigrations([__DIR__ . '/../database/migrations' => database_path('migrations')], 'authkit-migrations');
+
+        $this->publishesMigrations([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ], 'authkit-migrations');
 
 
         // -------------------------------------
         // Routes
         // -------------------------------------
-        if (config('authkit.app_mode', 'web') === 'web') {
-            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
-        }
+        $appMode = config('authkit.app_mode', 'web');
 
-        if (config('authkit.app_mode', 'web') === 'api') {
+        if ($appMode === 'web') {
+            $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        } elseif ($appMode === 'api') {
             $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
         }
 
 
 
+
+        
         // -----------------------------------------------------
         // Authentication Rate Limiters
         // -----------------------------------------------------
-        RateLimiter::for('my_auth_pages', function (Request $request) {
-            $ipKey = 'my_auth_pages:ip:' . $request->ip();
 
+        RateLimiter::for('authkit_pages', function (Request $request) {
             return [
-                Limit::perMinutes(30, 120)->by($ipKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_pages.ip'),
+                    'authkit_pages:ip:' . $request->ip()
+                ),
             ];
         });
 
-        RateLimiter::for('login', function (Request $request) {
-            $ipKey = 'login:ip:' . $request->ip();
-            $emailKey = 'login:email:' . strtolower(trim((string) $request->input('email', '')));
-
+        RateLimiter::for('authkit_login', function (Request $request) {
             return [
-                Limit::perMinutes(30, 60)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($emailKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_login.ip'),
+                    'authkit_login:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_login.email'),
+                    'authkit_login:email:' . strtolower(trim((string) $request->input('email', '')))
+                ),
             ];
         });
 
-        RateLimiter::for('logout', function (Request $request) {
-            $ipKey = 'logout:ip:' . $request->ip();
-            $userKey = 'logout:user:' . $request->user()->id;
-
+        RateLimiter::for('authkit_logout', function (Request $request) {
             return [
-                Limit::perMinutes(30, 30)->by($ipKey),
-                Limit::perMinutes(30, 15)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_logout.ip'),
+                    'authkit_logout:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_logout.user'),
+                    'authkit_logout:user:' . $request->user()->id
+                ),
             ];
         });
 
-        RateLimiter::for('register', function (Request $request) {
-            $ipKey = 'register:ip:' . $request->ip();
-            $emailKey = 'register:email:' . strtolower(trim((string) $request->input('email', '')));
-
+        RateLimiter::for('authkit_register', function (Request $request) {
             return [
-                Limit::perMinutes(30, 20)->by($ipKey),
-                Limit::perMinutes(30, 5)->by($emailKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_register.ip'),
+                    'authkit_register:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_register.email'),
+                    'authkit_register:email:' . strtolower(trim((string) $request->input('email', '')))
+                ),
             ];
         });
 
-        RateLimiter::for('verification_verify', function (Request $request) {
-            $ipKey = 'verification:verify:ip:' . $request->ip();
-            $userKey = 'verification:verify:user:' . $request->user()->id;
-
+        RateLimiter::for('authkit_verification_verify', function (Request $request) {
             return [
-                Limit::perMinutes(30, 30)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_verification_verify.ip'),
+                    'authkit_verification_verify:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_verification_verify.user'),
+                    'authkit_verification_verify:user:' . $request->user()->id
+                ),
             ];
         });
 
-        RateLimiter::for('resend_verification_email', function (Request $request) {
-            $ipKey = 'verification:resend:ip:' . $request->ip();
-            $userKey = 'verification:resend:user:' . $request->user()->id;
-
+        RateLimiter::for('authkit_resend_verification_email', function (Request $request) {
             return [
-                Limit::perMinutes(30, 30)->by($ipKey),
-                Limit::perMinutes(2, 1)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_resend_verification_email.ip'),
+                    'authkit_resend_verification_email:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_resend_verification_email.user'),
+                    'authkit_resend_verification_email:user:' . $request->user()->id
+                ),
             ];
         });
 
-        RateLimiter::for('forgot_password', function (Request $request) {
-            $ipKey = 'forgot_password:ip:' . $request->ip();
-            $emailKey = 'forgot_password:email:' . strtolower(trim((string) $request->input('email', '')));
-
+        RateLimiter::for('authkit_forgot_password', function (Request $request) {
             return [
-                Limit::perMinutes(30, 30)->by($ipKey),
-                Limit::perMinutes(30, 5)->by($emailKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_forgot_password.ip'),
+                    'authkit_forgot_password:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_forgot_password.email'),
+                    'authkit_forgot_password:email:' . strtolower(trim((string) $request->input('email', '')))
+                ),
             ];
         });
 
-        RateLimiter::for('reset_password', function (Request $request) {
-            $ipKey = 'reset_password:ip:' . $request->ip();
-            $emailKey = 'reset_password:email:' . strtolower(trim((string) $request->input('email', '')));
-
+        RateLimiter::for('authkit_reset_password', function (Request $request) {
             return [
-                Limit::perMinutes(30, 30)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($emailKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_reset_password.ip'),
+                    'authkit_reset_password:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_reset_password.email'),
+                    'authkit_reset_password:email:' . strtolower(trim((string) $request->input('email', '')))
+                ),
             ];
         });
 
-        RateLimiter::for('password_confirm', function (Request $request) {
-            $ipKey = 'password_confirm:ip:' . $request->ip();
-            $userKey = 'password_confirm:user:' . $request->user()->id;
-
+        RateLimiter::for('authkit_password_confirm', function (Request $request) {
             return [
-                Limit::perMinutes(30, 30)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_password_confirm.ip'),
+                    'authkit_password_confirm:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_password_confirm.user'),
+                    'authkit_password_confirm:user:' . $request->user()->id
+                ),
             ];
         });
 
@@ -157,69 +200,102 @@ class AuthKitServiceProvider extends ServiceProvider
         // -----------------------------------------------------
         // Two-Factor Authentication (2FA)
         // -----------------------------------------------------
-        RateLimiter::for('two_factor_enable', function (Request $request) {
-            $ipKey = 'two_factor_enable_disable:ip:' . $request->ip();
-            $userKey = 'two_factor_enable_disable:user:' . $request->user()->id;
 
+        RateLimiter::for('authkit_two_factor_enable', function (Request $request) {
             return [
-                Limit::perMinutes(30, 15)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_enable.ip'),
+                    'authkit_two_factor_enable:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_enable.user'),
+                    'authkit_two_factor_enable:user:' . $request->user()->id
+                ),
             ];
         });
 
-        RateLimiter::for('two_factor_disable', function (Request $request) {
-            $ipKey = 'two_factor_enable_disable:ip:' . $request->ip();
-            $userKey = 'two_factor_enable_disable:user:' . $request->user()->id;
-
+        RateLimiter::for('authkit_two_factor_disable', function (Request $request) {
             return [
-                Limit::perMinutes(30, 15)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_disable.ip'),
+                    'authkit_two_factor_disable:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_disable.user'),
+                    'authkit_two_factor_disable:user:' . $request->user()->id
+                ),
             ];
         });
 
-        RateLimiter::for('two_factor_generate_recovery_code', function (Request $request) {
-            $ipKey = 'two_factor_generate_recovery_code:ip:' . $request->ip();
-            $userKey = 'two_factor_generate_recovery_code:user:' . $request->user()->id;
-
+        RateLimiter::for('authkit_two_factor_generate_recovery_code', function (Request $request) {
             return [
-                Limit::perMinutes(30, 15)->by($ipKey),
-                Limit::perMinutes(30, 5)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_generate_recovery_code.ip'),
+                    'authkit_two_factor_generate_recovery_code:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_generate_recovery_code.user'),
+                    'authkit_two_factor_generate_recovery_code:user:' . $request->user()->id
+                ),
             ];
         });
 
-        RateLimiter::for('two_factor_verify', function (Request $request) {
-            $ipKey = 'two_factor_verify:ip:' . $request->ip();
+        RateLimiter::for('authkit_two_factor_verify', function (Request $request) {
             $userId = $request->session()->get('2fa:user_id');
-            $userKey = 'two_factor_verify:user:' . ($userId ?? $request->ip());
 
             return [
-                Limit::perMinutes(30, 15)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_verify.ip'),
+                    'authkit_two_factor_verify:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_two_factor_verify.user'),
+                    'authkit_two_factor_verify:user:' . ($userId ?? $request->ip())
+                ),
             ];
         });
 
 
         // -----------------------------------------------------
-        // in Dashboard
+        // Dashboard
         // -----------------------------------------------------
-        RateLimiter::for('update_profile', function (Request $request) {
-            $ipKey = 'update_profile:ip:' . $request->ip();
-            $userKey = 'update_profile:user:' . $request->user()->id;
 
+        RateLimiter::for('authkit_update_profile', function (Request $request) {
             return [
-                Limit::perMinutes(30, 30)->by($ipKey),
-                Limit::perMinutes(30, 10)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_update_profile.ip'),
+                    'authkit_update_profile:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_update_profile.user'),
+                    'authkit_update_profile:user:' . $request->user()->id
+                ),
             ];
         });
 
-        RateLimiter::for('change_password', function (Request $request) {
-            $ipKey = 'change_password:ip:' . $request->ip();
-            $userKey = 'change_password:user:' . $request->user()->id;
-
+        RateLimiter::for('authkit_change_password', function (Request $request) {
             return [
-                Limit::perMinutes(30, 20)->by($ipKey),
-                Limit::perMinutes(30, 5)->by($userKey),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_change_password.ip'),
+                    'authkit_change_password:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_change_password.user'),
+                    'authkit_change_password:user:' . $request->user()->id
+                ),
             ];
         });
+    }
+
+
+    // -------------------------------------
+    // Rate Limit Helper
+    // -------------------------------------
+    private function makeLimit(array $settings, string $key): Limit
+    {
+        return Limit::perMinutes(
+            $settings['decay_minutes'],
+            $settings['max_attempts']
+        )->by($key);
     }
 }
