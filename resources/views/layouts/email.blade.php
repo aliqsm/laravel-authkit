@@ -1,138 +1,148 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <title>@yield('title')</title>
+
     <style>
-        body {
+        @font-face {
+            font-family: 'shabnam';
+            src: url('./assets/fonts/shabnam/Shabnam-Medium.woff2') format('woff2');
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background-color: #222;
-            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        body {
+            padding: 24px 12px;
+            background: #111;
+            color: #fff;
+            font-family: shabnam, Tahoma, sans-serif;
             direction: rtl;
         }
 
         .wrapper {
             width: 100%;
-            padding: 24px 0;
-            background: #222;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
+            max-width: 430px;
             margin: 0 auto;
-            background-color: #333;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
-            border: 1px solid #444;
-        }
-
-        .header {
-            background-color: #222;
-            color: #ffffff;
-            text-align: center;
-            font-weight: bold;
-            padding: 16px;
-            font-size: 16px;
-            border-bottom: 1px solid #444;
         }
 
         .content {
-            padding: 24px;
+            padding: 32px 26px;
+            background: #171717;
+            border: 1px solid #292929;
+            border-radius: 14px;
+        }
+
+        p {
+            color: #999;
+            font-size: 13px;
+            line-height: 2.3;
         }
 
         .title {
-            font-size: 15px;
-            font-weight: 600;
-            margin: 0 0 12px 0;
-            color: #ffffff;
-        }
-
-        .text {
-            font-size: 14px;
-            color: #cfcfcf;
-            line-height: 1.8;
-            margin: 0 0 16px 0;
-            text-align: justify;
-        }
-
-        .link {
-            display: block;
-            font-size: 13px;
-            color: #2077d8;
-            direction: ltr;
-            word-break: break-all;
-            margin-top: 12px;
-            text-align: left;
-        }
-
-        .btn {
-            display: block;
-            margin-top: 16px;
-            padding: 12px;
-            background-color: #2077d8;
-            color: #ffffff !important;
-            text-decoration: none;
+            color: #fff;
             text-align: center;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 8px;
-        }
-
-        .btn:hover {
-            background-color: #1a63b6;
-        }
-
-        .info {
-            margin-top: 32px;
-            font-size: 13px;
-            color: #b5b5b5;
+            font-size: 20px;
+            font-weight: bold;
             line-height: 1.8;
         }
 
-        .contact {
-            margin-top: 16px;
+        .details {
+            margin: 25px 0;
+            padding: 14px 16px;
+            border: 1px solid #303030;
+            border-radius: 12px;
+        }
+
+        .detail {
+            margin-bottom: 10px;
+        }
+
+        .detail:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            display: inline-block;
+            min-width: 110px;
+            color: #999;
             font-size: 12px;
-            color: #e5e5e5;
+            line-height: 2.3;
+        }
+
+        .detail-value {
+            color: #eee;
+            font-size: 12px;
+            line-height: 2.3;
+        }
+
+        .actions {
+            margin-top: 8px;
+            padding-right: 22px;
+            color: #c4c4c4;
+            font-size: 12px;
+            line-height: 2.5;
+        }
+
+        .button {
+            display: block;
+            margin-top: 20px;
+            padding: 13px 18px;
+            border-radius: 8px;
+            background: #fff;
+            color: #111 !important;
+            text-align: center;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
         }
 
         .footer {
-            background-color: #222;
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #303030;
+            color: #666;
             text-align: center;
-            font-size: 12px;
-            color: #aaa;
-            padding: 14px;
-            border-top: 1px solid #444;
+            font-size: 11px;
+            line-height: 2;
+        }
+
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            .content {
+                padding: 26px 20px;
+            }
+
+            .title {
+                font-size: 19px;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <div class="wrapper">
-        <div class="container">
+        <div class="content">
+            @yield('content')
 
-            <div class="header">
-                @yield('title')
-            </div>
-
-
-            <div class="content">
-                @yield('content')
-            </div>
-
-
-            <div class="footer">
-                <div class="contact">
-                    <p>در صورت بروز مشکل می‌توانید با پشتیبانی تماس بگیرید.</p>
-                    <p>ایمیل: support@yourproject.com</p>
-                    <p>تیم پشتیبانی: {{ env('APP_NAME') }}</p>
-                </div>
-            </div>
-
+            <p class="footer">
+                در صورت نیاز به راهنمایی، با تیم پشتیبانی ما در ارتباط باشید.<br>
+                با احترام، تیم پشتیبانی نام برنامه<br>
+                © ۱۴۰۵ نام برنامه | تمامی حقوق محفوظ است.
+            </p>
         </div>
     </div>
-</body>
 
+</body>
 </html>
