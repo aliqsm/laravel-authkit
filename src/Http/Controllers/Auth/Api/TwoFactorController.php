@@ -131,7 +131,8 @@ class TwoFactorController extends Controller
     // -------------------------------------
     // Verify Two-Factor Code
     // -------------------------------------
-    public function verify(TwoFactorChallengeRequest $request,VerifyTwoFactorChallengeAction $action) {
+    public function verify(TwoFactorChallengeRequest $request, VerifyTwoFactorChallengeAction $action)
+    {
         $action->execute(
             request: $request,
             data: $request->validated()
