@@ -16,7 +16,6 @@
 }
 
 body {
-    font-family: inherit !important;
     background: #FFFFFF;
     user-select: none;
 }
@@ -36,32 +35,38 @@ body {
 /* ------------------------------------- */
 /* Form */
 /* ------------------------------------- */
-.authkit-auth-layout .is-invalid {
+.authkit-auth-layout .is-invalid,
+.authkit-dashboard-layout .is-invalid {
     border-color: var(--danger) !important;
 }
 
-.authkit-auth-layout .form-group {
+.authkit-auth-layout .form-group,
+.authkit-dashboard-layout .form-group {
     border: 1px solid var(--border);
     cursor: pointer;
     transition: all 0.1s;
 }
 
 /* یعنی اگه داخلش فوکوس شد */
-.authkit-auth-layout .form-group:focus-within {
+.authkit-auth-layout .form-group:focus-within,
+.authkit-dashboard-layout .form-group:focus-within {
     border-color: var(--dark);
 }
 
-.authkit-auth-layout .form-control {
+.authkit-auth-layout .form-control,
+.authkit-dashboard-layout .form-control {
     box-shadow: unset !important;
     outline: none;
     cursor: pointer;
 }
 
-.authkit-auth-layout .form-control::placeholder {
+.authkit-auth-layout .form-control::placeholder,
+.authkit-dashboard-layout .form-control::placeholder {
     color: var(--secondary);
 }
 
-.authkit-auth-layout .form-label {
+.authkit-auth-layout .form-label,
+.authkit-dashboard-layout .form-label {
     position: absolute;
     top: 50%;
     right: 1rem;
@@ -73,7 +78,9 @@ body {
 
 /* این باید همین باشه و فرم پلیس هلدر خالی داشته باشه */
 .authkit-auth-layout .form-control:focus+.form-label,
-.authkit-auth-layout .form-control:not(:placeholder-shown)+.form-label {
+.authkit-auth-layout .form-control:not(:placeholder-shown)+.form-label,
+.authkit-dashboard-layout .form-control:focus+.form-label,
+.authkit-dashboard-layout .form-control:not(:placeholder-shown)+.form-label {
     top: 0;
     background-color: var(--white);
     right: 0.6rem;
@@ -83,7 +90,8 @@ body {
 }
 
 
-.authkit-auth-layout .form-check-label {
+.authkit-auth-layout .form-check-label,
+.authkit-dashboard-layout .form-check-label {
     cursor: pointer !important;
 }
 
@@ -94,29 +102,35 @@ body {
 /* ---------------------------------------- */
 /* Overwrite Bootstrap Classes */
 /* ---------------------------------------- */
-.authkit-auth-layout .text-dark {
+.authkit-auth-layout .text-dark,
+.authkit-dashboard-layout .text-dark {
     color: var(--dark) !important;
 }
 
-.authkit-auth-layout .text-secondary {
+.authkit-auth-layout .text-secondary,
+.authkit-dashboard-layout .text-secondary {
     color: var(--secondary) !important;
 }
 
-.authkit-auth-layout .text-primary {
+.authkit-auth-layout .text-primary,
+.authkit-dashboard-layout .text-primary {
     color: var(--primary) !important;
 }
 
 
-.authkit-auth-layout .bg-light {
+.authkit-auth-layout .bg-light,
+.authkit-dashboard-layout .bg-light {
     background-color: var(--light) !important;
 }
 
-.authkit-auth-layout .border {
+.authkit-auth-layout .border,
+.authkit-dashboard-layout .border {
     border-color: var(--border) !important;
 }
 
 
-.authkit-auth-layout .btn-primary {
+.authkit-auth-layout .btn-primary,
+.authkit-dashboard-layout .btn-primary {
     background-color: var(--primary) !important;
     color: var(--white) !important;
     border: none !important;
