@@ -53,7 +53,8 @@ class LogoutController extends Controller
         // ------------------------------------
         // Regenerate Current Session
         // ------------------------------------
-        $user->setRememberToken(Str::random(72))->save();
+        $user->setRememberToken(Str::random(72));
+        $user->save();
 
         $request->session()->regenerate();
 

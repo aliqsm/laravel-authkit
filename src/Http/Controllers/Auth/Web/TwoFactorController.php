@@ -120,10 +120,10 @@ class TwoFactorController extends Controller
         );
 
         return response()->json([
-            'message' => 'درحال انتقال به صفحه داشبورد',
+            'message' => 'ورود با موفقیت انجام شد.',
             'data' => [
-                'redirect' => true
-            ]
+                'redirect' => route('dashboard'),
+            ],
         ]);
     }
 }

@@ -13,7 +13,7 @@
 
 
 
-    <div class="bg-body rounded-4 px-3 px-md-4">
+    <div class="bg-body px-2 px-md-0">
 
         <!-- ------------------------------------- -->
         <!-- Edit Account -->
