@@ -23,53 +23,30 @@ class AuthKitServiceProvider extends ServiceProvider
         // -------------------------------------
         // Config
         // -------------------------------------
-        $this->publishes([
-            __DIR__ . '/../config/authkit.php' => config_path('authkit.php'),
-        ], 'authkit-config');
+        $this->publishes([__DIR__ . '/../config/authkit.php' => config_path('authkit.php'),], 'authkit-config');
 
         
         // -------------------------------------
         // Source Assets
         // -------------------------------------
-        $this->publishes([
-            __DIR__ . '/../resources/css' => resource_path('vendor/authkit/css'),
-            __DIR__ . '/../resources/js' => resource_path('vendor/authkit/js'),
-        ], 'authkit-assets');
-
-        $this->publishes([
-            __DIR__ . '/../public/build' => public_path('vendor/authkit/build'),
-        ], 'authkit-build');
-
-        $this->publishes([
-            __DIR__ . '/../public/fonts' => public_path('vendor/authkit/fonts'),
-        ], 'authkit-fonts');
+        $this->publishes([ __DIR__ . '/../resources/css' => resource_path('vendor/authkit/css'), __DIR__ . '/../resources/js' => resource_path('vendor/authkit/js')], 'authkit-assets');
+        $this->publishes([ __DIR__ . '/../public/build' => public_path('vendor/authkit/build')], 'authkit-build');
+        $this->publishes([ __DIR__ . '/../public/fonts' => public_path('vendor/authkit/fonts')], 'authkit-fonts');
 
 
         // -------------------------------------
-        // Views
+        // Views & Components
         // -------------------------------------
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'authkit');
+        $this->publishes([__DIR__ . '/../resources/views' => resource_path('views/vendor/authkit')], 'authkit-views');
+        Blade::anonymousComponentPath(__DIR__ . '/../resources/views/components', 'authkit');
 
-        $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/authkit'),
-        ], 'authkit-views');
-
-
-        // -------------------------------------
-        // Component
-        // -------------------------------------
-        Blade::anonymousComponentPath(
-            __DIR__ . '/../resources/views/components',
-            'authkit'
-        );
 
         // -------------------------------------
         // Migrations
         // -------------------------------------
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
-        $this->publishesMigrations([
-            __DIR__ . '/../database/migrations' => database_path('migrations'),
-        ], 'authkit-migrations');
+        $this->publishesMigrations([__DIR__ . '/../database/migrations' => database_path('migrations')], 'authkit-migrations');
 
 
         // -------------------------------------

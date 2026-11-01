@@ -1,6 +1,3 @@
-npm install -D vite                 اینو چرا زدیم
-npm install -D laravel-vite-plugin
-
 
   پیشفرض public/build آرگومان دوم یعنی از این مسید این فایل رو لود بکن و نه از مسیر
 @vite(['resources/js/auth/two-factor-challenge.js'], 'vendor/authkit/build')

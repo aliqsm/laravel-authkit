@@ -16,12 +16,13 @@ return [
     ],
 
 
+    
     // -------------------------------------
     // Auth Mode (web or api)
     // -------------------------------------
     'app_mode' => 'web',
-
     'frontend_url' => '',
+
 
 
     // -------------------------------------
@@ -36,7 +37,6 @@ return [
         'security_activities' => true,
         'password_reset' => true,
     ],
-
 
 
 
