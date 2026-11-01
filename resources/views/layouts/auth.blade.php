@@ -9,8 +9,8 @@
     <link rel="shortcut icon" href="{{ asset('assets/media/image/favicon.png') }}">
     <title>@yield('page_title')</title>
 
-    @vite('resources/css/app.css')
-    @vite(['resources/css/app.css', 'resources/css/auth/layout.css', 'resources/js/app.js'], 'vendor/authkit/build')
+    @vite(['resources/css/app.css', 'resources/js/app.js'], 'vendor/authkit/build')
+    @include('authkit::components.font')
 </head>
 
 <body>

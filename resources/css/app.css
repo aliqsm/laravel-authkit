@@ -1,7 +1,8 @@
 /* ----------------------------------- */
 /* AuthKit */
 /* ----------------------------------- */
-
+@import 'bootstrap/dist/css/bootstrap.rtl.min.css';
+@import './layout.css';
 @import './custom-class/fs.css';
 @import './custom-class/margin.css';
 @import './custom-class/padding.css';

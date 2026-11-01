@@ -1,20 +1,11 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-CMw585Xi.css",
+    "file": "assets/app-CO72ob8I.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
     "names": [
       "app.css"
-    ]
-  },
-  "resources/css/auth/layout.css": {
-    "file": "assets/layout-DMOLqywa.css",
-    "src": "resources/css/auth/layout.css",
-    "isEntry": true,
-    "name": "layout",
-    "names": [
-      "layout.css"
     ]
   },
   "resources/css/custom-class/fs.css": {
@@ -44,8 +35,17 @@
       "padding.css"
     ]
   },
+  "resources/css/layout.css": {
+    "file": "assets/layout-0NwV0CKr.css",
+    "src": "resources/css/layout.css",
+    "isEntry": true,
+    "name": "layout",
+    "names": [
+      "layout.css"
+    ]
+  },
   "resources/js/app.js": {
-    "file": "assets/app-l0sNRNKZ.js",
+    "file": "assets/app-82v6EwEu.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

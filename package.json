@@ -6,8 +6,5 @@
     "devDependencies": {
         "laravel-vite-plugin": "^2.1.0",
         "vite": "^7.0.0"
-    },
-    "dependencies": {
-        "bootstrap": "^5.3.8"
     }
 }

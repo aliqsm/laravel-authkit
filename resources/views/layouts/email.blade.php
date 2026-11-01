@@ -6,30 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="dark">
     <title>@yield('title')</title>
-
+    @include('authkit::components.font')
+    
     <style>
-        @font-face {
-            font-family: 'AuthKitFont';
-            src: url('{{ asset('vendor/authkit/fonts/shabnam/Shabnam-Light.woff2') }}') format('woff2');
-            font-weight: 300;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'AuthKitFont';
-            src: url('{{ asset('vendor/authkit/fonts/shabnam/Shabnam-Medium.woff2') }}') format('woff2');
-            font-weight: 500;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'AuthKitFont';
-            src: url('{{ asset('vendor/authkit/fonts/shabnam/Shabnam-Bold.woff2') }}') format('woff2');
-            font-weight: 700;
-            font-display: swap;
-        }
-
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -40,7 +19,6 @@
             padding: 24px 12px;
             background: #111;
             color: #fff;
-            font-family: 'AuthKitFont', Tahoma, sans-serif;
             direction: rtl;
         }
 

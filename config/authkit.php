@@ -3,10 +3,24 @@
 return [
 
     // -------------------------------------
+    // Font
+    // -------------------------------------
+    'font' => [
+        'family' => 'ExampleFont',
+        'fallback' => 'Tahoma, Arial, sans-serif',
+        'weights' => [
+            400 => 'fonts/example-font/ExampleFont-Regular.woff2',
+            500 => 'fonts/example-font/ExampleFont-Medium.woff2',
+            700 => 'fonts/example-font/ExampleFont-Bold.woff2',
+        ],
+    ],
+
+
+    // -------------------------------------
     // Auth Mode (web or api)
     // -------------------------------------
     'app_mode' => 'web',
-    
+
     'frontend_url' => '',
 
 

@@ -13,7 +13,7 @@ export default defineConfig({
                 'resources/css/custom-class/fs.css',
                 'resources/css/custom-class/margin.css',
                 'resources/css/custom-class/padding.css',
-                'resources/css/auth/layout.css',
+                'resources/css/layout.css',
 
                 // --------------------------------------
                 // JS
