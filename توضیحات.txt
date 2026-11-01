@@ -1,5 +1,3 @@
-sweetAlert  نیازه نصب بشه
-
 npm install -D vite                 اینو چرا زدیم
 npm install -D laravel-vite-plugin
 
@@ -51,25 +49,12 @@ php artisan vendor:publish --tag=authkit-build   =>   پابلیش فایل ها
 
 
 // ------------------------------------------
-// Requirements
+// Requirements & Installation
 // ------------------------------------------
 - Laravel 12+
 - Bootstrap 5.3+
 
-نصب بودن جدول نوتیفیکیشن
-php artisan make:notifications-table
-php artisan migrate
+- php artisan make:notifications-table   ===>    نصب بودن جدول نوتیفیکیشن
+- php artisan migrate                    ===>    برای اعمال تغییرات جدول یوزر هم باید 
 
-
-برای اعمال تغییرات جدول یوزر هم باید 
-php artisan migrate 
-
-
-
-
-// ------------------------------------------
-// Installation
-// ------------------------------------------
-
-2__ در مدل یوزر این تریت اضافه بشه
-use HasAuthKit;
+- use HasAuthKit;   ===>    در مدل یوزر این تریت اضافه بشه

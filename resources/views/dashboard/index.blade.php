@@ -4,7 +4,10 @@
 @section('content')
 
     <div class="mb-4">
-        <h1 class="fs-20 fw-bold text-body mb-2">تنظیمات حساب</h1>
+        <span class="text-light fw-medium fs-13">
+            خوش آومدی
+            <h1 class="fs-20 fw-bold text-body mb-2">{{ auth()->user()->name }}</h1>
+        </span>
         <p class="fs-14 text-secondary m-0">امنیت حساب و نشست‌های فعال خود را مدیریت کنید.</p>
     </div>
 

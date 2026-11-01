@@ -16,6 +16,5 @@
         </p>
 
         <button type="submit" class="btn btn-primary w-100 mt-30 py-14 rounded-3 fw-medium fs-14">ارسال مجدد لینک تایید</button>
-        <a href="{{ route('home') }}" class="d-block text-secondary text-decoration-none mt-16 text-center fw-medium fs-13">بازگشت به خانه</a>
     </form>
 @endsection
