@@ -23,9 +23,8 @@ return [
     'app_mode' => 'web',
 
     // Set in API mode
-'password_reset_url' => env('AUTHKIT_PASSWORD_RESET_URL'),
-'email_verification_redirect_url' => env('AUTHKIT_EMAIL_VERIFICATION_REDIRECT_URL'),
-
+    'api_password_reset_url' => env('AUTHKIT_API_PASSWORD_RESET_URL'),
+    'api_email_verification_redirect_url' => env('AUTHKIT_API_EMAIL_VERIFICATION_REDIRECT_URL'),
 
 
     // -------------------------------------

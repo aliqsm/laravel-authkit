@@ -49,23 +49,14 @@ class EmailController extends Controller
     // ------------------------------------
     public function verifyEmail(EmailVerificationRequest $request)
     {
-        $appMode = config('authkit.app_mode');
-        $url = null;
-
-        if ($appMode === 'api') {
-            $url = rtrim(config('authkit.email_verification_redirect_url'), '/');
-        }
+        $url = rtrim(config('authkit.api_email_verification_redirect_url'), '/');
 
         if ($request->user()->hasVerifiedEmail()) {
-            return $appMode === 'api'
-                ? redirect($url . '?status=already')
-                : response()->json(['message' => 'ایمیل حساب شما قبلاً تأیید شده است.']);
+            return redirect($url . '?status=already');
         }
 
         $request->fulfill();
 
-        return $appMode === 'api'
-            ? redirect($url . '?status=success')
-            : response()->json(['message' => 'ایمیل شما با موفقیت تأیید شد.']);
+        return redirect($url . '?status=success');
     }
 }
