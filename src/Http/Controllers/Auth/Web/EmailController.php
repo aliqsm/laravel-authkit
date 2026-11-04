@@ -2,6 +2,8 @@
 
 namespace Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web;
 
+use Aliqsm\LaravelAuthkit\Actions\Email\ResendVerificationEmailAction;
+use Aliqsm\LaravelAuthkit\Actions\Email\VerifyEmailAction;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -20,7 +22,7 @@ class EmailController extends Controller
             return redirect()->route('dashboard');
         }
 
-        return view('authkit::auth.verify-email');
+        return view('auth.verify-email');
     }
 
 
@@ -28,17 +30,13 @@ class EmailController extends Controller
     // ------------------------------------
     // Send Email Verification Notification
     // ------------------------------------
-    public function resendVerificationEmail(Request $request)
+    public function resendVerificationEmail(Request $request, ResendVerificationEmailAction $action)
     {
-        $user = $request->user();
-
-        if (!$user->hasVerifiedEmail()) {
-            $user->sendEmailVerificationNotification();
-        }
+        $action->execute($request);
 
         return response()->json([
-            'message' => 'اگر حساب شما هنوز تأیید نشده باشد، لینک تأیید ارسال می‌شود.'
-        ], 200);
+            'message' => 'اگر حساب شما هنوز تأیید نشده باشد، لینک تأیید ارسال می‌شود.',
+        ]);
     }
 
 
@@ -46,13 +44,10 @@ class EmailController extends Controller
     // ------------------------------------
     // Verify Email Address
     // ------------------------------------
-    public function verifyEmail(EmailVerificationRequest $request)
+    public function verifyEmail(EmailVerificationRequest $request, VerifyEmailAction $action)
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->route('dashboard')->with('info', 'حساب شما قبلاً تایید شده است.');
-        }
+        $action->execute($request);
 
-        $request->fulfill();
-        return redirect()->route('dashboard')->with('success', 'حساب شما با موفقیت تایید شد.');
+        return redirect()->route('dashboard');
     }
 }
