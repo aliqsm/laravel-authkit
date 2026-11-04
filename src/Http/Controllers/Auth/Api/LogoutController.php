@@ -2,6 +2,8 @@
 
 namespace Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api;
 
+use Aliqsm\LaravelAuthkit\Actions\Logout\LogoutAction;
+use Aliqsm\LaravelAuthkit\Actions\Logout\LogoutOtherDevicesAction;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Controller;
 use Aliqsm\LaravelAuthkit\Http\Requests\Auth\LogoutOtherDevicesRequest;
 use Illuminate\Http\Request;
@@ -9,17 +11,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
+
 class LogoutController extends Controller
 {
     // ------------------------------------
     // Logout
     // ------------------------------------
-    public function logout(Request $request)
+    public function logout(Request $request, LogoutAction $action)
     {
-        Auth::logout();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        $action->execute(
+            request: $request,
+        );
 
         return response()->json([
             'message' => 'خروج از حساب موفقیت‌آمیز بود.',
@@ -28,36 +30,17 @@ class LogoutController extends Controller
 
 
 
-
     // ------------------------------------
     // Logout Other Devices
     // ------------------------------------
-    public function logoutOtherDevices(LogoutOtherDevicesRequest $request)
+    public function logoutOtherDevices(LogoutOtherDevicesRequest $request, LogoutOtherDevicesAction $action)
     {
-        $user = $request->user();
-
-        // ------------------------------------
-        // Invalidate Other Device Sessions
-        // ------------------------------------
-        Auth::logoutOtherDevices($request->password);
-
-        if (config('session.driver') === 'database') {
-            DB::table('sessions')
-                ->where('user_id', $user->getAuthIdentifier())
-                ->where('id', '!=', $request->session()->getId())
-                ->delete();
-        }
-
-        // ------------------------------------
-        // Regenerate Current Session
-        // ------------------------------------
-        $user->setRememberToken(Str::random(72));
-        $user->save();
-
-        $request->session()->regenerate();
+        $action->execute(
+            request: $request,
+        );
 
         return response()->json([
-            'message' => 'خروج از حساب در تمامی دستگاه‌های دیگر با موفقیت انجام شد.',
+            'message' => 'خروج از حساب در تمامی دستگاه‌های دیگر با موفقیت انجام شد.'
         ]);
     }
 }
