@@ -43,20 +43,29 @@ class EmailController extends Controller
     }
 
 
-    
+
     // ------------------------------------
     // Verify Email Address
     // ------------------------------------
     public function verifyEmail(EmailVerificationRequest $request)
     {
-        $frontendUrl = config('authkit.frontend_url');
+        $appMode = config('authkit.app_mode');
+        $url = null;
+
+        if ($appMode === 'api') {
+            $url = rtrim(config('authkit.email_verification_redirect_url'), '/');
+        }
 
         if ($request->user()->hasVerifiedEmail()) {
-            return redirect($frontendUrl . '/email/verified?status=already');
+            return $appMode === 'api'
+                ? redirect($url . '?status=already')
+                : response()->json(['message' => 'ایمیل حساب شما قبلاً تأیید شده است.']);
         }
 
         $request->fulfill();
 
-        return redirect($frontendUrl . '/email/verified?status=success');
+        return $appMode === 'api'
+            ? redirect($url . '?status=success')
+            : response()->json(['message' => 'ایمیل شما با موفقیت تأیید شد.']);
     }
 }

@@ -28,10 +28,20 @@ class ResetPasswordNotification extends Notification  implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
-        $url = route('password.reset', [
-            'token' => $this->token,
-            'email' => $notifiable->email,
-        ]);
+        $appMode = config('authkit.app_mode');
+        $url = null;
+
+        if ($appMode === 'web') {
+            $url = route('password.reset', [
+                'token' => $this->token,
+                'email' => $notifiable->email,
+            ]);
+        }
+
+        if ($appMode === 'api') {
+            $url = rtrim(config('authkit.password_reset_url'), '/') . '/' . $this->token . '?email=' . urlencode($notifiable->email);
+        }
+
 
         return (new MailMessage)
             ->subject('بازیابی رمز عبور')
