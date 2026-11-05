@@ -1,0 +1,1 @@
+import{i as o}from"./auth-form-Hzq0v2q3.js";import"./notify-sVpE1_zo.js";o({formId:"confirm-password-form",successMessage:"عملیات موفق"});o({formId:"password-reset-link-form",loadingColor:"#000",actionDelay:3e3});

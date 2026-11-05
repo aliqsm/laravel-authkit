@@ -15,5 +15,5 @@ initAuthForm({
 initAuthForm({
     formId: 'password-reset-link-form',
     loadingColor: '#000',
-    redirectDelay:3000
+    actionDelay:3000
 });

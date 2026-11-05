@@ -11,7 +11,7 @@ export default function initAuthForm({
     loading = true,
     loadingColor = '#fff',
     loadingSize = '14px',
-    redirectDelay = 500,
+    actionDelay = 600,
     successMessage = 'موفق',
 } = {}) {
 
@@ -68,13 +68,13 @@ export default function initAuthForm({
                     if (data.data?.redirect) {
                         setTimeout(() => {
                             window.location.href = data.data.redirect;
-                        }, redirectDelay);
+                        }, actionDelay);
                     }
 
                     if (data.data?.refresh) {
                         setTimeout(() => {
                             window.location.reload();
-                        }, redirectDelay);
+                        }, actionDelay);
                     }
                 },
 
@@ -108,7 +108,7 @@ export default function initAuthForm({
                             notify.error(data?.message || 'ابتدا باید رمز عبور خود را تأیید کنید');
                             setTimeout(() => {
                                 window.location.href = data?.data?.redirect || '/password/confirm';
-                            }, redirectDelay);
+                            }, actionDelay);
                             break;
 
                         case 429:

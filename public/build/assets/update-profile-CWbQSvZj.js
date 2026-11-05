@@ -1,0 +1,1 @@
+import{i}from"./auth-form-Hzq0v2q3.js";import"./notify-sVpE1_zo.js";i({formId:"edit-profile-form",submitBtnId:"submit-edit-profile-form",successMessage:"اطلاعات پروفایل با موفقت تغییر یافت.",actionDelay:2e3});

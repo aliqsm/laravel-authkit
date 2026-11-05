@@ -1,0 +1,1 @@
+import{i as s}from"./auth-form-Hzq0v2q3.js";import"./notify-sVpE1_zo.js";s({formId:"terminate-other-sessions-form",submitBtnId:"submit-terminate-sessions-form",successMessage:"خروج از سایر نشست‌ها با موفقیت انجام شد.",actionDelay:1e3});
