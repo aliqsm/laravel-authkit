@@ -22,7 +22,11 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
         submitBtn.disabled = true;
         originalHtml = submitBtn.innerHTML;
 
-        submitBtn.innerHTML = ` <span class="spinner-border spinner-border-sm" style="height:14px; width:14px; border-width:2px !important;"></span>`;
+        submitBtn.innerHTML = `
+            <span class="spinner-border spinner-border-sm"
+                style="height:14px; width:14px; border-width:2px !important;">
+            </span>
+        `;
 
         // ------------------------------------------
         // Send Request
@@ -44,8 +48,8 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
                     (data.data?.recovery_codes || []).forEach(code => {
                         const element = recoveryCodeTemplate.content.firstElementChild.cloneNode(true);
 
-                        element.querySelector('span[dir="ltr"]').textContent = code;
-                        element.querySelector('.copy-recovery-code').dataset.code = code;
+                        element.querySelector('[dir="ltr"]').textContent = code;
+                        element.querySelector('button').dataset.code = code;
 
                         recoveryCodes.appendChild(element);
                     });
@@ -67,23 +71,47 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
     // Copy Recovery Code
     // ------------------------------------------
     recoveryCodes.addEventListener('click', async (e) => {
-        const button = e.target.closest('.copy-recovery-code');
+        const button = e.target.closest('button[data-code]');
         if (!button) return;
 
         try {
-            await navigator.clipboard.writeText(button.dataset.code);
+            const code = button.dataset.code;
 
+            // ----------------------------------
+            // Copy to Clipboard
+            // ----------------------------------
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(code);
+            } else {
+                const textarea = document.createElement('textarea');
+
+                textarea.value = code;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                const copied = document.execCommand('copy');
+                textarea.remove();
+
+                if (!copied) throw new Error('Copy failed');
+            }
+
+            // ----------------------------------
+            // Show Tick Icon
+            // ----------------------------------
             const copyIcon = button.querySelector('.copy-icon');
-            const checkIcon = button.querySelector('.tick-icon');
+            const tickIcon = button.querySelector('.tick-icon');
 
             copyIcon.classList.add('d-none');
-            checkIcon.classList.remove('d-none');
+            tickIcon.classList.remove('d-none');
 
             clearTimeout(button.copyTimeout);
 
             button.copyTimeout = setTimeout(() => {
                 copyIcon.classList.remove('d-none');
-                checkIcon.classList.add('d-none');
+                tickIcon.classList.add('d-none');
             }, 2000);
 
         } catch {

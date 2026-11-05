@@ -73,8 +73,8 @@
         </div>
 
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end gap-2">
-            <a href="{{ route('dashboard') }}" class="btn text-secondary border-0 px-30 py-12 rounded-3 fw-medium fs-14">انصراف</a>
-            <button type="submit" id="submit-change-password-form" form="change-password-form" class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-14">تغییر گذرواژه</button>
+            <a href="{{ route('dashboard') }}" class="btn text-secondary border-0 px-30 py-12 rounded-3 fw-medium fs-13">انصراف</a>
+            <button type="submit" id="submit-change-password-form" form="change-password-form" class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-13">تغییر گذرواژه</button>
         </div>
     </div>
 

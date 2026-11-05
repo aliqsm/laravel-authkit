@@ -81,7 +81,7 @@
         <!-- Submit -->
         <!-- ----------------------------------- -->
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end">
-            <button type="submit" id="submit-two-factor-enable-form" form="two-factor-enable-form" class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-14">تأیید و فعال‌سازی</button>
+            <button type="submit" id="submit-two-factor-enable-form" form="two-factor-enable-form" class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-13">تأیید و فعال‌سازی</button>
         </div>
     </div>
 
