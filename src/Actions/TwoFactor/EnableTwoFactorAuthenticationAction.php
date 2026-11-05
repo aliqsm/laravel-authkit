@@ -5,7 +5,7 @@ namespace Aliqsm\LaravelAuthkit\Actions\TwoFactor;
 use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorAlreadyEnabledException;
 use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorSetupSessionExpiredException;
 use Aliqsm\LaravelAuthkit\TwoFactor\InvalidTwoFactorCodeException;
-use Aliqsm\LaravelAuthkit\Http\Requests\Auth\EnableTwoFactorRequest;
+use Aliqsm\LaravelAuthkit\Http\Requests\TwoFactor\EnableTwoFactorRequest;
 use Aliqsm\LaravelAuthkit\Notifications\SecurityEventNotification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;

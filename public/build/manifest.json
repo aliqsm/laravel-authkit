@@ -56,6 +56,15 @@
     "src": "resources/js/auth/auth-form.js",
     "isEntry": true
   },
+  "resources/js/auth/confirm-password.js": {
+    "file": "assets/confirm-password-CsuKPMY4.js",
+    "name": "confirm-password",
+    "src": "resources/js/auth/confirm-password.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/auth/auth-form.js"
+    ]
+  },
   "resources/js/auth/forgot-password.js": {
     "file": "assets/forgot-password-CyAFl-qQ.js",
     "name": "forgot-password",
@@ -78,15 +87,6 @@
     "file": "assets/logout-D_g7KTFb.js",
     "name": "logout",
     "src": "resources/js/auth/logout.js",
-    "isEntry": true,
-    "imports": [
-      "resources/js/auth/auth-form.js"
-    ]
-  },
-  "resources/js/auth/password-confirm.js": {
-    "file": "assets/password-confirm-Bucb27sn.js",
-    "name": "password-confirm",
-    "src": "resources/js/auth/password-confirm.js",
     "isEntry": true,
     "imports": [
       "resources/js/auth/auth-form.js"
@@ -132,15 +132,6 @@
     "file": "assets/verification-email-BlQ3bfOV.js",
     "name": "verification-email",
     "src": "resources/js/auth/verification-email.js",
-    "isEntry": true,
-    "imports": [
-      "resources/js/auth/auth-form.js"
-    ]
-  },
-  "resources/js/dashboard/change-password.js": {
-    "file": "assets/change-password-X2_H0D9U.js",
-    "name": "change-password",
-    "src": "resources/js/dashboard/change-password.js",
     "isEntry": true,
     "imports": [
       "resources/js/auth/auth-form.js"

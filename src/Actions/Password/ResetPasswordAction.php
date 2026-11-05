@@ -47,7 +47,7 @@ class ResetPasswordAction
                 // -------------------------------------
                 if (config('authkit.features.security_activities', true)) {
                     $user->notify(new SecurityEventNotification(data: [
-                        'event' => 'password_changed',
+                        'event' => 'password_updated',
                         'ip' => $ip,
                         'user_agent' => $userAgent,
                         'time' => $now,

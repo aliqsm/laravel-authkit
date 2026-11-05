@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class ChangePasswordAction
+class UpdatePasswordAction
 {
     public function execute(Request $request, array $data): void
     {
@@ -57,7 +57,7 @@ class ChangePasswordAction
         // ------------------------------------
         if (config('authkit.features.security_activities', true)) {
             $user->notify(new SecurityEventNotification(data: [
-                'event' => 'password_changed',
+                'event' => 'password_updated',
                 'ip' => $ip,
                 'user_agent' => $userAgent,
                 'time' => $now,

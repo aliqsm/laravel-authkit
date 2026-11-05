@@ -1,18 +1,21 @@
 <?php
 
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\SocialiteController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\LoginController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\RegisterController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\ResetPasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\EmailController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\ForgotPasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\LogoutController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\PasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Web\TwoFactorController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\Web\DashboardController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\Web\ProfileController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\Web\SecurityActivityController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\Web\SessionController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\SocialiteController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\LoginController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\RegisterController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\LogoutController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ResetPasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ForgotPasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ConfirmPasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\UpdatePasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Email\EmailController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\ProfileController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\SecurityActivityController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\DashboardController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Sessions\SessionController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\TwoFactor\TwoFactorController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\TwoFactor\TwoFactorChallengeController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,7 +33,7 @@ Route::middleware('web')->group(function () {
         // Edit Profile
         // -------------------------------------
         if (config('authkit.features.update_profile_information', true)) {
-            Route::prefix('/profile')->group(function () {
+            Route::prefix('profile')->group(function () {
                 Route::get('/', [ProfileController::class, 'edit'])->name('profile.edit')->middleware('throttle:authkit_pages');
                 Route::put('/', [ProfileController::class, 'update'])->name('profile.update')->middleware('throttle:authkit_update_profile');
             });
@@ -52,12 +55,12 @@ Route::middleware('web')->group(function () {
 
 
         // -------------------------------------
-        // Change Password
+        // Update Password
         // -------------------------------------
-        if (config('authkit.features.change_password', true)) {
-            Route::prefix('change-password')->middleware('password.confirm')->group(function () {
-                Route::get('/', [PasswordController::class, 'edit'])->name('password.edit')->middleware('throttle:authkit_pages');
-                Route::post('/', [PasswordController::class, 'update'])->name('password.change')->middleware('throttle:authkit_change_password');
+        if (config('authkit.features.update_password', true)) {
+            Route::prefix('update-password')->middleware('password.confirm')->group(function () {
+                Route::get('/', [UpdatePasswordController::class, 'edit'])->name('password.edit')->middleware('throttle:authkit_pages');
+                Route::post('/', [UpdatePasswordController::class, 'update'])->name('password.update')->middleware('throttle:authkit_update_password');
             });
         }
     });
@@ -114,8 +117,8 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.two_factor_authentication', true)) {
             Route::prefix('2fa/challenge')->group(function () {
-                Route::get('/', [TwoFactorController::class, 'show'])->name('two-factor.challenge')->middleware('throttle:authkit_pages');
-                Route::post('/', [TwoFactorController::class, 'verify'])->name('two-factor.verify')->middleware('throttle:authkit_two_factor_verify');
+                Route::get('/', [TwoFactorChallengeController::class, 'show'])->name('two-factor.challenge')->middleware('throttle:authkit_pages');
+                Route::post('/', [TwoFactorChallengeController::class, 'verify'])->name('two-factor.verify')->middleware('throttle:authkit_two_factor_verify');
             });
         }
     });
@@ -142,7 +145,7 @@ Route::middleware('web')->group(function () {
         Route::prefix('email')->group(function () {
             Route::get('/verify', [EmailController::class, 'showVerificationNotice'])->name('verification.notice')->middleware('throttle:authkit_pages');
             Route::post('/verification-notification', [EmailController::class, 'resendVerificationEmail'])->name('verification.send')->middleware('throttle:authkit_resend_verification_email');
-            Route::get('/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('verification.verify')->middleware(['signed', 'throttle:authkit_verification_verify']);;
+            Route::get('/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('verification.verify')->middleware(['signed', 'throttle:authkit_verification_verify']);
         });
 
 
@@ -159,8 +162,8 @@ Route::middleware('web')->group(function () {
         // Confirm Password
         // -------------------------------------
         Route::prefix('confirm-password')->group(function () {
-            Route::get('/', [PasswordController::class, 'show'])->name('password.confirm')->middleware('throttle:authkit_pages');
-            Route::post('/', [PasswordController::class, 'store'])->name('password.confirm.verify')->middleware('throttle:authkit_password_confirm');
+            Route::get('/', [ConfirmPasswordController::class, 'show'])->name('password.confirm')->middleware('throttle:authkit_pages');
+            Route::post('/', [ConfirmPasswordController::class, 'store'])->name('password.confirm.verify')->middleware('throttle:authkit_confirm_password');
         });
 
 

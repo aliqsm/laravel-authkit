@@ -25,7 +25,7 @@
                 @php
                     $action = match ($activity->data['event'] ?? '') {
                         'login_alert' => 'ورود به حساب کاربری',
-                        'password_changed' => 'تغییر رمز عبور',
+                        'password_updated' => 'تغییر رمز عبور',
                         'password_reset' => 'بازیابی رمز عبور',
                         'two_factor_enabled' => 'فعال‌سازی تأیید دومرحله‌ای',
                         'two_factor_disabled' => 'غیرفعال‌سازی تأیید دومرحله‌ای',

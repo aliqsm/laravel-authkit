@@ -59,7 +59,7 @@ class SecurityEventNotification extends Notification implements ShouldQueue
             'two_factor_disabled'     => 'authkit::emails.2fa.2fa-disabled',
             '2fa_recovery_codes_regenerated' => 'authkit::emails.2fa.recovery-codes-regenerated',
             '2fa_recovery_codes_empty' => 'authkit::emails.2fa.recovery-codes-empty',
-            'password_changed'  => 'authkit::emails.password-changed',
+            'password_updated'  => 'authkit::emails.password-updated',
             'login_alert'       => 'authkit::emails.login-alert',
             default             => throw new \InvalidArgumentException('Unknown security notification type.'),
         };
@@ -73,7 +73,7 @@ class SecurityEventNotification extends Notification implements ShouldQueue
             'two_factor_disabled'      => 'هشدار امنیتی: غیرفعال شدن تأیید دو مرحله‌ای',
             '2fa_recovery_codes_regenerated' => 'هشدار امنیتی: تولید مجدد کدهای بازیابی',
             '2fa_recovery_codes_empty' => 'هشدار امنیتی: اتمام کدهای بازیابی',
-            'password_changed'  => 'هشدار امنیتی: تغییر رمز عبور',
+            'password_updated'  => 'هشدار امنیتی: تغییر رمز عبور',
             'login_alert'       => 'هشدار امنیتی: ورود جدید به حساب کاربری',
             default             => 'هشدار امنیتی حساب کاربری',
         };

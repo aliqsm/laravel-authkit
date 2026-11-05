@@ -2,18 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\LoginController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\RegisterController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\ResetPasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\EmailController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\ForgotPasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\LogoutController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\PasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\SocialiteController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\Api\TwoFactorController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\Api\ProfileController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\Api\SessionController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\Api\SecurityActivityController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\LoginController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\RegisterController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\LogoutController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\SocialiteController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ResetPasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ForgotPasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ConfirmPasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\UpdatePasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Email\EmailController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\ProfileController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\SecurityActivityController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Sessions\SessionController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\TwoFactor\TwoFactorController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\TwoFactor\TwoFactorChallengeController;
 
 
 
@@ -46,10 +48,10 @@ Route::prefix('api')->middleware('api')->group(function () {
 
 
         // -------------------------------------
-        // Change Password
+        // Update Password
         // -------------------------------------
-        if (config('authkit.features.change_password', true)) {
-            Route::put('/password', [PasswordController::class, 'update'])->name('api.password.change')->middleware(['password.confirm', 'throttle:authkit_change_password']);
+        if (config('authkit.features.update_password', true)) {
+            Route::put('/password', [UpdatePasswordController::class, 'update'])->name('api.password.update')->middleware(['password.confirm', 'throttle:authkit_update_password']);
         }
     });
 
@@ -96,8 +98,8 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         if (config('authkit.features.two_factor_authentication', true)) {
             Route::prefix('2fa/challenge')->group(function () {
-                Route::get('/', [TwoFactorController::class, 'show'])->name('api.two-factor.challenge')->middleware('throttle:authkit_pages');
-                Route::post('/', [TwoFactorController::class, 'verify'])->name('api.two-factor.verify')->middleware('throttle:authkit_two_factor_verify');
+                Route::get('/', [TwoFactorChallengeController::class, 'show'])->name('api.two-factor.challenge')->middleware('throttle:authkit_pages');
+                Route::post('/', [TwoFactorChallengeController::class, 'verify'])->name('api.two-factor.verify')->middleware('throttle:authkit_two_factor_verify');
             });
         }
     });
@@ -114,7 +116,18 @@ Route::prefix('api')->middleware('api')->group(function () {
     }
 
 
+    // -------------------------------------
+    // Email Verification
+    // -------------------------------------
+    // تشخیص نمی‌داد SPA ندارن رو به‌عنوان درخواست Origin/Referer درخواست‌هایی که Sanctum چون
+    // درنتیجه سشن رو لود نمی‌کرد، و سرور فکر میکرد کاربر لاگین نیست و ایمیل اونو تایید نمیکرد
+    // استفاده کنیم auth:sanctum بجای web برای همین مجبور شدیم از میدلور
+    Route::prefix('email')->middleware(['web', 'signed', 'throttle:authkit_verification_verify'])->group(function () {
+        Route::get('/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('api.verification.verify');
+    });
 
+
+    
     Route::middleware('auth:sanctum')->group(function () {
 
         // -------------------------------------
@@ -123,7 +136,6 @@ Route::prefix('api')->middleware('api')->group(function () {
         Route::prefix('email')->group(function () {
             Route::get('/verify', [EmailController::class, 'showVerificationNotice'])->name('api.verification.notice')->middleware('throttle:authkit_pages');
             Route::post('/verification-notification', [EmailController::class, 'resendVerificationEmail'])->name('api.verification.send')->middleware('throttle:authkit_resend_verification_email');
-            Route::get('/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('api.verification.verify')->middleware(['signed', 'throttle:authkit_verification_verify']);
         });
 
 
@@ -139,7 +151,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         // Confirm Password
         // -------------------------------------
-        Route::post('/confirm-password', [PasswordController::class, 'store'])->name('api.password.confirm.verify')->middleware('throttle:authkit_password_confirm');
+        Route::post('/confirm-password', [ConfirmPasswordController::class, 'store'])->name('api.password.confirm.verify')->middleware('throttle:authkit_confirm_password');
 
 
         // -------------------------------------

@@ -20,8 +20,12 @@ class VerifyEmailNotification extends Notification implements ShouldQueue
 
     public function toMail(object $notifiable): MailMessage
     {
+        $routeName = config('authkit.app_mode') === 'api'
+            ? 'api.verification.verify'
+            : 'verification.verify';
+
         $url = URL::temporarySignedRoute(
-            'verification.verify',
+            $routeName,
             now()->addHours(2),
             [
                 'id' => $notifiable->id,

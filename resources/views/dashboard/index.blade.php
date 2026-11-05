@@ -38,9 +38,9 @@
 
 
         <!-- ------------------------------------- -->
-        <!-- Change Password -->
+        <!-- Update Password -->
         <!-- ------------------------------------- -->
-        @if (config('authkit.features.change_password', true))
+        @if (config('authkit.features.update_password', true))
             <div class="d-flex flex-wrap flex-md-nowrap align-items-center gap-3 py-4 border-bottom">
                 <div class="d-flex align-items-center justify-content-center flex-shrink-0 rounded-4 bg-light border border-secondary" style="width: 50px; height: 50px;">
                     <x-authkit::icons.lock-icon color="var(--secondary)" />

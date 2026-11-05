@@ -2,7 +2,6 @@
 
 namespace Aliqsm\LaravelAuthkit\Http\Requests\Dashboard;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProfileRequest extends FormRequest
