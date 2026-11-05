@@ -43,7 +43,12 @@
                         <div class="mt-20 bg-light border border-light rounded-3 p-2 d-flex align-items-center justify-content-end gap-3">
                             <span id="secret-key" class="font-monospace overflow-x-auto" dir="ltr">{{ $secret }}</span>
                             <button type="button" id="copy-2fa-secret" class="bg-transparent border-0 flex-shrink-0 p-1" style="outline:none !important" data-secret="{{ $secret }}">
-                                <x-authkit::icons.copy-icon color="var(--secondary)" />
+                                <span class="copy-icon">
+                                    <x-authkit::icons.copy-icon2 color="var(--secondary)" />
+                                </span>
+                                <span class="tick-icon d-none">
+                                    <x-authkit::icons.tick-icon color="var(--secondary)" />
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -81,7 +86,7 @@
         <!-- Submit -->
         <!-- ----------------------------------- -->
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end">
-            <button type="submit" id="submit-two-factor-enable-form" form="two-factor-enable-form" class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-13">تأیید و فعال‌سازی</button>
+            <button type="submit" id="submit-two-factor-enable-form" form="two-factor-enable-form" class="btn btn-outline-dark px-30 py-12 rounded-3 fw-medium fs-13">تأیید و فعال‌سازی</button>
         </div>
     </div>
 

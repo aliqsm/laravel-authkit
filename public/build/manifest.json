@@ -134,7 +134,7 @@
     ]
   },
   "resources/js/auth/two-factor-setup.js": {
-    "file": "assets/two-factor-setup-DxHatl_d.js",
+    "file": "assets/two-factor-setup-DpYHzbJM.js",
     "name": "two-factor-setup",
     "src": "resources/js/auth/two-factor-setup.js",
     "isEntry": true,
@@ -173,7 +173,7 @@
     ]
   },
   "resources/js/dashboard/regenerate-recovery-codes.js": {
-    "file": "assets/regenerate-recovery-codes-BY4RbtzQ.js",
+    "file": "assets/regenerate-recovery-codes-DQ25eh5P.js",
     "name": "regenerate-recovery-codes",
     "src": "resources/js/dashboard/regenerate-recovery-codes.js",
     "isEntry": true,

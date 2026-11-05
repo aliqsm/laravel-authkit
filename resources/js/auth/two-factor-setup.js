@@ -1,4 +1,5 @@
 import initAuthForm from './auth-form.js';
+import notify from '../utils/notify.js';
 
 initAuthForm({
     formId: 'two-factor-enable-form',
@@ -6,29 +7,52 @@ initAuthForm({
 });
 
 
-
-// -------------------------------------
-// copy secret code to clipboard
-// -------------------------------------
+// ------------------------------------------
+// Copy Secret Key
+// ------------------------------------------
 const copyBtn = document.getElementById('copy-2fa-secret');
-copyBtn.addEventListener('click', function () {
-    const value = this.dataset.secret;
-    const base = this.dataset.iconBase;
 
-    navigator.clipboard.writeText(value);
-    const original = this.innerHTML;
+if (copyBtn) {
 
-    btn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke="var(--primary)">
-            <use href="${base}#tick-circle"></use>
-        </svg>
-    `;
+    let copyTimeout;
 
-    setTimeout(() => {
-        btn.innerHTML = `
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" stroke="var(--secondary)">
-                <use href="${base}#copy"></use>
-            </svg>
-        `;
-    }, 2500);
-});
+    copyBtn.addEventListener('click', async function () {
+        try {
+            const value = this.dataset.secret;
+
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(value);
+            } else {
+                const textarea = document.createElement('textarea');
+
+                textarea.value = value;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+
+                document.body.appendChild(textarea);
+                textarea.select();
+
+                const copied = document.execCommand('copy');
+                textarea.remove();
+
+                if (!copied) throw new Error('Copy failed');
+            }
+
+            const copyIcon = this.querySelector('.copy-icon');
+            const tickIcon = this.querySelector('.tick-icon');
+
+            copyIcon.classList.add('d-none');
+            tickIcon.classList.remove('d-none');
+
+            clearTimeout(copyTimeout);
+
+            copyTimeout = setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                tickIcon.classList.add('d-none');
+            }, 2000);
+
+        } catch {
+            notify.error('کپی کلید راه‌اندازی انجام نشد');
+        }
+    });
+}

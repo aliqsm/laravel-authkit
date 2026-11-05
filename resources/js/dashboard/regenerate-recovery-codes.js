@@ -7,10 +7,9 @@ import notify from '../utils/notify.js';
 const form = document.getElementById('regenerate-recovery-codes-form');
 const submitBtn = document.getElementById('submit-regenerate-recovery-codes');
 const recoveryCodes = document.getElementById('recovery-codes');
-const recoveryCodeTemplate = document.getElementById('recovery-code-template');
 const copyBtn = document.getElementById('copy-recovery-codes');
 
-if (form && submitBtn && recoveryCodes && recoveryCodeTemplate && copyBtn) {
+if (form && submitBtn && recoveryCodes && copyBtn) {
 
     let originalHtml = '';
     let copyTimeout;
@@ -48,14 +47,22 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate && copyBtn) {
                 callback: (data) => {
                     notify.success(data.message || 'کدهای بازیابی با موفقیت تولید شدند.');
 
+                    // ----------------------------------
+                    // Update Recovery Codes
+                    // ----------------------------------
                     recoveryCodes.replaceChildren();
 
                     (data.data?.recovery_codes || []).forEach(code => {
-                        const element = recoveryCodeTemplate.content.firstElementChild.cloneNode(true);
+                        const row = document.createElement('div');
+                        row.className = 'd-flex align-items-center justify-content-center py-1';
 
-                        element.querySelector('[dir="ltr"]').textContent = code;
+                        const span = document.createElement('span');
+                        span.className = 'fw-medium font-monospace text-center';
+                        span.dir = 'ltr';
+                        span.textContent = code;
 
-                        recoveryCodes.appendChild(element);
+                        row.appendChild(span);
+                        recoveryCodes.appendChild(row);
                     });
 
                     copyBtn.classList.remove('d-none');

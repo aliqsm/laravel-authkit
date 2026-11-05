@@ -22,14 +22,14 @@
             </div>
             <small id="password_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
 
-            <button type="submit" class="btn btn-primary w-100 mt-20 py-14 rounded-3 fw-medium fs-14">تأیید و ادامه</button>
+            <button type="submit" class="btn btn-dark w-100 mt-20 py-14 rounded-3 fw-medium fs-14">تأیید و ادامه</button>
         </form>
 
         
         <form id="password-reset-link-form" action="{{ route('password.send-reset-link') }}" method="POST" class="mt-16 text-center">
             @csrf
             <span class="text-secondary fs-13">رمز عبور خود را فراموش کرده‌اید؟</span>
-            <button type="submit" class="btn btn-link p-0 ms-1 fs-13 fw-medium text-primary text-decoration-none">بازیابی رمز عبور</button>
+            <button type="submit" class="btn btn-link p-0 ms-1 fs-13 fw-medium text-dark text-decoration-none">بازیابی رمز عبور</button>
         </form>
     </div>
 @endsection

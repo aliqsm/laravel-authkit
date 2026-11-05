@@ -20,7 +20,7 @@
         </div>
         <small id="code_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
 
-        <button type="submit" class="btn btn-primary w-100 mt-30 py-14 rounded-3 fw-medium fs-14">تأیید و ورود</button>
+        <button type="submit" class="btn btn-dark w-100 mt-30 py-14 rounded-3 fw-medium fs-14">تأیید و ورود</button>
         <a href="{{ route('login') }}" class="d-block text-primary text-decoration-none mt-16 text-center fw-medium fs-13">بازگشت به ورود</a>
     </form>
 @endsection
