@@ -60,7 +60,7 @@ class EmailVerificationResponse
     public function verifyEmail(bool $alreadyVerified)
     {
         if (config('authkit.app_mode') === 'api') {
-            $url = rtrim(config('authkit.api_email_verification_redirect_url'), '/');
+            $url = rtrim(config('authkit.api_redirects.email_verification'), '/');
 
             return redirect($url . '?status=' . ($alreadyVerified ? 'already' : 'success'));
         }

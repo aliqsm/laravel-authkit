@@ -27,10 +27,11 @@ class GoogleAction
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (Throwable $e) {
+            report($e);
             return 'oauth_failed';
         }
 
-        
+
         // ------------------------------------
         // Validate Google User Data
         // ------------------------------------
@@ -88,7 +89,7 @@ class GoogleAction
             return 'oauth_failed';
         }
 
-        
+
         // -------------------------------------
         // Check If 2FA Is Enabled
         // -------------------------------------

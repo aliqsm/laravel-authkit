@@ -73,9 +73,9 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Login/Register With Oauth
         // -------------------------------------
         if (config('authkit.features.google_login', true)) {
-            Route::prefix('oauth/google')->middleware('throttle:authkit_pages')->group(function () {
-                Route::get('/redirect', [SocialiteController::class, 'redirectToGoogle'])->name('api.oauth.google.redirect');
-                Route::get('/callback', [SocialiteController::class, 'handleGoogleCallback'])->name('api.oauth.google.callback');
+            Route::prefix('oauth/google')->middleware(['web', 'throttle:authkit_pages'])->group(function () {
+                Route::get('/redirect', [SocialiteController::class, 'redirectToGoogle']);
+                Route::get('/callback', [SocialiteController::class, 'handleGoogleCallback']);
             });
         }
 

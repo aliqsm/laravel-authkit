@@ -329,7 +329,7 @@ GOOGLE_REDIRECT_URI=
 |---|---|---|
 | POST | `/api/login` | `api.login` |
 | POST | `/api/register` | `api.register` |
-| GET | `/api/oauth/google/redirect` | `api.oauth.google.redirect` |
+| GET | `/api/oauth/google/redirect` |
 | GET | `/api/oauth/google/callback` | `api.oauth.google.callback` |
 | POST | `/api/forgot-password` | `api.password.email` |
 | POST | `/api/reset-password` | `api.password.update` |

@@ -21,10 +21,18 @@ return [
     // Auth Mode (web or api)
     // -------------------------------------
     'app_mode' => 'web',
+    'frontend_url' => env('FRONTEND_URL'),
 
-    // Set in API mode
-    'api_password_reset_url' => env('AUTHKIT_API_PASSWORD_RESET_URL'),
-    'api_email_verification_redirect_url' => env('AUTHKIT_API_EMAIL_VERIFICATION_REDIRECT_URL'),
+    // -------------------------------------
+    // API Redirect URLs (Set in API mode)
+    // -------------------------------------
+    'api_redirects' => [
+        'dashboard' => env('AUTHKIT_API_DASHBOARD_URL', '/dashboard'),
+        'two_factor_challenge' => env('AUTHKIT_API_TWO_FACTOR_CHALLENGE_URL', '/two-factor/challenge'),
+        'login' => env('AUTHKIT_API_LOGIN_URL', '/login'),
+        'password_reset' => env('AUTHKIT_API_PASSWORD_RESET_URL', '/reset-password'),
+        'email_verification' => env('AUTHKIT_API_EMAIL_VERIFICATION_REDIRECT_URL', '/email/verified'),
+    ],
 
 
     // -------------------------------------
