@@ -57,7 +57,7 @@ class UpdatePasswordAction
         // ------------------------------------
         if (config('authkit.features.security_activities', true)) {
             $user->notify(new SecurityEventNotification(data: [
-                'event' => 'password_updated',
+                'event' => 'password_changed',
                 'ip' => $ip,
                 'user_agent' => $userAgent,
                 'time' => $now,

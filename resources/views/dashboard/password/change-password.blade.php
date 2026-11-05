@@ -1,14 +1,14 @@
 @extends('authkit::layouts.dashboard')
 @section('page_title', 'تغییر گذرواژه')
 
-@vite(['resources/js/dashboard/update-password.js'], 'vendor/authkit/build')
+@vite(['resources/js/dashboard/change-password.js'], 'vendor/authkit/build')
 
 
 
 @section('content')
 
     <!-- ----------------------------------- -->
-    <!-- Update Password -->
+    <!-- Change Password -->
     <!-- ----------------------------------- -->
     <div class="card">
 

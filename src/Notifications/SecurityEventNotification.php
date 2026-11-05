@@ -59,7 +59,7 @@ class SecurityEventNotification extends Notification implements ShouldQueue
             'two_factor_disabled'     => 'authkit::emails.2fa.2fa-disabled',
             '2fa_recovery_codes_regenerated' => 'authkit::emails.2fa.recovery-codes-regenerated',
             '2fa_recovery_codes_empty' => 'authkit::emails.2fa.recovery-codes-empty',
-            'password_updated'  => 'authkit::emails.password-updated',
+            'password_updated'  => 'authkit::emails.password-changed',
             'login_alert'       => 'authkit::emails.login-alert',
             default             => throw new \InvalidArgumentException('Unknown security notification type.'),
         };

@@ -273,15 +273,15 @@ class AuthKitServiceProvider extends ServiceProvider
             ];
         });
 
-        RateLimiter::for('authkit_update_password', function (Request $request) {
+        RateLimiter::for('authkit_change_password', function (Request $request) {
             return [
                 $this->makeLimit(
-                    config('authkit.rate_limits.authkit_update_password.ip'),
-                    'authkit_update_password:ip:' . $request->ip()
+                    config('authkit.rate_limits.authkit_change_password.ip'),
+                    'authkit_change_password:ip:' . $request->ip()
                 ),
                 $this->makeLimit(
-                    config('authkit.rate_limits.authkit_update_password.user'),
-                    'authkit_update_password:user:' . $request->user()->id
+                    config('authkit.rate_limits.authkit_change_password.user'),
+                    'authkit_change_password:user:' . $request->user()->id
                 ),
             ];
         });

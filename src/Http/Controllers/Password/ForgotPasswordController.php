@@ -18,6 +18,7 @@ class ForgotPasswordController extends Controller
         return view('authkit::auth.forget-password');
     }
 
+
     // ------------------------------------
     // Forgot Password
     // ------------------------------------
@@ -27,8 +28,9 @@ class ForgotPasswordController extends Controller
             data: $request->validated()
         );
 
-        return $response->toResponse($request);
+        return $response->toResponse();
     }
+
 
     // ------------------------------------
     // Send Password Reset Link for Authenticated User
@@ -40,6 +42,6 @@ class ForgotPasswordController extends Controller
             'email' => $request->user()->email,
         ]);
 
-        return $response->toResponse($request);
+        return $response->toResponse();
     }
 }

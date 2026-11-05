@@ -12,7 +12,7 @@ class UpdatePasswordResponse
             return response()->json([
                 'message' => 'رمز عبور با موفقیت تغییر یافت.',
                 'data' => [
-                    'password_updated' => true,
+                    'password_changed' => true,
                 ],
             ]);
         }

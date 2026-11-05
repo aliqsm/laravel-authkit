@@ -141,7 +141,7 @@ php artisan vendor:publish --tag=authkit-config
     'google_login' => true,
     'two_factor_authentication' => true,
     'update_profile_information' => true,
-    'update_password' => true,
+    'change_password' => true,
     'security_activities' => true,
     'password_reset' => true,
 ],
@@ -308,8 +308,8 @@ GOOGLE_REDIRECT_URI=
 | PUT | `/dashboard/profile` | `profile.update` |
 | GET | `/dashboard/sessions` | `dashboard.sessions.index` |
 | GET | `/dashboard/security-activities` | `dashboard.security-activities.index` |
-| GET | `/dashboard/update-password` | `password.edit` |
-| POST | `/dashboard/update-password` | `password.update` |
+| GET | `/dashboard/change-password` | `password.edit` |
+| POST | `/dashboard/change-password` | `password.change` |
 | GET | `/confirm-password` | `password.confirm` |
 | POST | `/confirm-password` | `password.confirm.verify` |
 | POST | `/password/send-reset-link` | `password.send-reset-link` |

@@ -50,8 +50,8 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         // Update Password
         // -------------------------------------
-        if (config('authkit.features.update_password', true)) {
-            Route::put('/password', [UpdatePasswordController::class, 'update'])->name('api.password.update')->middleware(['password.confirm', 'throttle:authkit_update_password']);
+        if (config('authkit.features.change_password', true)) {
+            Route::put('/password', [UpdatePasswordController::class, 'update'])->name('api.password.change')->middleware(['password.confirm', 'throttle:authkit_change_password']);
         }
     });
 

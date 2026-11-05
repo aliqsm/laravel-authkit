@@ -35,7 +35,7 @@ return [
         'google_login' => true,
         'two_factor_authentication' => true,
         'update_profile_information' => true,
-        'update_password' => true,
+        'change_password' => true,
         'security_activities' => true,
         'password_reset' => true,
     ],
@@ -128,7 +128,7 @@ return [
             'user' => ['max_attempts' => 10, 'decay_minutes' => 30],
         ],
 
-        'authkit_update_password' => [
+        'authkit_change_password' => [
             'ip' => ['max_attempts' => 20, 'decay_minutes' => 30],
             'user' => ['max_attempts' => 5, 'decay_minutes' => 30],
         ],

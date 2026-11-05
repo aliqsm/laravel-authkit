@@ -10,11 +10,11 @@ use Aliqsm\LaravelAuthkit\Http\Responses\Password\UpdatePasswordResponse;
 class UpdatePasswordController extends Controller
 {
     // ------------------------------------
-    // Show Update Password Form
+    // Show Change Password Form
     // ------------------------------------
     public function edit()
     {
-        return view('authkit::dashboard.password.update-password');
+        return view('authkit::dashboard.password.change-password');
     }
 
 
