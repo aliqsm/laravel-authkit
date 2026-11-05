@@ -24,7 +24,7 @@ class TwoFactorController extends Controller
             $data = $action->execute($request);
         }
 
-        return $response->index($request, $data);
+        return $response->index($data);
     }
 
 

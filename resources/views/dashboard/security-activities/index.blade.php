@@ -1,7 +1,7 @@
 @extends('authkit::layouts.dashboard')
 @section('page_title', 'فعالیت‌های امنیتی')
 
-@dd($activities)
+
 
 @section('content')
 
@@ -26,8 +26,7 @@
                 @php
                     $action = match ($activity->data['event'] ?? '') {
                         'login_alert' => 'ورود به حساب کاربری',
-                        'password_changed' => 'تغییر رمز عبور',
-                        'password_reset' => 'بازیابی رمز عبور',
+                        'password_updated' => 'تغییر رمز عبور',
                         'two_factor_enabled' => 'فعال‌سازی تأیید دومرحله‌ای',
                         'two_factor_disabled' => 'غیرفعال‌سازی تأیید دومرحله‌ای',
                         '2fa_recovery_codes_regenerated' => 'تولید مجدد کدهای بازیابی',

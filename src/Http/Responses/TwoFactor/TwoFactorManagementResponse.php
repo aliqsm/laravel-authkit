@@ -43,6 +43,7 @@ class TwoFactorManagementResponse
     }
 
 
+
     // -------------------------------------
     // Enable Two-Factor Authentication
     // -------------------------------------
@@ -69,6 +70,7 @@ class TwoFactorManagementResponse
     }
 
 
+
     // -------------------------------------
     // Disable Two-Factor Authentication
     // -------------------------------------
@@ -88,6 +90,7 @@ class TwoFactorManagementResponse
         ]);
     }
 
+    
 
     // -------------------------------------
     // Regenerate Recovery Codes
