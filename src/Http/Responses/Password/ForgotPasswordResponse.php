@@ -2,13 +2,13 @@
 
 namespace Aliqsm\LaravelAuthkit\Http\Responses\Password;
 
-use Illuminate\Http\Request;
-
 class ForgotPasswordResponse
 {
-    public function toResponse(Request $request)
+    public function toResponse(bool $authenticatedUser = false)
     {
-        $message = 'اگر حسابی با این ایمیل وجود داشته باشد، لینک بازیابی ارسال خواهد شد.';
+        $message = $authenticatedUser
+            ? 'لینک بازیابی رمز عبور برای شما ارسال شد. لطفاً صندوق ورودی ایمیل خود را بررسی کنید.'
+            : 'اگر حسابی با این ایمیل وجود داشته باشد، لینک بازیابی ارسال خواهد شد.';
 
         if (config('authkit.app_mode') === 'api') {
             return response()->json([
@@ -16,6 +16,11 @@ class ForgotPasswordResponse
             ]);
         }
 
-        return back()->with('status', $message);
+        return response()->json([
+            'message' => $message,
+            'data' => [
+                'redirect' => route('login'),
+            ],
+        ]);
     }
 }

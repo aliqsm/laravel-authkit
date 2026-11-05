@@ -22,12 +22,16 @@ class LoginResponse
             ]);
         }
 
-        
         $redirect = match ($result) {
             'two_factor' => route('two-factor.challenge'),
             'success' => route('dashboard'),
         };
 
-        return redirect()->to($redirect);
+        return response()->json([
+            'message' => 'درحال ورود...',
+            'data' => [
+                'redirect' => $redirect,
+            ],
+        ]);
     }
 }

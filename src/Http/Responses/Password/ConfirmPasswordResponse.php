@@ -17,6 +17,11 @@ class ConfirmPasswordResponse
             ]);
         }
 
-        return redirect()->intended();
+        return response()->json([
+            'message' => 'تأیید هویت با موفقیت انجام شد.',
+            'data' => [
+                'redirect' => redirect()->intended()->getTargetUrl(),
+            ],
+        ]);
     }
 }

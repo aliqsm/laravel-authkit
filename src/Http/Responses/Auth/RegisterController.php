@@ -14,9 +14,14 @@ class RegisterResponse
                 'data' => [
                     'next_step' => 'email_verification',
                 ],
-            ], 200);
+            ]);
         }
 
-        return redirect()->route('verification.notice');
+        return response()->json([
+            'message' => 'درحال انتقال به صفحه تأیید ایمیل',
+            'data' => [
+                'redirect' => route('verification.notice'),
+            ],
+        ]);
     }
 }

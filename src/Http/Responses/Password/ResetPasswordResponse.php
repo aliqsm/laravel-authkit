@@ -8,18 +8,22 @@ class ResetPasswordResponse
 {
     public function toResponse(Request $request)
     {
+        $message = 'گذرواژه شما با موفقیت تغییر کرد.';
+
         if (config('authkit.app_mode') === 'api') {
             return response()->json([
-                'message' => 'گذرواژه شما با موفقیت تغییر کرد.',
+                'message' => $message,
                 'data' => [
                     'password_reset' => true,
                 ],
             ]);
         }
 
-        return redirect()->route('login')->with(
-            'status',
-            'گذرواژه شما با موفقیت تغییر کرد.'
-        );
+        return response()->json([
+            'message' => $message,
+            'data' => [
+                'redirect' => route('login'),
+            ],
+        ]);
     }
 }

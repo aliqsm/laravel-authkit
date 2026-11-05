@@ -10,12 +10,16 @@ class GoogleLoginResponse
             return match ($result) {
                 'success' => response()->json([
                     'message' => 'ورود با موفقیت انجام شد.',
-                    'next_step' => 'dashboard',
+                    'data' => [
+                        'next_step' => 'dashboard',
+                    ],
                 ]),
 
                 'two_factor' => response()->json([
                     'message' => 'تأیید دومرحله‌ای لازم است.',
-                    'next_step' => 'two_factor_challenge',
+                    'data' => [
+                        'next_step' => 'two-factor-challenge-form',
+                    ],
                 ]),
 
                 'email_exists' => response()->json([
@@ -37,18 +41,24 @@ class GoogleLoginResponse
         }
 
         
+
         return match ($result) {
             'success' => redirect()->route('dashboard'),
+
             'two_factor' => redirect()->route('two-factor.challenge'),
+
             'email_exists' => redirect()->route('login')->withErrors([
                 'email' => 'این ایمیل قبلاً ثبت شده است. وارد حساب خود شوید.',
             ]),
+
             'invalid_google_user' => redirect()->route('login')->withErrors([
                 'email' => 'اطلاعات حساب گوگل تأیید نشد.',
             ]),
+
             'oauth_failed' => redirect()->route('login')->withErrors([
                 'email' => 'ارتباط با گوگل ناموفق بود. لطفاً دوباره تلاش کنید.',
             ]),
+
             default => redirect()->route('login')->withErrors([
                 'email' => 'ورود با گوگل ناموفق بود. دوباره تلاش کنید.',
             ]),

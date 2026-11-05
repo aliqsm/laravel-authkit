@@ -7,7 +7,10 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class TwoFactorManagementResponse
 {
-    public function index(Request $request, ?array $data)
+    // -------------------------------------
+    // Show Two-Factor Management
+    // -------------------------------------
+    public function index(?array $data)
     {
         if (config('authkit.app_mode') === 'api') {
             if ($data === null) {
@@ -38,8 +41,11 @@ class TwoFactorManagementResponse
             'secret' => $data['secret'],
         ]);
     }
-    
 
+
+    // -------------------------------------
+    // Enable Two-Factor Authentication
+    // -------------------------------------
     public function enable(Request $request, array $recoveryCodes)
     {
         if (config('authkit.app_mode') === 'api') {
@@ -63,6 +69,9 @@ class TwoFactorManagementResponse
     }
 
 
+    // -------------------------------------
+    // Disable Two-Factor Authentication
+    // -------------------------------------
     public function disable()
     {
         if (config('authkit.app_mode') === 'api') {
@@ -74,13 +83,15 @@ class TwoFactorManagementResponse
             ]);
         }
 
-        return redirect()->back()->with([
-            'type' => 'success',
+        return response()->json([
             'message' => 'تأیید دومرحله‌ای با موفقیت غیرفعال شد.',
         ]);
     }
 
 
+    // -------------------------------------
+    // Regenerate Recovery Codes
+    // -------------------------------------
     public function regenerate(array $codes)
     {
         if (config('authkit.app_mode') === 'api') {
@@ -92,8 +103,11 @@ class TwoFactorManagementResponse
             ]);
         }
 
-        return redirect()->back()->with([
-            'recovery_codes' => $codes,
+        return response()->json([
+            'message' => 'کدهای بازیابی با موفقیت تولید شدند.',
+            'data' => [
+                'recovery_codes' => $codes,
+            ],
         ]);
     }
 }

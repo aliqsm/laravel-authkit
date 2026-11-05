@@ -8,12 +8,13 @@ class LogoutResponse
 {
     public function toResponse(Request $request)
     {
-        if (config('authkit.app_mode') === 'api') {
-            return response()->json([
-                'message' => 'خروج از حساب موفقیت‌آمیز بود.',
-            ]);
-        }
-
-        return redirect()->route('login');
+        return response()->json([
+            'message' => 'خروج از حساب موفقیت‌آمیز بود.',
+            'data' => [
+                'redirect' => config('authkit.app_mode') === 'api'
+                    ? null
+                    : route('login'),
+            ],
+        ]);
     }
 }

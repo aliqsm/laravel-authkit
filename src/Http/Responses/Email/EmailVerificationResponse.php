@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class EmailVerificationResponse
 {
-    // ------------------------------------
+    // -------------------------------------
     // Show Email Verification Notice
-    // ------------------------------------
+    // -------------------------------------
     public function showVerificationNotice(Request $request)
     {
         $verified = $request->user()->hasVerifiedEmail();
@@ -32,23 +32,32 @@ class EmailVerificationResponse
     }
 
 
-
-    // ------------------------------------
+    // -------------------------------------
     // Resend Verification Email
-    // ------------------------------------
+    // -------------------------------------
     public function resendVerificationEmail()
     {
+        $message = 'اگر حساب شما هنوز تأیید نشده باشد، لینک تأیید ارسال می‌شود.';
+
+        if (config('authkit.app_mode') === 'api') {
+            return response()->json([
+                'message' => $message,
+            ]);
+        }
+
         return response()->json([
-            'message' => 'اگر حساب شما هنوز تأیید نشده باشد، لینک تأیید ارسال می‌شود.',
+            'message' => $message,
+            'data' => [
+                'redirect' => route('verification.notice'),
+            ],
         ]);
     }
 
 
-
-    // ------------------------------------
+    // -------------------------------------
     // Verify Email Address
-    // ------------------------------------
-    public function verifyEmail(Request $request, bool $alreadyVerified)
+    // -------------------------------------
+    public function verifyEmail(bool $alreadyVerified)
     {
         if (config('authkit.app_mode') === 'api') {
             $url = rtrim(config('authkit.api_email_verification_redirect_url'), '/');

@@ -17,6 +17,11 @@ class UpdatePasswordResponse
             ]);
         }
 
-        return redirect()->route('dashboard');
+        return response()->json([
+            'message' => 'رمز عبور با موفقیت تغییر یافت.',
+            'data' => [
+                'redirect' => route('dashboard'),
+            ],
+        ]);
     }
 }

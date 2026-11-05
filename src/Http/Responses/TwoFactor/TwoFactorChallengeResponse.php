@@ -4,6 +4,9 @@ namespace Aliqsm\LaravelAuthkit\Http\Responses\TwoFactor;
 
 class TwoFactorChallengeResponse
 {
+    // -------------------------------------
+    // Expired Challenge
+    // -------------------------------------
     public function expired()
     {
         if (config('authkit.app_mode') === 'api') {
@@ -12,10 +15,13 @@ class TwoFactorChallengeResponse
             ], 401);
         }
 
-        return redirect()->route('login.form');
+        return redirect()->route('login');
     }
 
 
+    // -------------------------------------
+    // Show Challenge
+    // -------------------------------------
     public function show()
     {
         if (config('authkit.app_mode') === 'api') {
@@ -29,7 +35,10 @@ class TwoFactorChallengeResponse
         return view('authkit::auth.2fa-challenge');
     }
 
-    
+
+    // -------------------------------------
+    // Verify Challenge
+    // -------------------------------------
     public function verify()
     {
         if (config('authkit.app_mode') === 'api') {
