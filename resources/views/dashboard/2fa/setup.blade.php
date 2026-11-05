@@ -47,7 +47,7 @@
                                     <x-authkit::icons.copy-icon2 color="var(--secondary)" />
                                 </span>
                                 <span class="tick-icon d-none">
-                                    <x-authkit::icons.tick-icon color="var(--secondary)" />
+                                    <x-authkit::icons.tick-icon :width="19" :height="21" color="var(--secondary)" />
                                 </span>
                             </button>
                         </div>
@@ -86,7 +86,7 @@
         <!-- Submit -->
         <!-- ----------------------------------- -->
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end">
-            <button type="submit" id="submit-two-factor-enable-form" form="two-factor-enable-form" class="btn btn-outline-dark px-30 py-12 rounded-3 fw-medium fs-13">تأیید و فعال‌سازی</button>
+            <button type="submit" id="submit-two-factor-enable-form" form="two-factor-enable-form" class="btn btn-dark px-30 py-12 rounded-3 fw-medium fs-13">تأیید و فعال‌سازی</button>
         </div>
     </div>
 

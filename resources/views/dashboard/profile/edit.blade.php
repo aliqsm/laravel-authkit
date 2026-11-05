@@ -58,7 +58,7 @@
         <!-- Form Actions -->
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end gap-2">
             <a href="{{ route('dashboard') }}" class="btn text-secondary border-0 px-30 py-12 rounded-3 fw-medium fs-13">انصراف</a>
-            <button type="submit" id="submit-edit-profile-form" form="edit-profile-form" class="btn btn-outline-dark px-30 py-12 rounded-3 fw-medium fs-13">ذخیره تغییرات</button>
+            <button type="submit" id="submit-edit-profile-form" form="edit-profile-form" class="btn btn-dark px-30 py-12 rounded-3 fw-medium fs-13">ذخیره تغییرات</button>
         </div>
 
     </div>

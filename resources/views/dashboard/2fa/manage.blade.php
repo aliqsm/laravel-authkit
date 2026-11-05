@@ -51,12 +51,12 @@
                 @endforelse
 
 
-                <button type="button" id="copy-recovery-codes" class="btn btn-sm p-1 mt-2">
+                <button type="button" id="copy-recovery-codes" class="btn btn-sm p-1 mt-2 me-2 position-absolute top-0 end-0">
                     <span class="copy-icon">
                         <x-authkit::icons.copy-icon2 color="var(--secondary)" width="22" height="22" />
                     </span>
                     <span class="tick-icon d-none">
-                        <x-authkit::icons.tick-icon color="var(--secondary)" width="18" height="18" />
+                        <x-authkit::icons.tick-icon color="var(--secondary)" width="18" height="22" />
                     </span>
                 </button>
             </div>
