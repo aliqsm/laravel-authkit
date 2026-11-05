@@ -50,10 +50,14 @@ if (form && submitBtn && recoveryCodes && copyBtn) {
                     // ----------------------------------
                     // Update Recovery Codes
                     // ----------------------------------
-                    recoveryCodes.querySelectorAll('[dir="ltr"]').forEach(element => {
-                        element.parentElement.remove();
+                    recoveryCodes.querySelectorAll('p, [dir="ltr"]').forEach(element => {
+                        if (element.tagName === 'P') {
+                            element.remove();
+                        } else {
+                            element.parentElement.remove();
+                        }
                     });
-
+                    
                     (data.data?.recovery_codes || []).forEach(code => {
                         const row = document.createElement('div');
                         row.className = 'd-flex align-items-center justify-content-center py-1';

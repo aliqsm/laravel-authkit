@@ -22,9 +22,9 @@ class ChangePasswordAction
         // ------------------------------------
         // Ensure New Password Is Different
         // ------------------------------------
-        if (Hash::check($data['password'], $user->password)) {
+        if (Hash::check($data['new_password'], $user->password)) {
             throw ValidationException::withMessages([
-                'password' => 'رمز عبور جدید باید با رمز فعلی متفاوت باشد.',
+                'new_password' => 'رمز عبور جدید باید با رمز فعلی متفاوت باشد.',
             ]);
         }
 
@@ -34,7 +34,7 @@ class ChangePasswordAction
             // Update Password and Remember Token
             // ------------------------------------
             $user->forceFill([
-                'password' => $data['password'],
+                'password' => $data['new_password'],
                 'remember_token' => Str::random(72),
             ])->save();
 

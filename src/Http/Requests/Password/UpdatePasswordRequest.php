@@ -12,11 +12,12 @@ class UpdatePasswordRequest extends FormRequest
         return true;
     }
 
-    
+
     public function rules(): array
     {
         return [
-            'password' => [
+            'current_password' => 'required|current_password',
+            'new_password' => [
                 'required',
                 'string',
                 'max:255',

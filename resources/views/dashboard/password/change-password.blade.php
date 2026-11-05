@@ -48,25 +48,33 @@
                     <form id="change-password-form" action="{{ route('password.change') }}" method="POST" novalidate>
                         @csrf
 
-                        <p class="text-secondary fw-light fs-14 mb-4">گذرواژه جدید را وارد کنید.</p>
+                        <div class="position-relative mt-20">
+                            <label class="form-group rounded-3 fw-light p-14 @error('current_password') is-invalid @enderror d-flex align-items-center justify-content-between gap-2">
+                                <input type="password" name="current_password" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="off" autofocus>
+                                <span class="form-label text-secondary fw-light fs-13">گذرواژه فعلی</span>
+                                <x-authkit::icons.lock-icon color="var(--secondary)" />
+                            </label>
+                        </div>
+                        <span id="current_password_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
+
 
                         <div class="position-relative">
-                            <label class="form-group rounded-3 fw-light p-14 @error('password') is-invalid @enderror d-flex align-items-center justify-content-between gap-2">
-                                <input type="password" name="password" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="new-password" autofocus>
+                            <label class="form-group rounded-3 fw-light p-14 @error('new_password') is-invalid @enderror d-flex align-items-center justify-content-between gap-2">
+                                <input type="password" name="new_password" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="new-password">
                                 <span class="form-label text-secondary fw-light fs-13">گذرواژه جدید</span>
                                 <x-authkit::icons.lock-icon color="var(--secondary)" />
                             </label>
                         </div>
-                        <span id="password_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
+                        <span id="new_password_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
 
                         <div class="position-relative mt-20">
-                            <label class="form-group rounded-3 fw-light p-14 @error('password_confirmation') is-invalid @enderror d-flex align-items-center justify-content-between gap-2">
-                                <input type="password" name="password_confirmation" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="new-password">
+                            <label class="form-group rounded-3 fw-light p-14 @error('new_password_confirmation') is-invalid @enderror d-flex align-items-center justify-content-between gap-2">
+                                <input type="password" name="new_password_confirmation" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="new-password">
                                 <span class="form-label text-secondary fw-light fs-13">تکرار گذرواژه</span>
                                 <x-authkit::icons.lock-icon color="var(--secondary)" />
                             </label>
                         </div>
-                        <span id="password_confirmation_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
+                        <span id="new_password_confirmation_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
                     </form>
                 </div>
             </div>
@@ -74,7 +82,7 @@
 
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end gap-2">
             <a href="{{ route('dashboard') }}" class="btn text-secondary border-0 px-30 py-12 rounded-3 fw-medium fs-13">انصراف</a>
-            <button type="submit" id="submit-change-password-form" form="change-password-form" class="btn btn-outline-primary px-30 py-12 rounded-3 fw-medium fs-13">تغییر گذرواژه</button>
+            <button type="submit" id="submit-change-password-form" form="change-password-form" class="btn btn-dark px-30 py-12 rounded-3 fw-medium fs-13">تغییر گذرواژه</button>
         </div>
     </div>
 
