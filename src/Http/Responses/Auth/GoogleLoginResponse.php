@@ -10,17 +10,17 @@ class GoogleLoginResponse
         // API Response
         // -------------------------------------
         if (config('authkit.app_mode') === 'api') {
-            $frontendUrl = rtrim(config('authkit.frontend_url'), '/');
+            $redirects = config('authkit.api_redirects');
 
             return match ($result) {
-                'success' => redirect($frontendUrl . '/dashboard'),
-                'two_factor' => redirect($frontendUrl . '/two-factor/challenge'),
-                'invalid_google_user' => redirect($frontendUrl . '/login?error=invalid_google_user'),
-                'oauth_failed' => redirect($frontendUrl . '/login?error=oauth_failed'),
-                default => redirect($frontendUrl . '/login?error=oauth_failed'),
+                'success' => redirect($redirects['dashboard']),
+                'two_factor' => redirect($redirects['two_factor_challenge']),
+                'invalid_google_user' => redirect($redirects['login'] . '?error=invalid_google_user'),
+                'oauth_failed' => redirect($redirects['login'] . '?error=oauth_failed'),
+                default => redirect($redirects['login'] . '?error=oauth_failed'),
             };
         }
-
+        
 
         // -------------------------------------
         // Web Response
