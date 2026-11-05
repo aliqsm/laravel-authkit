@@ -12,9 +12,9 @@ class ProfileResponse
     {
         if (config('authkit.app_mode') === 'api') {
             return response()->json([
-                'user' => [
-                    'name' => $user->name,
-                ],
+                'data' => [
+                    'user' => $user
+                ]
             ]);
         }
 
@@ -39,9 +39,14 @@ class ProfileResponse
             ]);
         }
 
-        return redirect()->route('dashboard')->with(
-            'status',
-            'اطلاعات حساب با موفقیت به‌روزرسانی شد.'
-        );
+        return response()->json([
+            'message' => 'اطلاعات حساب با موفقیت به‌روزرسانی شد.',
+            'data' => [
+                'redirect' => route('dashboard'),
+                'user' => [
+                    'name' => $user->name,
+                ],
+            ]
+        ]);
     }
 }
