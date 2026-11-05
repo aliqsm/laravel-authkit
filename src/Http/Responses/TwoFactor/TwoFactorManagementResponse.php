@@ -87,10 +87,13 @@ class TwoFactorManagementResponse
 
         return response()->json([
             'message' => 'تأیید دومرحله‌ای با موفقیت غیرفعال شد.',
+            'data' => [
+                'redirect' => route('dashboard'),
+            ],
         ]);
     }
 
-    
+
 
     // -------------------------------------
     // Regenerate Recovery Codes

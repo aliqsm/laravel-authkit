@@ -7,8 +7,9 @@ import notify from '../utils/notify.js';
 const form = document.getElementById('regenerate-recovery-codes-form');
 const submitBtn = document.getElementById('submit-regenerate-recovery-codes');
 const recoveryCodes = document.getElementById('recovery-codes');
+const recoveryCodeTemplate = document.getElementById('recovery-code-template');
 
-if (form && submitBtn && recoveryCodes) {
+if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
 
     let originalHtml = '';
 
@@ -21,11 +22,7 @@ if (form && submitBtn && recoveryCodes) {
         submitBtn.disabled = true;
         originalHtml = submitBtn.innerHTML;
 
-        submitBtn.innerHTML = `
-            <span class="spinner-border spinner-border-sm"
-                style="height:14px; width:14px; border-width:2px !important;">
-            </span>
-        `;
+        submitBtn.innerHTML = ` <span class="spinner-border spinner-border-sm" style="height:14px; width:14px; border-width:2px !important;"></span>`;
 
         // ------------------------------------------
         // Send Request
@@ -44,18 +41,17 @@ if (form && submitBtn && recoveryCodes) {
                     // ----------------------------------
                     recoveryCodes.replaceChildren();
 
-                    data.data.recovery_codes.forEach(code => {
-                        const element = document.createElement('div');
+                    (data.data?.recovery_codes || []).forEach(code => {
+                        const element = recoveryCodeTemplate.content.firstElementChild.cloneNode(true);
 
-                        element.className = 'py-1 fw-medium font-monospace text-center';
-                        element.dir = 'ltr';
-                        element.textContent = code;
+                        element.querySelector('span[dir="ltr"]').textContent = code;
+                        element.querySelector('.copy-recovery-code').dataset.code = code;
 
                         recoveryCodes.appendChild(element);
                     });
                 },
 
-                onError: (data, response) => {
+                onError: (data) => {
                     notify.error(data?.message || 'خطا در تولید کدهای بازیابی');
                 },
             });
@@ -63,6 +59,35 @@ if (form && submitBtn && recoveryCodes) {
         } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalHtml;
+        }
+    });
+
+
+    // ------------------------------------------
+    // Copy Recovery Code
+    // ------------------------------------------
+    recoveryCodes.addEventListener('click', async (e) => {
+        const button = e.target.closest('.copy-recovery-code');
+        if (!button) return;
+
+        try {
+            await navigator.clipboard.writeText(button.dataset.code);
+
+            const copyIcon = button.querySelector('.copy-icon');
+            const checkIcon = button.querySelector('.check-icon');
+
+            copyIcon.classList.add('d-none');
+            checkIcon.classList.remove('d-none');
+
+            clearTimeout(button.copyTimeout);
+
+            button.copyTimeout = setTimeout(() => {
+                copyIcon.classList.remove('d-none');
+                checkIcon.classList.add('d-none');
+            }, 2000);
+
+        } catch {
+            notify.error('کپی کد انجام نشد');
         }
     });
 }

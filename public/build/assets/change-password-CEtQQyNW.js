@@ -1,0 +1,1 @@
+import{i as s}from"./auth-form-DspXNFbx.js";import"./notify-sVpE1_zo.js";s({formId:"change-password-form",submitBtnId:"submit-change-password-form",successMessage:"گذرواژه حساب شما با موفقیت تغییر یافت."});

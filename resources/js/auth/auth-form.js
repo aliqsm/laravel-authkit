@@ -77,7 +77,7 @@ export default function initAuthForm({
                         }, redirectDelay);
                     }
                 },
-                
+
                 onError: (data, response) => {
                     switch (response?.status) {
                         case 422:
@@ -105,7 +105,10 @@ export default function initAuthForm({
                             break;
 
                         case 423:
-                            notify.error(data.message || 'ابتدا باید رمز عبور خود را تأیید کنید');
+                            notify.error(data?.message || 'ابتدا باید رمز عبور خود را تأیید کنید');
+                            setTimeout(() => {
+                                window.location.href = data?.data?.redirect || '/password/confirm';
+                            }, redirectDelay);
                             break;
 
                         case 429:

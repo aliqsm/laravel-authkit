@@ -55,7 +55,7 @@
     "isEntry": true
   },
   "resources/js/auth/auth-form.js": {
-    "file": "assets/auth-form-BYono99r.js",
+    "file": "assets/auth-form-DspXNFbx.js",
     "name": "auth-form",
     "src": "resources/js/auth/auth-form.js",
     "isEntry": true,
@@ -64,7 +64,7 @@
     ]
   },
   "resources/js/auth/confirm-password.js": {
-    "file": "assets/confirm-password-BgUVJvgY.js",
+    "file": "assets/confirm-password-CL9k94w_.js",
     "name": "confirm-password",
     "src": "resources/js/auth/confirm-password.js",
     "isEntry": true,
@@ -74,7 +74,7 @@
     ]
   },
   "resources/js/auth/forgot-password.js": {
-    "file": "assets/forgot-password-Cu9tYJeV.js",
+    "file": "assets/forgot-password-7qWRvLMF.js",
     "name": "forgot-password",
     "src": "resources/js/auth/forgot-password.js",
     "isEntry": true,
@@ -84,7 +84,7 @@
     ]
   },
   "resources/js/auth/login.js": {
-    "file": "assets/login-BA1Q9wO0.js",
+    "file": "assets/login-CVRbwtmx.js",
     "name": "login",
     "src": "resources/js/auth/login.js",
     "isEntry": true,
@@ -94,7 +94,7 @@
     ]
   },
   "resources/js/auth/logout.js": {
-    "file": "assets/logout-B0UvMNdm.js",
+    "file": "assets/logout-BgYkNrS1.js",
     "name": "logout",
     "src": "resources/js/auth/logout.js",
     "isEntry": true,
@@ -104,7 +104,7 @@
     ]
   },
   "resources/js/auth/register.js": {
-    "file": "assets/register-a3PXt0ht.js",
+    "file": "assets/register-u1Gg6JY0.js",
     "name": "register",
     "src": "resources/js/auth/register.js",
     "isEntry": true,
@@ -114,7 +114,7 @@
     ]
   },
   "resources/js/auth/reset-password.js": {
-    "file": "assets/reset-password-CDVzIexh.js",
+    "file": "assets/reset-password-B-LRY-8P.js",
     "name": "reset-password",
     "src": "resources/js/auth/reset-password.js",
     "isEntry": true,
@@ -124,7 +124,7 @@
     ]
   },
   "resources/js/auth/two-factor-challenge.js": {
-    "file": "assets/two-factor-challenge-B0WeQiKv.js",
+    "file": "assets/two-factor-challenge-BSGdNT0O.js",
     "name": "two-factor-challenge",
     "src": "resources/js/auth/two-factor-challenge.js",
     "isEntry": true,
@@ -134,7 +134,7 @@
     ]
   },
   "resources/js/auth/two-factor-setup.js": {
-    "file": "assets/two-factor-setup-kioAI-v4.js",
+    "file": "assets/two-factor-setup-DxHatl_d.js",
     "name": "two-factor-setup",
     "src": "resources/js/auth/two-factor-setup.js",
     "isEntry": true,
@@ -144,7 +144,7 @@
     ]
   },
   "resources/js/auth/verification-email.js": {
-    "file": "assets/verification-email-D8Pt9Kzd.js",
+    "file": "assets/verification-email-x4WeIGYZ.js",
     "name": "verification-email",
     "src": "resources/js/auth/verification-email.js",
     "isEntry": true,
@@ -154,7 +154,7 @@
     ]
   },
   "resources/js/dashboard/change-password.js": {
-    "file": "assets/change-password-D7cGN9ft.js",
+    "file": "assets/change-password-CEtQQyNW.js",
     "name": "change-password",
     "src": "resources/js/dashboard/change-password.js",
     "isEntry": true,
@@ -163,8 +163,17 @@
       "_notify-sVpE1_zo.js"
     ]
   },
+  "resources/js/dashboard/disable-two-factor.js": {
+    "file": "assets/disable-two-factor-C6UOlroK.js",
+    "name": "disable-two-factor",
+    "src": "resources/js/dashboard/disable-two-factor.js",
+    "isEntry": true,
+    "imports": [
+      "_notify-sVpE1_zo.js"
+    ]
+  },
   "resources/js/dashboard/regenerate-recovery-codes.js": {
-    "file": "assets/regenerate-recovery-codes-B6edjzKD.js",
+    "file": "assets/regenerate-recovery-codes-Du7fSgqk.js",
     "name": "regenerate-recovery-codes",
     "src": "resources/js/dashboard/regenerate-recovery-codes.js",
     "isEntry": true,
@@ -173,7 +182,7 @@
     ]
   },
   "resources/js/dashboard/terminate-other-sessions.js": {
-    "file": "assets/terminate-other-sessions-BGrUzA81.js",
+    "file": "assets/terminate-other-sessions-haGFA5W8.js",
     "name": "terminate-other-sessions",
     "src": "resources/js/dashboard/terminate-other-sessions.js",
     "isEntry": true,
@@ -183,7 +192,7 @@
     ]
   },
   "resources/js/dashboard/update-profile.js": {
-    "file": "assets/update-profile-DJNVgFUV.js",
+    "file": "assets/update-profile-BeEV3Vv8.js",
     "name": "update-profile",
     "src": "resources/js/dashboard/update-profile.js",
     "isEntry": true,
