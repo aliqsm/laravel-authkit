@@ -48,7 +48,7 @@
                     <form id="change-password-form" action="{{ route('password.change') }}" method="POST" novalidate>
                         @csrf
 
-                        <div class="position-relative mt-20">
+                        <div class="position-relative">
                             <label class="form-group rounded-3 fw-light p-14 @error('current_password') is-invalid @enderror d-flex align-items-center justify-content-between gap-2">
                                 <input type="password" name="current_password" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="off" autofocus>
                                 <span class="form-label text-secondary fw-light fs-13">گذرواژه فعلی</span>
@@ -58,7 +58,7 @@
                         <span id="current_password_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
 
 
-                        <div class="position-relative">
+                        <div class="position-relative mt-20">
                             <label class="form-group rounded-3 fw-light p-14 @error('new_password') is-invalid @enderror d-flex align-items-center justify-content-between gap-2">
                                 <input type="password" name="new_password" class="form-control rounded-0 border-0 p-0" placeholder=" " required autocomplete="new-password">
                                 <span class="form-label text-secondary fw-light fs-13">گذرواژه جدید</span>

@@ -29,6 +29,7 @@ class UserSessionsAction
                     str_contains($agent, 'android') => 'Android',
                     str_contains($agent, 'windows') => 'Windows',
                     str_contains($agent, 'mac os') => 'Mac',
+                    str_contains($agent, 'macintosh') => 'Mac',
                     str_contains($agent, 'linux') => 'Linux',
                     default => 'Unknown',
                 };

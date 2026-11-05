@@ -41,7 +41,7 @@ if (form && submitBtn) {
                     if (data.data?.redirect) {
                         setTimeout(() => {
                             window.location.href = data.data.redirect;
-                        }, 500);
+                        }, 1000);
                     }
                 },
 

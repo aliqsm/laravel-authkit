@@ -78,7 +78,7 @@ class AuthKitServiceProvider extends ServiceProvider
 
 
 
-        
+
         // -----------------------------------------------------
         // Authentication Rate Limiters
         // -----------------------------------------------------
@@ -282,6 +282,19 @@ class AuthKitServiceProvider extends ServiceProvider
                 $this->makeLimit(
                     config('authkit.rate_limits.authkit_change_password.user'),
                     'authkit_change_password:user:' . $request->user()->id
+                ),
+            ];
+        });
+
+        RateLimiter::for('authkit_terminate_sessions', function (Request $request) {
+            return [
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_terminate_sessions.ip'),
+                    'authkit_terminate_sessions:ip:' . $request->ip()
+                ),
+                $this->makeLimit(
+                    config('authkit.rate_limits.authkit_terminate_sessions.user'),
+                    'authkit_terminate_sessions:user:' . $request->user()->id
                 ),
             ];
         });

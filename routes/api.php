@@ -36,7 +36,10 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         // Sessions
         // -------------------------------------
-        Route::get('/sessions', [SessionController::class, 'index'])->name('api.dashboard.sessions.index')->middleware('throttle:authkit_pages');
+        Route::prefix('sessions')->middleware('throttle:authkit_logout')->group(function () {
+            Route::get('/', [SessionController::class, 'index'])->name('api.dashboard.sessions.index')->middleware('throttle:authkit_pages');
+            Route::post('/terminate-others', [SessionController::class, 'destroyOthers'])->name('api.sessions.destroy')->middleware('throttle:authkit_terminate_sessions');
+        });
 
 
         // -------------------------------------
@@ -127,7 +130,7 @@ Route::prefix('api')->middleware('api')->group(function () {
     });
 
 
-    
+
     Route::middleware('auth:sanctum')->group(function () {
 
         // -------------------------------------
@@ -144,7 +147,6 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         Route::prefix('logout')->middleware('throttle:authkit_logout')->group(function () {
             Route::post('/', [LogoutController::class, 'logout'])->name('api.logout');
-            Route::post('/logout-other-devices', [LogoutController::class, 'logoutOtherDevices'])->name('api.sessions.destroy');
         });
 
 

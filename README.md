@@ -297,7 +297,7 @@ GOOGLE_REDIRECT_URI=
 | POST | `/email/verification-notification` | `verification.send` |
 | GET | `/email/verify/{id}/{hash}` | `verification.verify` |
 | POST | `/logout` | `logout` |
-| POST | `/logout/logout-other-devices` | `sessions.destroy` |
+
 
 **داشبورد و تنظیمات حساب**
 
@@ -307,6 +307,7 @@ GOOGLE_REDIRECT_URI=
 | GET | `/dashboard/profile` | `profile.edit` |
 | PUT | `/dashboard/profile` | `profile.update` |
 | GET | `/dashboard/sessions` | `dashboard.sessions.index` |
+| POST | `/sessions/terminate-others` | `sessions.destroy` |
 | GET | `/dashboard/security-activities` | `dashboard.security-activities.index` |
 | GET | `/dashboard/change-password` | `password.edit` |
 | POST | `/dashboard/change-password` | `password.change` |
