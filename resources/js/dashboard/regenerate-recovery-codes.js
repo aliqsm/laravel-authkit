@@ -74,7 +74,7 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
             await navigator.clipboard.writeText(button.dataset.code);
 
             const copyIcon = button.querySelector('.copy-icon');
-            const checkIcon = button.querySelector('.check-icon');
+            const checkIcon = button.querySelector('.tick-icon');
 
             copyIcon.classList.add('d-none');
             checkIcon.classList.remove('d-none');

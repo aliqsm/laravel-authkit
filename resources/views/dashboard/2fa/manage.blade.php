@@ -29,8 +29,8 @@
                 <span class="copy-icon">
                     <x-authkit::icons.copy-icon />
                 </span>
-                <span class="check-icon d-none">
-                    <x-authkit::icons.check-icon />
+                <span class="tick-icon d-none">
+                    <x-authkit::icons.tick-icon />
                 </span>
             </button>
         </div>
@@ -38,7 +38,7 @@
         <p class="text-secondary fw-light fs-14 mb-0">
             کد بازیابی جدیدی برای نمایش وجود ندارد.<br>
             برای دریافت کدهای جدید، روی «تولید کدهای جدید» کلیک کنید.
-            کدهای قبلی با تولید مجموعه جدید باطل می‌شوند.
+            کدهای قبلی با تولید مجموعه جدید باطل می‌شوند.ti
         </p>
     @endforelse
 </div>
@@ -51,8 +51,8 @@
             <span class="copy-icon">
                 <x-authkit::icons.copy-icon />
             </span>
-            <span class="check-icon d-none">
-                <x-authkit::icons.check-icon />
+            <span class="tick-icon d-none">
+                <x-authkit::icons.tick-icon />
             </span>
         </button>
     </div>
