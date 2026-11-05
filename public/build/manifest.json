@@ -1,4 +1,8 @@
 {
+  "_notify-sVpE1_zo.js": {
+    "file": "assets/notify-sVpE1_zo.js",
+    "name": "notify"
+  },
   "resources/css/app.css": {
     "file": "assets/app-9_tsbCrk.css",
     "src": "resources/css/app.css",
@@ -45,123 +49,147 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-82v6EwEu.js",
+    "file": "assets/app-l0sNRNKZ.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
   },
   "resources/js/auth/auth-form.js": {
-    "file": "assets/auth-form-BcIEQhMr.js",
+    "file": "assets/auth-form-BYono99r.js",
     "name": "auth-form",
     "src": "resources/js/auth/auth-form.js",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_notify-sVpE1_zo.js"
+    ]
   },
   "resources/js/auth/confirm-password.js": {
-    "file": "assets/confirm-password-CsuKPMY4.js",
+    "file": "assets/confirm-password-BgUVJvgY.js",
     "name": "confirm-password",
     "src": "resources/js/auth/confirm-password.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/forgot-password.js": {
-    "file": "assets/forgot-password-CyAFl-qQ.js",
+    "file": "assets/forgot-password-Cu9tYJeV.js",
     "name": "forgot-password",
     "src": "resources/js/auth/forgot-password.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/login.js": {
-    "file": "assets/login-BfplkN80.js",
+    "file": "assets/login-BA1Q9wO0.js",
     "name": "login",
     "src": "resources/js/auth/login.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/logout.js": {
-    "file": "assets/logout-D_g7KTFb.js",
+    "file": "assets/logout-B0UvMNdm.js",
     "name": "logout",
     "src": "resources/js/auth/logout.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/register.js": {
-    "file": "assets/register-0xhHOotW.js",
+    "file": "assets/register-a3PXt0ht.js",
     "name": "register",
     "src": "resources/js/auth/register.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/reset-password.js": {
-    "file": "assets/reset-password-CwPaNoiF.js",
+    "file": "assets/reset-password-CDVzIexh.js",
     "name": "reset-password",
     "src": "resources/js/auth/reset-password.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/two-factor-challenge.js": {
-    "file": "assets/two-factor-challenge-UVPosZHN.js",
+    "file": "assets/two-factor-challenge-B0WeQiKv.js",
     "name": "two-factor-challenge",
     "src": "resources/js/auth/two-factor-challenge.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/two-factor-setup.js": {
-    "file": "assets/two-factor-setup-CcOnakMw.js",
+    "file": "assets/two-factor-setup-kioAI-v4.js",
     "name": "two-factor-setup",
     "src": "resources/js/auth/two-factor-setup.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/auth/verification-email.js": {
-    "file": "assets/verification-email-BlQ3bfOV.js",
+    "file": "assets/verification-email-D8Pt9Kzd.js",
     "name": "verification-email",
     "src": "resources/js/auth/verification-email.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/dashboard/change-password.js": {
-    "file": "assets/change-password-X2_H0D9U.js",
+    "file": "assets/change-password-D7cGN9ft.js",
     "name": "change-password",
     "src": "resources/js/dashboard/change-password.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
+    ]
+  },
+  "resources/js/dashboard/regenerate-recovery-codes.js": {
+    "file": "assets/regenerate-recovery-codes-B6edjzKD.js",
+    "name": "regenerate-recovery-codes",
+    "src": "resources/js/dashboard/regenerate-recovery-codes.js",
+    "isEntry": true,
+    "imports": [
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/dashboard/terminate-other-sessions.js": {
-    "file": "assets/terminate-other-sessions-CO-KKVKL.js",
+    "file": "assets/terminate-other-sessions-BGrUzA81.js",
     "name": "terminate-other-sessions",
     "src": "resources/js/dashboard/terminate-other-sessions.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   },
   "resources/js/dashboard/update-profile.js": {
-    "file": "assets/update-profile-fYmx-Yjp.js",
+    "file": "assets/update-profile-DJNVgFUV.js",
     "name": "update-profile",
     "src": "resources/js/dashboard/update-profile.js",
     "isEntry": true,
     "imports": [
-      "resources/js/auth/auth-form.js"
+      "resources/js/auth/auth-form.js",
+      "_notify-sVpE1_zo.js"
     ]
   }
 }

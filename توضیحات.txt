@@ -46,10 +46,7 @@ php artisan vendor:publish --tag=authkit-build   =>   پابلیش فایل ها
 // ------------------------------------------
 // Requirements & Installation
 // ------------------------------------------
-- Laravel 12+
-- Bootstrap 5.3+
 
-- npm install bootstrap
 - php artisan make:notifications-table   ===>    نصب بودن جدول نوتیفیکیشن
 - php artisan migrate                    ===>    برای اعمال تغییرات جدول یوزر هم باید 
 - use HasAuthKit;                        ===>    در مدل یوزر این تریت اضافه بشه

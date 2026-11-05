@@ -1,21 +1,7 @@
 @extends('authkit::layouts.dashboard')
 @section('page_title', 'کدهای بازیابی تأیید دو مرحله‌ای')
 
-
-@push('scripts')
-    @if (session('type') === 'success')
-        <script>
-            notify.success(@json(session('message')));
-        </script>
-    @endif
-
-    @if (session('type') === 'error')
-        <script>
-            notify.error(@json(session('message')));
-        </script>
-    @endif
-@endpush
-
+@vite(['resources/js/dashboard/regenerate-recovery-codes.js'], 'vendor/authkit/build')
 
 
 @section('content')
@@ -41,7 +27,7 @@
                 <li>هر کد فقط یک‌بار قابل استفاده است؛ در صورت گم‌کردن کدها و ازدست‌دادن دسترسی به اپلیکیشن، امکان بازیابی حساب وجود ندارد.</li>
             </ul>
 
-            <div class="mt-3 bg-light p-16 rounded-3 border border-light">
+            <div id="recovery-codes" class="mt-3 bg-light p-16 rounded-3 border border-light">
                 @forelse (session('recovery_codes', []) as $recovery_code)
                     <div class="py-1 fw-medium font-monospace text-center" dir="ltr">
                         {{ $recovery_code }}
@@ -57,9 +43,9 @@
         </div>
 
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end flex-wrap gap-2">
-            <form action="{{ route('two-factor.recovery-code.regenerate') }}" method="POST">
+            <form id="regenerate-recovery-codes-form" action="{{ route('two-factor.recovery-code.regenerate') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-outline-success px-30 py-12 rounded-3 fw-medium fs-14">
+                <button id="submit-regenerate-recovery-codes" type="submit" class="btn btn-outline-success px-30 py-12 rounded-3 fw-medium fs-14">
                     تولید کد جدید
                 </button>
             </form>

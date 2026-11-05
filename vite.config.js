@@ -31,6 +31,7 @@ export default defineConfig({
                 'resources/js/auth/two-factor-setup.js',
                 'resources/js/dashboard/change-password.js',
                 'resources/js/dashboard/update-profile.js',
+                'resources/js/dashboard/regenerate-recovery-codes.js',
                 'resources/js/dashboard/terminate-other-sessions.js',
             ],
             buildDirectory: 'build',
