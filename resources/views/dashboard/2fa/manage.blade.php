@@ -36,7 +36,7 @@
             <!-- ----------------------------------- -->
             <div id="recovery-codes" class="mt-3 bg-light p-16 rounded-3 border border-light position-relative">
 
-                @forelse (as $recovery_code)
+                @forelse (session('recovery_codes', []) as $recovery_code)
                     <div class="d-flex align-items-center justify-content-center py-1">
                         <span class="fw-medium font-monospace text-center" dir="ltr">
                             {{ $recovery_code }}
