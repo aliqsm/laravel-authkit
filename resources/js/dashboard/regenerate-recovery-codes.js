@@ -50,7 +50,9 @@ if (form && submitBtn && recoveryCodes && copyBtn) {
                     // ----------------------------------
                     // Update Recovery Codes
                     // ----------------------------------
-                    recoveryCodes.replaceChildren();
+                    recoveryCodes.querySelectorAll('[dir="ltr"]').forEach(element => {
+                        element.parentElement.remove();
+                    });
 
                     (data.data?.recovery_codes || []).forEach(code => {
                         const row = document.createElement('div');

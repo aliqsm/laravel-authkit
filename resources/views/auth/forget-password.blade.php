@@ -19,7 +19,7 @@
                 <x-authkit::icons.sms-icon color="var(--secondary)" />
             </label>
         </div>
-        <small id="email_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+        <span id="email_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
 
         <button type="submit" class="btn btn-dark w-100 mt-30 py-14 rounded-3 fw-medium fs-14">ارسال لینک بازیابی</button>
         <a href="{{ route('login') }}" class="d-block text-secondary text-decoration-none mt-16 text-center fw-medium fs-13">بازگشت به ورود</a>

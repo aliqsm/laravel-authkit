@@ -36,7 +36,7 @@
                                 <span class="form-label text-secondary fw-light fs-13">نام</span>
                             </label>
                         </div>
-                        <small id="name_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+                        <span id="name_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
                     </div>
 
                     <!-- Email -->
@@ -48,7 +48,7 @@
                                 <span class="form-label text-secondary fw-light fs-13">ایمیل</span>
                             </label>
                         </div>
-                        <small id="email_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+                        <span id="email_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
                     </div>
 
                 </div>

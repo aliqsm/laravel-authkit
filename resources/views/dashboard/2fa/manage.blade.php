@@ -36,7 +36,7 @@
             <!-- ----------------------------------- -->
             <div id="recovery-codes" class="mt-3 bg-light p-16 rounded-3 border border-light position-relative">
 
-                @forelse (session('recovery_codes', []) as $recovery_code)
+                @forelse (as $recovery_code)
                     <div class="d-flex align-items-center justify-content-center py-1">
                         <span class="fw-medium font-monospace text-center" dir="ltr">
                             {{ $recovery_code }}
@@ -50,15 +50,19 @@
                     </p>
                 @endforelse
 
-
-                <button type="button" id="copy-recovery-codes" class="btn btn-sm p-1 mt-2 me-2 position-absolute top-0 end-0">
-                    <span class="copy-icon">
-                        <x-authkit::icons.copy-icon2 color="var(--secondary)" width="22" height="22" />
-                    </span>
-                    <span class="tick-icon d-none">
-                        <x-authkit::icons.tick-icon color="var(--secondary)" width="18" height="22" />
-                    </span>
-                </button>
+                <!-- ----------------------------------- -->
+                <!-- Copy Recovery Codes Button -->
+                <!-- ----------------------------------- -->
+                @if (session('recovery_codes', []))
+                    <button type="button" id="copy-recovery-codes" class="btn btn-sm p-1 mt-2 me-2 position-absolute top-0 end-0">
+                        <span class="copy-icon">
+                            <x-authkit::icons.copy-icon2 color="var(--secondary)" width="22" height="22" />
+                        </span>
+                        <span class="tick-icon d-none">
+                            <x-authkit::icons.tick-icon color="var(--secondary)" width="18" height="22" />
+                        </span>
+                    </button>
+                @endif
             </div>
         </div>
 

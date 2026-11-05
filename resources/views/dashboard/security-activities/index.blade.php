@@ -12,7 +12,7 @@
         <div class="card-header py-3 d-flex align-items-center justify-content-between">
             <div>
                 <h3 class="m-0 fw-bold fs-18">فعالیت‌های امنیتی</h3>
-                <small class="text-secondary fs-13">۲۰ فعالیت امنیتی اخیر حساب شما</small>
+                <span class="text-secondary fs-13">۲۰ فعالیت امنیتی اخیر حساب شما</span>
             </div>
 
             <a href="{{ route('dashboard') }}" class="p-1">
@@ -42,14 +42,14 @@
                     <div class="d-flex flex-column gap-2 flex-grow-1 overflow-hidden">
                         <span class="fw-medium fs-14 text-body">{{ $action }}</span>
                         <div class="d-flex align-items-center flex-wrap gap-3">
-                            <small class="text-secondary fs-13">{{ $activity->created_at?->format('H:i - Y/m/d') }}</small>
-                            <small class="text-secondary fs-13" dir="ltr">IP: {{ $activity->data['ip'] ?? '-' }}</small>
+                            <span class="text-secondary fs-13">{{ $activity->created_at?->format('H:i - Y/m/d') }}</span>
+                            <span class="text-secondary fs-13" dir="ltr">IP: {{ $activity->data['ip'] ?? '-' }}</span>
                         </div>
                     </div>
                 </div>
             @empty
                 <div class="text-center py-5">
-                    <small class="text-secondary">هنوز فعالیت امنیتی ثبت نشده است</small>
+                    <span class="text-secondary">هنوز فعالیت امنیتی ثبت نشده است</span>
                 </div>
             @endforelse
         </div>

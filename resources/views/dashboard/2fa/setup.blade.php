@@ -44,10 +44,10 @@
                             <span id="secret-key" class="font-monospace overflow-x-auto" dir="ltr">{{ $secret }}</span>
                             <button type="button" id="copy-2fa-secret" class="bg-transparent border-0 flex-shrink-0 p-1" style="outline:none !important" data-secret="{{ $secret }}">
                                 <span class="copy-icon">
-                                    <x-authkit::icons.copy-icon2 color="var(--secondary)" />
+                                    <x-authkit::icons.copy-icon2 :width="22" :height="22" color="var(--secondary)" />
                                 </span>
                                 <span class="tick-icon d-none">
-                                    <x-authkit::icons.tick-icon :width="19" :height="21" color="var(--secondary)" />
+                                    <x-authkit::icons.tick-icon :width="18" :height="20" color="var(--secondary)" />
                                 </span>
                             </button>
                         </div>
@@ -75,7 +75,7 @@
                                 <span class="form-label text-secondary fw-light fs-13">کد ۶ رقمی</span>
                                 <x-authkit::icons.key-icon color="var(--secondary)" />
                             </label>
-                            <small id="code_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+                            <span id="code_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
                         </div>
                     </div>
                 </div>

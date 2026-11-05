@@ -22,7 +22,7 @@
                     <x-authkit::icons.user-icon3 color="var(--secondary)" />
                 </label>
             </div>
-            <small id="email_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+            <span id="email_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
 
             <div class="position-relative mt-20 mt-md-400">
                 <label class="form-group rounded-3 fw-light p-14 d-flex align-items-center justify-content-between gap-2">
@@ -31,7 +31,7 @@
                     <x-authkit::icons.lock-icon color="var(--secondary)" />
                 </label>
             </div>
-            <small id="password_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+            <span id="password_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
 
             <div class="d-flex align-items-center justify-content-between mt-16">
                 <label class="form-check-label text-secondary fw-medium fs-13 d-flex align-items-center justify-content-start gap-1">

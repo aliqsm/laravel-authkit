@@ -40,11 +40,11 @@
 
                                 <div class="d-flex align-items-center flex-wrap gap-2">
                                     @if ($session->id === session()->getId())
-                                        <small class="badge bg-success-subtle text-success fs-11">دستگاه فعلی</small>
+                                        <span class="badge bg-success-subtle text-success fs-11">دستگاه فعلی</span>
                                     @else
-                                        <small class="text-secondary fs-13">
+                                        <span class="text-secondary fs-13">
                                             آخرین فعالیت: {{ Carbon::parse($session->last_activity)->diffForHumans() }}
-                                        </small>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -52,7 +52,7 @@
                     </div>
                 @empty
                     <div class="col-12">
-                        <small class="d-block text-center text-secondary">هیچ سشن فعالی یافت نشد.</small>
+                        <span class="d-block text-center text-secondary">هیچ سشن فعالی یافت نشد.</span>
                     </div>
                 @endforelse
             </div>
@@ -90,7 +90,7 @@
                             <x-authkit::icons.lock-icon color="var(--secondary)" />
                         </label>
                     </div>
-                    <small id="password_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+                    <span id="password_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
                 </form>
 
                 <div class="modal-footer">

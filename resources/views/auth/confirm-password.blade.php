@@ -20,7 +20,7 @@
                     <x-authkit::icons.lock-icon color="var(--secondary)" />
                 </label>
             </div>
-            <small id="password_error" class="fw-medium text-danger fs-12 ps-1 mt-1 d-none"></small>
+            <span id="password_error" class="fw-medium text-danger fs-12 ms-1 mt-1 d-none"></span>
 
             <button type="submit" class="btn btn-dark w-100 mt-20 py-14 rounded-3 fw-medium fs-14">تأیید و ادامه</button>
         </form>
