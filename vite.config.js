@@ -29,7 +29,7 @@ export default defineConfig({
                 'resources/js/auth/verification-email.js',
                 'resources/js/auth/two-factor-challenge.js',
                 'resources/js/auth/two-factor-setup.js',
-                'resources/js/auth/confirm-password.js',
+                'resources/js/dashboard/change-password.js',
                 'resources/js/dashboard/update-profile.js',
                 'resources/js/dashboard/terminate-other-sessions.js',
             ],

@@ -42,10 +42,10 @@
                 </div>
 
                 <!-- ----------------------------------- -->
-                <!-- Update Password Form -->
+                <!-- Change Password Form -->
                 <!-- ----------------------------------- -->
                 <div class="col-12 col-md-6">
-                    <form id="update-password-form" action="{{ route('password.update') }}" method="POST" novalidate>
+                    <form id="change-password-form" action="{{ route('password.change') }}" method="POST" novalidate>
                         @csrf
 
                         <p class="text-secondary fw-light fs-14 mb-4">گذرواژه جدید را وارد کنید.</p>
@@ -74,7 +74,7 @@
 
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end gap-2">
             <a href="{{ route('dashboard') }}" class="btn text-secondary border-0 px-30 py-12 rounded-3 fw-medium fs-14">انصراف</a>
-            <button type="submit" id="submit-update-password-form" form="update-password-form" class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-14">تغییر گذرواژه</button>
+            <button type="submit" id="submit-change-password-form" form="change-password-form" class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-14">تغییر گذرواژه</button>
         </div>
     </div>
 

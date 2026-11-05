@@ -137,6 +137,15 @@
       "resources/js/auth/auth-form.js"
     ]
   },
+  "resources/js/dashboard/change-password.js": {
+    "file": "assets/change-password-X2_H0D9U.js",
+    "name": "change-password",
+    "src": "resources/js/dashboard/change-password.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/auth/auth-form.js"
+    ]
+  },
   "resources/js/dashboard/terminate-other-sessions.js": {
     "file": "assets/terminate-other-sessions-CO-KKVKL.js",
     "name": "terminate-other-sessions",
