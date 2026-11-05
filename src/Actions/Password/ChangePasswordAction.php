@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
-class UpdatePasswordAction
+class ChangePasswordAction
 {
     public function execute(Request $request, array $data): void
     {
