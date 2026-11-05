@@ -1,6 +1,7 @@
 @extends('authkit::layouts.dashboard')
 @section('page_title', 'فعالیت‌های امنیتی')
 
+@dd($activities)
 
 @section('content')
 

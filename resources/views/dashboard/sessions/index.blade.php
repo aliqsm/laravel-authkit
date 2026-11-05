@@ -1,3 +1,4 @@
+
 @php
     use Illuminate\Support\Carbon;
 @endphp
@@ -6,8 +7,6 @@
 @section('page_title', 'نشست ها')
 
 @vite(['resources/js/dashboard/terminate-other-sessions.js'], 'vendor/authkit/build')
-
-
 
 @section('content')
 
@@ -29,19 +28,17 @@
                     <div class="col-12 col-md-6">
                         <div class="d-flex align-items-center gap-2 border rounded-3 p-3 h-100">
                             <div class="d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px">
-                                @if ($session->device == 'iPhone' || $session->device == 'Android')
+                                @if (in_array($session->device, ['iPhone', 'iPad', 'Android'], true))
                                     <x-authkit::icons.mobile-icon color="var(--secondary)" />
-                                @elseif ($session->device == 'Windows' || $session->device == 'Mac' || $session->device == 'Linux')
+                                @elseif (in_array($session->device, ['Windows', 'Mac', 'Linux'], true))
                                     <x-authkit::icons.monitor-icon color="var(--secondary)" />
                                 @endif
                             </div>
 
                             <div class="d-flex flex-column align-items-start gap-1 overflow-hidden">
-                                <span class="text-dark fw-medium fs-14">{{ $session->browser }} - {{ $session->device }}</span>
+                                <span class="text-dark fw-medium fs-14">{{ $session->device }}</span>
 
                                 <div class="d-flex align-items-center flex-wrap gap-2">
-                                    <small class="text-secondary fs-13">IP: {{ $session->ip_address }}</small>
-
                                     @if ($session->id === session()->getId())
                                         <small class="badge bg-success-subtle text-success fs-11">دستگاه فعلی</small>
                                     @else
@@ -69,8 +66,6 @@
             @endif
         </div>
     </div>
-
-
 
     <!-- ----------------------------------- -->
     <!-- Logout Other Devices Modal -->

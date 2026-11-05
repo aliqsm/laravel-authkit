@@ -12,7 +12,7 @@ class UserSessionsAction
         $user = $request->user();
         $currentSessionId = $request->session()->getId();
 
-        $sessions = DB::table('sessions')
+        return DB::table('sessions')
             ->where('user_id', $user->id)
             ->orderByDesc('last_activity')
             ->get(['id', 'user_agent', 'last_activity'])
@@ -24,23 +24,12 @@ class UserSessionsAction
                 // Detect Device
                 // -------------------------------------
                 $device = match (true) {
-                    str_contains($agent, 'iphone') => 'Laptop',
-                    str_contains($agent, 'ipad') => 'Laptop',
-                    str_contains($agent, 'android') => 'Laptop',
-                    str_contains($agent, 'mobile') => 'Mobile',
-                    default => 'Unknown',
-                };
-
-                // -------------------------------------
-                // Detect Platform
-                // -------------------------------------
-                $platform = match (true) {
-                    str_contains($agent, 'windows') => 'Windows',
-                    str_contains($agent, 'iphone'),
-                    str_contains($agent, 'ipad') => 'iOS',
+                    str_contains($agent, 'iphone') => 'iPhone',
+                    str_contains($agent, 'ipad') => 'iPad',
                     str_contains($agent, 'android') => 'Android',
+                    str_contains($agent, 'windows') => 'Windows',
                     str_contains($agent, 'macintosh'),
-                    str_contains($agent, 'mac os') => 'macOS',
+                    str_contains($agent, 'mac os') => 'Mac',
                     str_contains($agent, 'linux') => 'Linux',
                     default => 'Unknown',
                 };
@@ -48,16 +37,12 @@ class UserSessionsAction
                 // -------------------------------------
                 // Format Session Data
                 // -------------------------------------
-                return [
+                return (object) [
                     'id' => $session->id,
                     'device' => $device,
-                    'platform' => $platform,
-                    'lastActivity' => $session->last_activity,
+                    'last_activity' => $session->last_activity,
                     'isCurrent' => $session->id === $currentSessionId,
                 ];
             });
-
-
-          return $sessions;
     }
 }

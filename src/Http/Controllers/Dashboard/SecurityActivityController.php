@@ -16,6 +16,6 @@ class SecurityActivityController extends Controller
     {
         $activities = $action->execute($request);
 
-        return $response->toResponse($request, $activities);
+        return $response->toResponse($activities);
     }
 }
