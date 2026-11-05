@@ -132,5 +132,10 @@ return [
             'ip' => ['max_attempts' => 20, 'decay_minutes' => 30],
             'user' => ['max_attempts' => 5, 'decay_minutes' => 30],
         ],
+
+        'authkit_terminate_sessions' => [
+            'ip' => ['max_attempts' => 10, 'decay_minutes' => 1],
+            'user' => ['max_attempts' => 5, 'decay_minutes' => 1],
+        ],
     ],
 ];
