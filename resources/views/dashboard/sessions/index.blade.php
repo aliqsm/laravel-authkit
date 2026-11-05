@@ -60,7 +60,7 @@
 
         <div class="card-footer py-3 bg-transparent border-0 d-flex justify-content-end">
             @if (count($sessions) > 1)
-                <button class="btn btn-primary px-30 py-12 rounded-3 fw-medium fs-14" data-bs-toggle="modal" data-bs-target="#logoutSessionsModal">
+                <button class="btn btn-outline-primary px-30 py-12 rounded-3 fw-medium fs-13" data-bs-toggle="modal" data-bs-target="#logoutSessionsModal">
                     خروج از سایر نشست‌ها
                 </button>
             @endif

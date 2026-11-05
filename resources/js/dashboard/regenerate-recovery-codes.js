@@ -2,16 +2,27 @@ import api from '../utils/api.js';
 import notify from '../utils/notify.js';
 
 // ------------------------------------------
-// Get Form and Elements
+// Get Elements
 // ------------------------------------------
 const form = document.getElementById('regenerate-recovery-codes-form');
 const submitBtn = document.getElementById('submit-regenerate-recovery-codes');
 const recoveryCodes = document.getElementById('recovery-codes');
 const recoveryCodeTemplate = document.getElementById('recovery-code-template');
+const copyBtn = document.getElementById('copy-recovery-codes');
 
-if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
+if (form && submitBtn && recoveryCodes && recoveryCodeTemplate && copyBtn) {
 
     let originalHtml = '';
+    let copyTimeout;
+
+    // ------------------------------------------
+    // Get Recovery Codes
+    // ------------------------------------------
+    const getRecoveryCodes = () => {
+        return [...recoveryCodes.querySelectorAll('[dir="ltr"]')]
+            .map(element => element.textContent.trim());
+    };
+
 
     // ------------------------------------------
     // Handle Form Submission
@@ -28,9 +39,6 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
             </span>
         `;
 
-        // ------------------------------------------
-        // Send Request
-        // ------------------------------------------
         try {
             await api({
                 endpoint: form.action,
@@ -40,19 +48,18 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
                 callback: (data) => {
                     notify.success(data.message || 'کدهای بازیابی با موفقیت تولید شدند.');
 
-                    // ----------------------------------
-                    // Update Recovery Codes
-                    // ----------------------------------
                     recoveryCodes.replaceChildren();
 
                     (data.data?.recovery_codes || []).forEach(code => {
                         const element = recoveryCodeTemplate.content.firstElementChild.cloneNode(true);
 
                         element.querySelector('[dir="ltr"]').textContent = code;
-                        element.querySelector('button').dataset.code = code;
 
                         recoveryCodes.appendChild(element);
                     });
+
+                    copyBtn.classList.remove('d-none');
+                    resetCopyIcon();
                 },
 
                 onError: (data) => {
@@ -68,24 +75,33 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
 
 
     // ------------------------------------------
-    // Copy Recovery Code
+    // Reset Copy Icon
     // ------------------------------------------
-    recoveryCodes.addEventListener('click', async (e) => {
-        const button = e.target.closest('button[data-code]');
-        if (!button) return;
+    function resetCopyIcon() {
+        clearTimeout(copyTimeout);
+
+        copyBtn.querySelector('.copy-icon').classList.remove('d-none');
+        copyBtn.querySelector('.tick-icon').classList.add('d-none');
+    }
+
+
+    // ------------------------------------------
+    // Copy All Recovery Codes
+    // ------------------------------------------
+    copyBtn.addEventListener('click', async () => {
+        const codes = getRecoveryCodes();
+
+        if (!codes.length) return;
 
         try {
-            const code = button.dataset.code;
+            const text = codes.join('\n');
 
-            // ----------------------------------
-            // Copy to Clipboard
-            // ----------------------------------
             if (navigator.clipboard && window.isSecureContext) {
-                await navigator.clipboard.writeText(code);
+                await navigator.clipboard.writeText(text);
             } else {
                 const textarea = document.createElement('textarea');
 
-                textarea.value = code;
+                textarea.value = text;
                 textarea.style.position = 'fixed';
                 textarea.style.opacity = '0';
 
@@ -98,24 +114,14 @@ if (form && submitBtn && recoveryCodes && recoveryCodeTemplate) {
                 if (!copied) throw new Error('Copy failed');
             }
 
-            // ----------------------------------
-            // Show Tick Icon
-            // ----------------------------------
-            const copyIcon = button.querySelector('.copy-icon');
-            const tickIcon = button.querySelector('.tick-icon');
+            copyBtn.querySelector('.copy-icon').classList.add('d-none');
+            copyBtn.querySelector('.tick-icon').classList.remove('d-none');
 
-            copyIcon.classList.add('d-none');
-            tickIcon.classList.remove('d-none');
-
-            clearTimeout(button.copyTimeout);
-
-            button.copyTimeout = setTimeout(() => {
-                copyIcon.classList.remove('d-none');
-                tickIcon.classList.add('d-none');
-            }, 2000);
+            clearTimeout(copyTimeout);
+            copyTimeout = setTimeout(resetCopyIcon, 2000);
 
         } catch {
-            notify.error('کپی کد انجام نشد');
+            notify.error('کپی کدهای بازیابی انجام نشد');
         }
     });
 }

@@ -37,23 +37,10 @@
             <div id="recovery-codes" class="mt-3 bg-light p-16 rounded-3 border border-light">
 
                 @forelse (session('recovery_codes', []) as $recovery_code)
-                    <div class="position-relative d-flex align-items-center justify-content-center py-1">
+                    <div class="d-flex align-items-center justify-content-center py-1">
                         <span class="fw-medium font-monospace text-center" dir="ltr">
                             {{ $recovery_code }}
                         </span>
-
-                        <button type="button"
-                                class="btn p-1 position-absolute"
-                                style="left: 0; top: 50%; transform: translateY(-50%);"
-                                data-code="{{ $recovery_code }}"
-                                aria-label="کپی کد بازیابی">
-                            <span class="copy-icon">
-                                <x-authkit::icons.copy-icon color="var(--secondary)" />
-                            </span>
-                            <span class="tick-icon d-none">
-                                <x-authkit::icons.tick-icon color="var(--success)" />
-                            </span>
-                        </button>
                     </div>
                 @empty
                     <p class="text-secondary fw-light fs-14 mb-0">
@@ -65,28 +52,23 @@
 
             </div>
 
+            <button type="button" id="copy-recovery-codes" class="btn btn-sm p-1 mt-2">
+                <span class="copy-icon">
+                    <x-authkit::icons.copy-icon color="var(--secondary)" width="18" height="18" />
+                </span>
+                <span class="tick-icon d-none">
+                    <x-authkit::icons.tick-icon color="var(--secondary)" width="18" height="18" />
+                </span>
+            </button>
+
+            <template id="recovery-code-template">
+                <div class="d-flex align-items-center justify-content-center py-1">
+                    <span class="fw-medium font-monospace text-center" dir="ltr"></span>
+                </div>
+            </template>
         </div>
 
-        <!-- ----------------------------------- -->
-        <!-- Recovery Code Template -->
-        <!-- ----------------------------------- -->
-        <template id="recovery-code-template">
-            <div class="position-relative d-flex align-items-center justify-content-center py-1">
-                <span class="fw-medium font-monospace text-center" dir="ltr"></span>
 
-                <button type="button"
-                        class="btn p-1 position-absolute"
-                        style="left: 0; top: 50%; transform: translateY(-50%);"
-                        aria-label="کپی کد بازیابی">
-                    <span class="copy-icon">
-                        <x-authkit::icons.copy-icon color="var(--secondary)" />
-                    </span>
-                    <span class="tick-icon d-none">
-                        <x-authkit::icons.tick-icon color="var(--success)" />
-                    </span>
-                </button>
-            </div>
-        </template>
 
         <!-- ----------------------------------- -->
         <!-- Actions -->
