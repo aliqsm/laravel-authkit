@@ -27,7 +27,7 @@
 
                     $action = match ($event) {
                         'login_alert' => 'ورود به حساب کاربری',
-                        'password_updated' => 'تغییر گذرواژه',
+                        'password_changed' => 'تغییر گذرواژه',
                         'two_factor_enabled' => 'فعال‌سازی تأیید دومرحله‌ای',
                         'two_factor_disabled' => 'غیرفعال‌سازی تأیید دومرحله‌ای',
                         '2fa_recovery_codes_regenerated' => 'تولید مجدد کدهای بازیابی',
@@ -35,7 +35,7 @@
                         default => $activity->data['title'] ?? 'فعالیت امنیتی',
                     };
 
-                    $isImportant = in_array($event, ['login_alert', 'password_updated', 'two_factor_disabled', '2fa_recovery_codes_empty']);
+                    $isImportant = in_array($event, ['login_alert', 'password_changed', 'two_factor_disabled', '2fa_recovery_codes_empty']);
                 @endphp
 
                 <div class="d-flex align-items-center gap-3 py-3 {{ !$loop->last ? 'border-bottom' : '' }}">
