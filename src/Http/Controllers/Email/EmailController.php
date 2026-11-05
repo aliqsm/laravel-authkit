@@ -44,6 +44,6 @@ class EmailController extends Controller
             $action->execute($request);
         }
 
-        return $response->verifyEmail($request, $alreadyVerified);
+        return $response->verifyEmail($alreadyVerified);
     }
 }

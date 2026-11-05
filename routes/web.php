@@ -59,8 +59,8 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.change_password', true)) {
             Route::prefix('change-password')->middleware('password.confirm')->group(function () {
-                Route::get('/', [UpdatePasswordController::class, 'edit'])->name('password.change')->middleware('throttle:authkit_pages');
-                Route::post('/', [UpdatePasswordController::class, 'update'])->name('password.change.update')->middleware('throttle:authkit_change_password');
+                Route::get('/', [UpdatePasswordController::class, 'edit'])->name('password.edit')->middleware('throttle:authkit_pages');
+                Route::post('/', [UpdatePasswordController::class, 'update'])->name('password.change')->middleware('throttle:authkit_change_password');
             });
         }
     });

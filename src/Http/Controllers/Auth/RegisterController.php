@@ -27,6 +27,6 @@ class RegisterController extends Controller
             data: $request->validated(),
         );
 
-        return $response->toResponse($request);
+        return $response->toResponse();
     }
 }

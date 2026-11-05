@@ -28,7 +28,7 @@ class EmailVerificationResponse
             return redirect()->route('dashboard');
         }
 
-        return view('auth.verify-email');
+        return view('authkit::auth.verify-email');
     }
 
 

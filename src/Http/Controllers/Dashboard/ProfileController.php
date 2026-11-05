@@ -5,25 +5,26 @@ namespace Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard;
 use Illuminate\Http\Request;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Controller;
 use Aliqsm\LaravelAuthkit\Http\Requests\Dashboard\UpdateProfileRequest;
-use Aliqsm\LaravelAuthkit\Http\Responses\Dashboard\ProfileEditResponse;
-use Aliqsm\LaravelAuthkit\Http\Responses\Dashboard\ProfileUpdateResponse;
+use Aliqsm\LaravelAuthkit\Http\Responses\Dashboard\ProfileResponse;
 
 class ProfileController extends Controller
 {
     // -------------------------------------
     // Edit Profile
     // -------------------------------------
-    public function edit(Request $request, ProfileEditResponse $response)
+    public function edit(Request $request, ProfileResponse $response)
     {
-        return $response->toResponse($request, $request->user());
+        $user = $request->user();
+
+        return $response->edit($user);
     }
 
 
-    
+
     // -------------------------------------
     // Update Profile
     // -------------------------------------
-    public function update(UpdateProfileRequest $request, ProfileUpdateResponse $response)
+    public function update(UpdateProfileRequest $request, ProfileResponse $response)
     {
         $user = $request->user();
 
@@ -31,6 +32,6 @@ class ProfileController extends Controller
             'name' => $request->validated()['name'],
         ]);
 
-        return $response->toResponse($request, $user);
+        return $response->update($user);
     }
 }

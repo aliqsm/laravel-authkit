@@ -2,15 +2,13 @@
 
 namespace Aliqsm\LaravelAuthkit\Http\Responses\Auth;
 
-use Illuminate\Http\Request;
-
 class RegisterResponse
 {
-    public function toResponse(Request $request)
+    public function toResponse()
     {
         if (config('authkit.app_mode') === 'api') {
             return response()->json([
-                'message' => 'درحال انتقال به صفحه تأیید ایمیل',
+                'message' => 'حساب کاربری شما با موفقیت ایجاد شد',
                 'data' => [
                     'next_step' => 'email_verification',
                 ],
@@ -18,7 +16,7 @@ class RegisterResponse
         }
 
         return response()->json([
-            'message' => 'درحال انتقال به صفحه تأیید ایمیل',
+            'message' => 'حساب کاربری شما با موفقیت ایجاد شد',
             'data' => [
                 'redirect' => route('verification.notice'),
             ],
