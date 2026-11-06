@@ -128,7 +128,6 @@ php artisan vendor:publish --tag=authkit-config
 در حالت API، آدرس Frontend را در گزینه `frontend_url` مشخص کنید. این آدرس برای هدایت کاربر به Frontend استفاده می‌شود:
 
 ```php
-'frontend_url' => 'https://app.example.com',
 ```
 
 ### فعال‌سازی قابلیت‌ها

@@ -3,35 +3,20 @@
 return [
 
     // -------------------------------------
-    // Font
-    // -------------------------------------
-    'font' => [
-        'family' => 'ExampleFont',
-        'fallback' => 'Tahoma, Arial, sans-serif',
-        'weights' => [
-            400 => 'fonts/example-font/ExampleFont-Regular.woff2',
-            500 => 'fonts/example-font/ExampleFont-Medium.woff2',
-            700 => 'fonts/example-font/ExampleFont-Bold.woff2',
-        ],
-    ],
-
-
-
-    // -------------------------------------
     // Auth Mode (web or api)
     // -------------------------------------
     'app_mode' => 'web',
-    'frontend_url' => env('FRONTEND_URL'),
+
 
     // -------------------------------------
     // API Redirect URLs (Set in API mode)
     // -------------------------------------
-    'api_redirects' => [
-        'oauth_success' => env('AUTHKIT_REDIRECT_OAUTH_SUCCESS'),
-        'oauth_failure' => env('AUTHKIT_REDIRECT_OAUTH_FAILURE'),
-        'two_factor_challenge' => env('AUTHKIT_REDIRECT_TWO_FACTOR_CHALLENGE'),
-        'after_password_reset' => env('AUTHKIT_REDIRECT_AFTER_PASSWORD_RESET'),
-        'after_email_verification' => env('AUTHKIT_REDIRECT_AFTER_EMAIL_VERIFICATION'),
+    'api_urls' => [
+        'oauth_success' => env('AUTHKIT_URL_OAUTH_SUCCESS'),
+        'oauth_failure' => env('AUTHKIT_URL_OAUTH_FAILURE'),
+        'two_factor_challenge' => env('AUTHKIT_URL_TWO_FACTOR_CHALLENGE'),
+        'password_reset' => env('AUTHKIT_URL_PASSWORD_RESET'),
+        'email_verification' => env('AUTHKIT_URL_EMAIL_VERIFICATION'),
     ],
 
 
@@ -144,6 +129,21 @@ return [
         'authkit_terminate_sessions' => [
             'ip' => ['max_attempts' => 10, 'decay_minutes' => 1],
             'user' => ['max_attempts' => 5, 'decay_minutes' => 1],
+        ],
+    ],
+
+
+
+    // -------------------------------------
+    // Font
+    // -------------------------------------
+    'font' => [
+        'family' => 'ExampleFont',
+        'fallback' => 'Tahoma, Arial, sans-serif',
+        'weights' => [
+            400 => 'fonts/example-font/ExampleFont-Regular.woff2',
+            500 => 'fonts/example-font/ExampleFont-Medium.woff2',
+            700 => 'fonts/example-font/ExampleFont-Bold.woff2',
         ],
     ],
 ];
