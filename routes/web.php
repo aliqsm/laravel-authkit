@@ -7,7 +7,7 @@ use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\LogoutController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ResetPasswordController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ForgotPasswordController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ConfirmPasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Password\UpdatePasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ChangePasswordController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Email\EmailController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\ProfileController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\SecurityActivityController;
@@ -64,8 +64,8 @@ Route::middleware('web')->group(function () {
         // -------------------------------------
         if (config('authkit.features.change_password', true)) {
             Route::prefix('change-password')->group(function () {
-                Route::get('/', [UpdatePasswordController::class, 'edit'])->name('password.edit')->middleware('throttle:authkit_pages');
-                Route::post('/', [UpdatePasswordController::class, 'update'])->name('password.change')->middleware('throttle:authkit_change_password');
+                Route::get('/', [ChangePasswordController::class, 'edit'])->name('password.edit')->middleware('throttle:authkit_pages');
+                Route::post('/', [ChangePasswordController::class, 'update'])->name('password.change')->middleware('throttle:authkit_change_password');
             });
         }
     });

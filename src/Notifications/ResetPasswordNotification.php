@@ -39,7 +39,7 @@ class ResetPasswordNotification extends Notification  implements ShouldQueue
         }
 
         if ($appMode === 'api') {
-            $url = rtrim(config('authkit.after_email_verification.password_reset'), '/') . '/' . $this->token . '?email=' . urlencode($notifiable->email);
+            $url = rtrim(config('authkit.api_urls.password_reset'), '/') . '/' . $this->token . '?email=' . urlencode($notifiable->email);
         }
 
 

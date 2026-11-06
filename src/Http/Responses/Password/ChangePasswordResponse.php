@@ -4,7 +4,7 @@ namespace Aliqsm\LaravelAuthkit\Http\Responses\Password;
 
 use Illuminate\Http\Request;
 
-class UpdatePasswordResponse
+class ChangePasswordResponse
 {
     public function toResponse(Request $request)
     {

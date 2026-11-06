@@ -9,7 +9,7 @@ use Aliqsm\LaravelAuthkit\Http\Controllers\Auth\SocialiteController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ResetPasswordController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ForgotPasswordController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ConfirmPasswordController;
-use Aliqsm\LaravelAuthkit\Http\Controllers\Password\UpdatePasswordController;
+use Aliqsm\LaravelAuthkit\Http\Controllers\Password\ChangePasswordController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Email\EmailController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\ProfileController;
 use Aliqsm\LaravelAuthkit\Http\Controllers\Dashboard\SecurityActivityController;
@@ -54,7 +54,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Update Password
         // -------------------------------------
         if (config('authkit.features.change_password', true)) {
-            Route::put('/password', [UpdatePasswordController::class, 'update'])->middleware('throttle:authkit_change_password');
+            Route::put('/password', [ChangePasswordController::class, 'update'])->middleware('throttle:authkit_change_password');
         }
     });
 
