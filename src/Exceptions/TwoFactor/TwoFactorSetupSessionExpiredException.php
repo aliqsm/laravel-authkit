@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class TwoFactorSetupSessionExpiredException extends Exception
 {
     public function __construct(
-        string $msg = 'نشست شما منقضی شده، مجدداً تلاش نمایید.'
+        string $msg = 'مهلت انجام فرآیند راه‌اندازی تأیید دومرحله‌ای به پایان رسیده است. لطفاً مجدداً تلاش کنید.'
     ) {
         parent::__construct($msg);
     }

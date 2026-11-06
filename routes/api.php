@@ -125,7 +125,7 @@ Route::prefix('api')->middleware('api')->group(function () {
     // تشخیص نمی‌داد SPA ندارن رو به‌عنوان درخواست Origin/Referer درخواست‌هایی که Sanctum چون
     // درنتیجه سشن رو لود نمی‌کرد، و سرور فکر میکرد کاربر لاگین نیست و ایمیل اونو تایید نمیکرد
     // استفاده کنیم auth:sanctum بجای web برای همین مجبور شدیم از میدلور
-    Route::get('email/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->middleware(['web', 'signed', 'throttle:authkit_verification_verify']);
+    Route::get('email/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('api.verification.verify')->middleware(['web', 'signed', 'throttle:authkit_verification_verify']);
 
 
 

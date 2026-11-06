@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class TwoFactorChallengeInvalidException extends Exception
 {
     public function __construct(
-        string $msg = 'فرآیند تأیید هویت دومرحله‌ای معتبر نمی‌باشد. لطفاً مجدداً وارد شوید.'
+        string $msg = 'درخواست تأیید دومرحله‌ای نامعتبر یا منقضی شده است. لطفاً مجدداً وارد حساب خود شوید.'
     ) {
         parent::__construct($msg);
     }

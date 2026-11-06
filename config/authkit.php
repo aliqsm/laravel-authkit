@@ -27,13 +27,12 @@ return [
     // API Redirect URLs (Set in API mode)
     // -------------------------------------
     'api_redirects' => [
-        'oauth_error' => env('AUTHKIT_REDIRECT_OAUTH_ERROR', '/login'),
-        'after_oauth_login' => env('AUTHKIT_REDIRECT_AFTER_OAUTH_LOGIN', '/dashboard'),
-        'two_factor_challenge' => env('AUTHKIT_REDIRECT_TWO_FACTOR_CHALLENGE', '/2fa/challenge'),
-        'after_password_reset' => env('AUTHKIT_REDIRECT_AFTER_PASSWORD_RESET', '/login'),
-        'after_email_verification' => env('AUTHKIT_REDIRECT_AFTER_EMAIL_VERIFICATION', '/dashboard'),
+        'oauth_success' => env('AUTHKIT_REDIRECT_OAUTH_SUCCESS'),
+        'oauth_failure' => env('AUTHKIT_REDIRECT_OAUTH_FAILURE'),
+        'two_factor_challenge' => env('AUTHKIT_REDIRECT_TWO_FACTOR_CHALLENGE'),
+        'after_password_reset' => env('AUTHKIT_REDIRECT_AFTER_PASSWORD_RESET'),
+        'after_email_verification' => env('AUTHKIT_REDIRECT_AFTER_EMAIL_VERIFICATION'),
     ],
-
 
 
     // -------------------------------------
