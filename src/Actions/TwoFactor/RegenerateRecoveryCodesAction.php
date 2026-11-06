@@ -3,7 +3,7 @@
 namespace Aliqsm\LaravelAuthkit\Actions\TwoFactor;
 
 use Aliqsm\LaravelAuthkit\Notifications\SecurityEventNotification;
-use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorAuthenticationNotEnabledException;
+use Aliqsm\LaravelAuthkit\Exceptions\TwoFactor\TwoFactorAuthenticationNotEnabledException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;

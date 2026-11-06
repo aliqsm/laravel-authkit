@@ -327,40 +327,40 @@ GOOGLE_REDIRECT_URI=
 
 | متد | مسیر | نام Route |
 |---|---|---|
-| POST | `/api/login` | `api.login` |
-| POST | `/api/register` | `api.register` |
+| POST | `/api/login` |
+| POST | `/api/register` |
 | GET | `/api/oauth/google/redirect` |
-| GET | `/api/oauth/google/callback` | `api.oauth.google.callback` |
-| POST | `/api/forgot-password` | `api.password.email` |
-| POST | `/api/reset-password` | `api.password.update` |
-| GET | `/api/2fa/challenge` | `api.two-factor.challenge` |
-| POST | `/api/2fa/challenge` | `api.two-factor.verify` |
+| GET | `/api/oauth/google/callback` |
+| POST | `/api/forgot-password` |
+| POST | `/api/reset-password` |
+| GET | `/api/2fa/challenge` |
+| POST | `/api/2fa/challenge` |
 
 **تأیید ایمیل و مدیریت نشست**
 
 | متد | مسیر | نام Route |
 |---|---|---|
-| GET | `/api/email/verify` | `api.verification.notice` |
-| POST | `/api/email/verification-notification` | `api.verification.send` |
-| GET | `/api/email/verify/{id}/{hash}` | `api.verification.verify` |
-| POST | `/api/logout` | `api.logout` |
-| POST | `/api/logout/logout-other-devices` | `api.sessions.destroy` |
+| GET | `/api/email/verify` |
+| POST | `/api/email/verification-notification` |
+| GET | `/api/email/verify/{id}/{hash}` |
+| POST | `/api/logout` |
+| POST | `/api/logout/logout-other-devices` |
 
 **مدیریت حساب کاربری**
 
 | متد | مسیر | نام Route |
 |---|---|---|
-| GET | `/api/dashboard/profile` | `api.profile.edit` |
-| PUT | `/api/dashboard/profile` | `api.profile.update` |
-| GET | `/api/dashboard/sessions` | `api.dashboard.sessions.index` |
-| GET | `/api/dashboard/security-activities` | `api.dashboard.security-activities.index` |
+| GET | `/api/dashboard/profile` |
+| PUT | `/api/dashboard/profile` |
+| GET | `/api/dashboard/sessions` |
+| GET | `/api/dashboard/security-activities` |
 | PUT | `/api/dashboard/password` | `api.password.update` |
-| POST | `/api/confirm-password` | `api.password.confirm.verify` |
-| POST | `/api/password/send-reset-link` | `api.password.send-reset-link` |
-| GET | `/api/2fa` | `api.two-factor.index` |
-| POST | `/api/2fa/enable` | `api.two-factor.enable` |
-| POST | `/api/2fa/disable` | `api.two-factor.disable` |
-| POST | `/api/2fa/regenerate` | `api.two-factor.recovery-code.regenerate` |
+| POST | `/api/confirm-password` |
+| POST | `/api/password/send-reset-link` |
+| GET | `/api/2fa` |
+| POST | `/api/2fa/enable` |
+| POST | `/api/2fa/disable` |
+| POST | `/api/2fa/regenerate` |
 
 
 

@@ -2,9 +2,9 @@
 
 namespace Aliqsm\LaravelAuthkit\Actions\TwoFactor;
 
-use Aliqsm\LaravelAuthkit\TwoFactor\InvalidTwoFactorCodeException;
-use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorAuthenticationNotEnabledException;
-use Aliqsm\LaravelAuthkit\TwoFactor\TwoFactorChallengeInvalidException;
+use Aliqsm\LaravelAuthkit\Exceptions\TwoFactor\InvalidTwoFactorCodeException;
+use Aliqsm\LaravelAuthkit\Exceptions\TwoFactor\TwoFactorAuthenticationNotEnabledException;
+use Aliqsm\LaravelAuthkit\Exceptions\TwoFactor\TwoFactorChallengeInvalidException;
 use Aliqsm\LaravelAuthkit\Http\Requests\TwoFactor\TwoFactorChallengeRequest;
 use Aliqsm\LaravelAuthkit\Notifications\SecurityEventNotification;
 use Illuminate\Support\Carbon;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Aliqsm\LaravelAuthkit\TwoFactor;
+namespace Aliqsm\LaravelAuthkit\Exceptions\TwoFactor;
 
 use Exception;
 use Illuminate\Http\Request;

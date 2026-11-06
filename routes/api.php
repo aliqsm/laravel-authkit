@@ -20,15 +20,15 @@ use Aliqsm\LaravelAuthkit\Http\Controllers\TwoFactor\TwoFactorChallengeControlle
 
 
 Route::prefix('api')->middleware('api')->group(function () {
-    Route::prefix('dashboard')->middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
         // -------------------------------------
         // Edit Profile
         // -------------------------------------
         if (config('authkit.features.update_profile_information', true)) {
             Route::prefix('profile')->group(function () {
-                Route::get('/', [ProfileController::class, 'edit'])->name('api.profile.edit')->middleware('throttle:authkit_pages');
-                Route::put('/', [ProfileController::class, 'update'])->name('api.profile.update')->middleware('throttle:authkit_update_profile');
+                Route::get('/', [ProfileController::class, 'edit'])->middleware('throttle:authkit_pages');
+                Route::put('/', [ProfileController::class, 'update'])->middleware('throttle:authkit_update_profile');
             });
         }
 
@@ -37,8 +37,8 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Sessions
         // -------------------------------------
         Route::prefix('sessions')->middleware('throttle:authkit_logout')->group(function () {
-            Route::get('/', [SessionController::class, 'index'])->name('api.dashboard.sessions.index')->middleware('throttle:authkit_pages');
-            Route::post('/terminate-others', [SessionController::class, 'destroyOthers'])->name('api.sessions.destroy')->middleware('throttle:authkit_terminate_sessions');
+            Route::get('/', [SessionController::class, 'index'])->middleware('throttle:authkit_pages');
+            Route::post('/terminate-others', [SessionController::class, 'destroyOthers'])->middleware('throttle:authkit_terminate_sessions');
         });
 
 
@@ -46,7 +46,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Security Activities
         // -------------------------------------
         if (config('authkit.features.security_activities', true)) {
-            Route::get('/security-activities', [SecurityActivityController::class, 'index'])->name('api.dashboard.security-activities.index')->middleware('throttle:authkit_pages');
+            Route::get('/security-activities', [SecurityActivityController::class, 'index'])->middleware('throttle:authkit_pages');
         }
 
 
@@ -54,7 +54,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Update Password
         // -------------------------------------
         if (config('authkit.features.change_password', true)) {
-            Route::put('/password', [UpdatePasswordController::class, 'update'])->name('api.password.change')->middleware('throttle:authkit_change_password');
+            Route::put('/password', [UpdatePasswordController::class, 'update'])->middleware('throttle:authkit_change_password');
         }
     });
 
@@ -66,7 +66,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         // Login
         // -------------------------------------
-        Route::post('/login', [LoginController::class, 'login'])->name('api.login')->middleware('throttle:authkit_login');
+        Route::post('/login', [LoginController::class, 'login'])->middleware('throttle:authkit_login');
 
 
         // -------------------------------------
@@ -84,7 +84,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Register
         // -------------------------------------
         if (config('authkit.features.registration', true)) {
-            Route::post('/register', [RegisterController::class, 'register'])->name('api.register')->middleware('throttle:authkit_register');
+            Route::post('/register', [RegisterController::class, 'register'])->middleware('throttle:authkit_register');
         }
 
 
@@ -92,7 +92,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Forgot Password
         // -------------------------------------
         if (config('authkit.features.password_reset', true)) {
-            Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword'])->name('api.password.email')->middleware('throttle:authkit_forgot_password');
+            Route::post('/forgot-password', [ForgotPasswordController::class, 'forgotPassword'])->middleware('throttle:authkit_forgot_password');
         }
 
 
@@ -101,8 +101,8 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         if (config('authkit.features.two_factor_authentication', true)) {
             Route::prefix('2fa/challenge')->group(function () {
-                Route::get('/', [TwoFactorChallengeController::class, 'show'])->name('api.two-factor.challenge')->middleware('throttle:authkit_pages');
-                Route::post('/', [TwoFactorChallengeController::class, 'verify'])->name('api.two-factor.verify')->middleware('throttle:authkit_two_factor_verify');
+                Route::get('/', [TwoFactorChallengeController::class, 'show'])->middleware('throttle:authkit_pages');
+                Route::post('/', [TwoFactorChallengeController::class, 'verify'])->middleware('throttle:authkit_two_factor_verify');
             });
         }
     });
@@ -115,7 +115,7 @@ Route::prefix('api')->middleware('api')->group(function () {
     // Guest + Authenticated
     // -------------------------------------
     if (config('authkit.features.password_reset', true)) {
-        Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('api.password.update')->middleware('throttle:authkit_reset_password');
+        Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->middleware('throttle:authkit_reset_password');
     }
 
 
@@ -125,9 +125,7 @@ Route::prefix('api')->middleware('api')->group(function () {
     // تشخیص نمی‌داد SPA ندارن رو به‌عنوان درخواست Origin/Referer درخواست‌هایی که Sanctum چون
     // درنتیجه سشن رو لود نمی‌کرد، و سرور فکر میکرد کاربر لاگین نیست و ایمیل اونو تایید نمیکرد
     // استفاده کنیم auth:sanctum بجای web برای همین مجبور شدیم از میدلور
-    Route::prefix('email')->middleware(['web', 'signed', 'throttle:authkit_verification_verify'])->group(function () {
-        Route::get('/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->name('api.verification.verify');
-    });
+    Route::get('email/verify/{id}/{hash}', [EmailController::class, 'verifyEmail'])->middleware(['web', 'signed', 'throttle:authkit_verification_verify']);
 
 
 
@@ -137,23 +135,21 @@ Route::prefix('api')->middleware('api')->group(function () {
         // Email Verification
         // -------------------------------------
         Route::prefix('email')->group(function () {
-            Route::get('/verify', [EmailController::class, 'showVerificationNotice'])->name('api.verification.notice')->middleware('throttle:authkit_pages');
-            Route::post('/verification-notification', [EmailController::class, 'resendVerificationEmail'])->name('api.verification.send')->middleware('throttle:authkit_resend_verification_email');
+            Route::get('/verify', [EmailController::class, 'showVerificationNotice'])->middleware('throttle:authkit_pages');
+            Route::post('/verification-notification', [EmailController::class, 'resendVerificationEmail'])->middleware('throttle:authkit_resend_verification_email');
         });
 
 
         // -------------------------------------
         // Logout
         // -------------------------------------
-        Route::prefix('logout')->middleware('throttle:authkit_logout')->group(function () {
-            Route::post('/', [LogoutController::class, 'logout'])->name('api.logout');
-        });
+        Route::post('/logout', [LogoutController::class, 'logout'])->middleware('throttle:authkit_logout');
 
 
         // -------------------------------------
         // Confirm Password
         // -------------------------------------
-        Route::post('/confirm-password', [ConfirmPasswordController::class, 'store'])->name('api.password.confirm.verify')->middleware('throttle:authkit_confirm_password');
+        Route::post('/confirm-password', [ConfirmPasswordController::class, 'store'])->middleware('throttle:authkit_confirm_password');
 
 
         // -------------------------------------
@@ -161,7 +157,7 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         // برای وقتی که کاربر با گوگل ثبت نام کرده و رمز عبورش رو نمیدونه
         if (config('authkit.features.password_reset', true)) {
-            Route::post('/password/send-reset-link', [ForgotPasswordController::class, 'sendResetLinkForAuthenticatedUser'])->name('api.password.send-reset-link')->middleware('throttle:authkit_forgot_password');
+            Route::post('/password/send-reset-link', [ForgotPasswordController::class, 'sendResetLinkForAuthenticatedUser'])->middleware('throttle:authkit_forgot_password');
         }
 
 
@@ -170,10 +166,10 @@ Route::prefix('api')->middleware('api')->group(function () {
         // -------------------------------------
         if (config('authkit.features.two_factor_authentication', true)) {
             Route::prefix('2fa')->middleware('password.confirm')->group(function () {
-                Route::get('/', [TwoFactorController::class, 'index'])->name('api.two-factor.index')->middleware('throttle:authkit_pages');
-                Route::post('/enable', [TwoFactorController::class, 'enable'])->name('api.two-factor.enable')->middleware('throttle:authkit_two_factor_enable');
-                Route::post('/disable', [TwoFactorController::class, 'disable'])->name('api.two-factor.disable')->middleware('throttle:authkit_two_factor_disable');
-                Route::post('/regenerate', [TwoFactorController::class, 'regenerate'])->name('api.two-factor.recovery-code.regenerate')->middleware('throttle:authkit_two_factor_generate_recovery_code');
+                Route::get('/', [TwoFactorController::class, 'index'])->middleware('throttle:authkit_pages');
+                Route::post('/enable', [TwoFactorController::class, 'enable'])->middleware('throttle:authkit_two_factor_enable');
+                Route::post('/disable', [TwoFactorController::class, 'disable'])->middleware('throttle:authkit_two_factor_disable');
+                Route::post('/regenerate', [TwoFactorController::class, 'regenerate'])->middleware('throttle:authkit_two_factor_generate_recovery_code');
             });
         }
     });

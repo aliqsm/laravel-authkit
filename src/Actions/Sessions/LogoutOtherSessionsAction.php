@@ -13,7 +13,7 @@ class LogoutOtherSessionsAction
     {
         $user = $request->user();
 
-        Auth::logoutOtherDevices($data['password']);
+        Auth::guard('web')->logoutOtherDevices($data['password']);
 
         if (config('session.driver') === 'database') {
             DB::table('sessions')
