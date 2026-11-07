@@ -16,7 +16,7 @@ class SecurityActivitiesResponse
             ]);
         }
 
-        return view('authkit::dashboard.security-activities.index', [
+        return view('authkit::security-activities.index', [
             'activities' => $activities,
         ]);
     }

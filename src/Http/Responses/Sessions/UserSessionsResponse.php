@@ -14,7 +14,7 @@ class UserSessionsResponse
             ]);
         }
 
-        return view('authkit::dashboard.sessions.index', [
+        return view('authkit::sessions.index', [
             'sessions' => $sessions,
         ]);
     }

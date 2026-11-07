@@ -4,7 +4,7 @@ namespace Aliqsm\LaravelAuthkit\Http\Controllers\Password;
 
 use Aliqsm\LaravelAuthkit\Http\Controllers\Controller;
 use Aliqsm\LaravelAuthkit\Actions\Password\ChangePasswordAction;
-use Aliqsm\LaravelAuthkit\Http\Requests\Password\UpdatePasswordRequest;
+use Aliqsm\LaravelAuthkit\Http\Requests\Password\ChangePasswordRequest;
 use Aliqsm\LaravelAuthkit\Http\Responses\Password\ChangePasswordResponse;
 
 class ChangePasswordController extends Controller
@@ -22,7 +22,7 @@ class ChangePasswordController extends Controller
     // ------------------------------------
     // Update Password
     // ------------------------------------
-    public function update(UpdatePasswordRequest $request, ChangePasswordAction $action, ChangePasswordResponse $response)
+    public function update(ChangePasswordRequest $request, ChangePasswordAction $action, ChangePasswordResponse $response)
     {
         $action->execute(
             request: $request,

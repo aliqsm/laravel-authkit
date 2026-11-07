@@ -1,0 +1,199 @@
+<div data-title="پیکربندی">
+    <div class="border-bottom pb-4 mb-5">
+        <h1 class="fw-bold">پیکربندی</h1>
+    </div>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">فایل تنظیمات</h4>
+        <p class="text-secondary lh-lg">
+            تنظیمات AuthKit در فایل زیر قرار دارند:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>config/authkit.php</code></pre>
+        <p class="text-secondary lh-lg">
+            اگر هنوز این فایل را در پروژه خود ندارید، ابتدا آن را منتشر کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan vendor:publish --tag=authkit-config</code></pre>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">حالت اجرا</h4>
+        <p class="text-secondary lh-lg">
+            با استفاده از گزینه <code>app_mode</code> می‌توانید حالت اجرای AuthKit را مشخص کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'app_mode' => 'web',</code></pre>
+        <ul class="text-secondary lh-lg">
+            <li><code>web</code>: فعال‌سازی Routeهای مربوط به احراز هویت وب.</li>
+            <li><code>api</code>: فعال‌سازی Routeهای مربوط به API.</li>
+            <li><code>null</code>: غیرفعال‌کردن Routeهای AuthKit.</li>
+        </ul>
+        <p class="text-secondary lh-lg">
+            با تغییر این گزینه، می‌توانید مشخص کنید کدام بخش از Routeهای پکیج در پروژه بارگذاری شود.
+        </p>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">تنظیم آدرس‌های انتقال در حالت API</h4>
+        <p class="text-secondary lh-lg">
+            اگر حالت اجرای AuthKit را روی <code>api</code> قرار داده‌اید، باید آدرس مقصد هر یک از مراحل زیر را در بخش <code>api_urls</code> مشخص کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'api_urls' => [
+    'oauth_success' => env('AUTHKIT_URL_OAUTH_SUCCESS'),
+    'oauth_failure' => env('AUTHKIT_URL_OAUTH_FAILURE'),
+    'two_factor_challenge' => env('AUTHKIT_URL_TWO_FACTOR_CHALLENGE'),
+    'password_reset' => env('AUTHKIT_URL_PASSWORD_RESET'),
+    'email_verification' => env('AUTHKIT_URL_EMAIL_VERIFICATION'),
+],</code></pre>
+        <p class="text-secondary lh-lg">
+            آدرس‌ها از طریق متغیرهای محیطی در فایل <code>.env</code> تنظیم می‌شوند و مشخص می‌کنند کاربر پس از هر یک از این مراحل به کدام صفحه در Frontend منتقل شود.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">مدیریت قابلیت‌ها</h4>
+        <p class="text-secondary lh-lg">
+            در بخش <code>features</code> می‌توانید هر یک از قابلیت‌های اختیاری AuthKit را متناسب با نیاز پروژه فعال یا غیرفعال کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'features' => [
+    'registration' => true,
+    'google_login' => true,
+    'two_factor_authentication' => true,
+    'update_profile_information' => true,
+    'change_password' => true,
+    'security_activities' => true,
+    'password_reset' => true,
+],</code></pre>
+        <p class="text-secondary lh-lg">
+            برای فعال‌بودن هر قابلیت مقدار <code>true</code> و برای غیرفعال‌کردن آن مقدار <code>false</code> را قرار دهید.
+        </p>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">تنظیمات احراز هویت دومرحله‌ای</h4>
+        <p class="text-secondary lh-lg">
+            در بخش <code>two_factor</code> می‌توانید تنظیمات مربوط به احراز هویت دومرحله‌ای را مطابق نیاز پروژه خود تغییر دهید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'two_factor' => [
+    'challenge_expire_minutes' => (int) env('TWO_FACTOR_CHALLENGE_EXPIRE_MINUTES', 10),
+    'setup_expire_minutes' => (int) env('TWO_FACTOR_SETUP_EXPIRE_MINUTES', 10),
+    'recovery_code_length' => (int) env('TWO_FACTOR_RECOVERY_CODE_LENGTH', 12),
+    'recovery_codes_count' => (int) env('TWO_FACTOR_RECOVERY_CODES_COUNT', 6),
+],</code></pre>
+        <ul class="text-secondary lh-lg">
+            <li><code>challenge_expire_minutes</code>: مدت اعتبار مرحله تأیید دومرحله‌ای.</li>
+            <li><code>setup_expire_minutes</code>: مدت اعتبار فرایند فعال‌سازی.</li>
+            <li><code>recovery_code_length</code>: طول هر کد بازیابی.</li>
+            <li><code>recovery_codes_count</code>: تعداد کدهای بازیابی.</li>
+        </ul>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">محدودسازی درخواست‌ها (Rate Limiting)</h4>
+        <p class="text-secondary lh-lg">
+            در بخش <code>rate_limits</code> می‌توانید تعداد درخواست‌های مجاز و مدت زمان محدودیت را برای بخش‌های مختلف AuthKit مشخص کنید. محدودیت‌ها بر اساس IP، ایمیل یا کاربر اعمال می‌شوند:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'rate_limits' => [
+    'authkit_pages' => [
+        'ip' => ['max_attempts' => 120, 'decay_minutes' => 30],
+    ],
+
+    'authkit_login' => [
+        'ip' => ['max_attempts' => 60, 'decay_minutes' => 30],
+        'email' => ['max_attempts' => 10, 'decay_minutes' => 30],
+    ],
+
+    'authkit_logout' => [
+        'ip' => ['max_attempts' => 30, 'decay_minutes' => 30],
+        'user' => ['max_attempts' => 15, 'decay_minutes' => 30],
+    ],
+
+    // سایر محدودیت‌ها ...
+],</code></pre>
+        <p class="text-secondary lh-lg">
+            مقدار <code>max_attempts</code> تعداد درخواست‌های مجاز و <code>decay_minutes</code> مدت زمان محدودیت را بر حسب دقیقه مشخص می‌کند. می‌توانید مقادیر هر بخش را متناسب با نیاز پروژه خود تغییر دهید.
+        </p>
+    </section>
+
+
+
+    <section class="mb-5">
+    <h4 class="fw-bold mb-3">تنظیمات صف (Queue)</h4>
+
+    <p class="text-secondary lh-lg">
+        AuthKit برای پردازش ایمیل‌ها و اعلان‌های امنیتی از سیستم صف (Queue) لاراول استفاده می‌کند. نوع اتصال صف از طریق متغیر <code>QUEUE_CONNECTION</code> در فایل <code>.env</code> مشخص می‌شود:
+    </p>
+
+    <pre class="bg-dark text-light rounded-3 p-3"><code>QUEUE_CONNECTION=database</code></pre>
+
+    <p class="text-secondary lh-lg">
+        لاراول از اتصال‌های مختلفی مانند <code>database</code>، <code>redis</code> و <code>sync</code> پشتیبانی می‌کند. تنظیمات هر اتصال در فایل <code>config/queue.php</code> قرار دارد و می‌توانید آن‌ها را متناسب با زیرساخت پروژه خود تغییر دهید.
+    </p>
+
+    <p class="text-secondary lh-lg">
+        برای پردازش کارهای صف، باید یک Queue Worker فعال باشد. جزئیات ایجاد جدول صف و اجرای Worker در بخش <a href="?page=installation" data-page="installation">نصب و راه‌اندازی</a> توضیح داده شده است.
+    </p>
+</section>
+
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">سفارشی‌سازی فایل‌ها</h4>
+        <p class="text-secondary lh-lg">
+            فایل‌های View و Assetهای AuthKit به‌صورت پیش‌فرض داخل پکیج باقی می‌مانند و برای استفاده معمول نیازی به انتشار آن‌ها ندارید. اگر قصد تغییر یا شخصی‌سازی این فایل‌ها را دارید، می‌توانید آن‌ها را به پروژه خود
+            منتقل کنید.
+        </p>
+
+        <h6 class="fw-bold mt-4">انتشار Viewها</h6>
+        <p class="text-secondary lh-lg">
+            برای دریافت فایل‌های Blade و اعمال تغییرات دلخواه در صفحات AuthKit، دستور زیر را اجرا کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan vendor:publish --tag=authkit-views</code></pre>
+
+        <h6 class="fw-bold mt-4">انتشار Assetها</h6>
+        <p class="text-secondary lh-lg">
+            برای دریافت فایل‌های CSS و JavaScript و شخصی‌سازی ظاهر یا رفتار صفحات، از دستور زیر استفاده کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan vendor:publish --tag=authkit-assets</code></pre>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">تنظیمات فونت</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit از فونت دلخواه پروژه برای نمایش صفحات در حالت Web و قالب ایمیل‌ها در هر دو حالت Web و API استفاده می‌کند. برای تنظیم فونت، خانواده فونت، فونت‌های جایگزین و مسیر فایل‌های فونت با وزن‌های مختلف را در
+            بخش <code>font</code> مشخص کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'font' => [
+    'family' => 'ExampleFont',
+    'fallback' => 'Tahoma, Arial, sans-serif',
+    'weights' => [
+        400 => 'fonts/example-font/ExampleFont-Regular.woff2',
+        500 => 'fonts/example-font/ExampleFont-Medium.woff2',
+        700 => 'fonts/example-font/ExampleFont-Bold.woff2',
+    ],
+],</code></pre>
+        <p class="text-secondary lh-lg">
+            فایل‌های فونت باید در مسیرهای مشخص‌شده در پروژه قرار داشته باشند. نام فونت، فونت‌های جایگزین و وزن‌های موردنیاز را متناسب با فونت مورد استفاده خود تنظیم کنید.
+        </p>
+    </section>
+
+
+
+
+    <div class="border-top mt-5 pt-4 d-flex justify-content-between">
+        <a href="?page=installation" data-page="installation" class="btn py-2 px-4 small border-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+            نصب و راه‌اندازی
+        </a>
+        <a href="?page=authentication" data-page="authentication" class="btn py-2 px-4 small border-dark">
+            احراز هویت
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </a>
+    </div>
+</div>

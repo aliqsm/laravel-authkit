@@ -44,7 +44,7 @@ Route::middleware('web')->group(function () {
         // Sessions
         // -------------------------------------
         Route::prefix('sessions')->middleware('throttle:authkit_logout')->group(function () {
-            Route::get('/', [SessionController::class, 'index'])->name('dashboard.sessions.index')->middleware('throttle:authkit_pages');
+            Route::get('/', [SessionController::class, 'index'])->name('sessions.index')->middleware('throttle:authkit_pages');
             Route::post('/terminate-others', [SessionController::class, 'destroyOthers'])->name('sessions.destroy')->middleware('throttle:authkit_terminate_sessions');;
         });
 
@@ -55,7 +55,7 @@ Route::middleware('web')->group(function () {
         // Security Activities
         // -------------------------------------
         if (config('authkit.features.security_activities', true)) {
-            Route::get('/security-activities', [SecurityActivityController::class, 'index'])->name('dashboard.security-activities.index')->middleware('throttle:authkit_pages');
+            Route::get('/security-activities', [SecurityActivityController::class, 'index'])->name('security-activities.index')->middleware('throttle:authkit_pages');
         }
 
 

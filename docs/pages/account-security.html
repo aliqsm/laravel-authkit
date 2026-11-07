@@ -1,0 +1,285 @@
+<div data-title="مدیریت حساب و امنیت">
+
+    <div class="border-bottom pb-4 mb-5">
+        <h1 class="fw-bold">مدیریت حساب و امنیت</h1>
+    </div>
+
+    <section class="mb-5">
+        <p class="text-secondary lh-lg">
+            AuthKit امکاناتی برای مدیریت اطلاعات و امنیت حساب کاربری فراهم می‌کند. کاربران می‌توانند پروفایل خود را ویرایش کنند، رمز عبور و نشست‌های فعال را مدیریت کنند و از قابلیت‌هایی مانند تأیید ایمیل و احراز هویت
+            دومرحله‌ای استفاده کنند.
+        </p>
+    </section>
+
+    <!-- ------------------------------------- -->
+    <!-- Account Management -->
+    <!-- ------------------------------------- -->
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">مدیریت پروفایل</h4>
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند اطلاعات پروفایل خود را مشاهده و ویرایش کنند. در صورت نیاز، می‌توانید با بازنویسی Route مربوط به این بخش، منطق دلخواه خود را پیاده‌سازی کنید. در این حالت، Route بازنویسی‌شده جایگزین Route
+            پکیج می‌شود.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">تغییر رمز عبور</h4>
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند رمز عبور فعلی حساب خود را با یک رمز عبور جدید جایگزین کنند. برای انجام این عملیات، رمز عبور فعلی کاربر بررسی می‌شود تا از تغییر غیرمجاز آن جلوگیری شود.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">مدیریت نشست‌های فعال</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit امکان مشاهده نشست‌های فعال حساب کاربری را فراهم می‌کند. کاربران می‌توانند نشست‌های خود را بررسی کرده و در صورت نیاز، از سایر دستگاه‌ها خارج شوند. با خاتمه دادن نشست‌های دیگر، دسترسی آن دستگاه‌ها قطع
+            می‌شود و نشست فعلی کاربر حفظ خواهد شد.
+        </p>
+    </section>
+
+    <!-- ------------------------------------- -->
+    <!-- Security -->
+    <!-- ------------------------------------- -->
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">تأیید ایمیل</h4>
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند آدرس ایمیل خود را از طریق لینک ارسال‌شده به ایمیل تأیید کنند. در صورت نیاز، امکان ارسال مجدد ایمیل تأیید نیز وجود دارد. لینک تأیید دارای امضای معتبر است و برای جلوگیری از استفاده غیرمجاز
+            اعتبارسنجی می‌شود.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">احراز هویت دومرحله‌ای (2FA)</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit از احراز هویت دومرحله‌ای با استفاده از کدهای یک‌بارمصرف پشتیبانی می‌کند. کاربران می‌توانند این قابلیت را برای حساب خود فعال یا غیرفعال کنند. پس از فعال‌سازی، هنگام ورود علاوه بر رمز عبور باید کد تأیید
+            ارائه شود.
+        </p>
+        <p class="text-secondary lh-lg">
+            هنگام راه‌اندازی، کدهای بازیابی در اختیار کاربر قرار می‌گیرند تا در صورت دسترسی نداشتن به روش اصلی تأیید، بتواند از آن‌ها استفاده کند. همچنین امکان تولید مجدد کدهای بازیابی وجود دارد.
+        </p>
+        <p class="text-secondary lh-lg">
+            برای انجام عملیات مدیریتی مربوط به احراز هویت دومرحله‌ای، تأیید مجدد رمز عبور الزامی است.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">فعالیت‌های امنیتی</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit امکان ثبت و مشاهده فعالیت‌های امنیتی حساب کاربری را فراهم می‌کند. کاربران می‌توانند رویدادهای امنیتی ثبت‌شده برای حساب خود را بررسی کنند.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">اعلان‌های امنیتی</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit از سیستم اعلان‌های لاراول برای ارسال ایمیل‌های مرتبط با رویدادهای امنیتی حساب کاربران استفاده می‌کند. ارسال این اعلان‌ها از طریق سیستم صف (Queue) انجام می‌شود؛ بنابراین برای پردازش و ارسال آن‌ها باید
+            یک Queue Worker فعال باشد.
+        </p>
+    </section>
+
+
+
+    <!-- ------------------------------------- -->
+    <!-- Routes -->
+    <!-- ------------------------------------- -->
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">مسیرهای مدیریت حساب و امنیت</h4>
+        <p class="text-secondary lh-lg">
+            مسیرهای زیر برای دسترسی به قابلیت‌های مدیریت حساب و امنیت در حالت Web در دسترس هستند:
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">پروفایل</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/profile</code></td>
+                        <td><code>profile.edit</code></td>
+                    </tr>
+                    <tr>
+                        <td>PUT</td>
+                        <td><code>/profile</code></td>
+                        <td><code>profile.update</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="fw-bold mt-4 mb-3">تغییر رمز عبور و تأیید مجدد هویت</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/change-password</code></td>
+                        <td><code>password.edit</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/change-password</code></td>
+                        <td><code>password.change</code></td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/confirm-password</code></td>
+                        <td><code>password.confirm</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/confirm-password</code></td>
+                        <td><code>password.confirm.verify</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="fw-bold mt-4 mb-3">نشست‌های فعال</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/sessions</code></td>
+                        <td><code>sessions.index</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/sessions/terminate-others</code></td>
+                        <td><code>sessions.destroy</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="fw-bold mt-4 mb-3">تأیید ایمیل</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/email/verify</code></td>
+                        <td><code>verification.notice</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/email/verification-notification</code></td>
+                        <td><code>verification.send</code></td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/email/verify/{id}/{hash}</code></td>
+                        <td><code>verification.verify</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="fw-bold mt-4 mb-3">احراز هویت دومرحله‌ای</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/2fa</code></td>
+                        <td><code>two-factor.index</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/2fa/enable</code></td>
+                        <td><code>two-factor.enable</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/2fa/disable</code></td>
+                        <td><code>two-factor.disable</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/2fa/regenerate</code></td>
+                        <td><code>two-factor.recovery-code.regenerate</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="fw-bold mt-4 mb-3">فعالیت‌های امنیتی</h6>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/security-activities</code></td>
+                        <td><code>security-activities.index</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="text-secondary lh-lg mt-3">
+            مسیرهای مدیریت حساب و امنیت در حالت Web به ورود کاربر و تأیید ایمیل او نیاز دارند. همچنین مسیرهای مدیریت احراز هویت دومرحله‌ای به تأیید مجدد رمز عبور نیاز دارند.
+        </p>
+    </section>
+
+
+
+    <div class="border-top mt-5 pt-4 d-flex justify-content-between">
+        <a href="?page=authentication" data-page="authentication" class="btn py-2 px-4 small border-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+            احراز هویت
+        </a>
+        <a href="?page=api" data-page="api" class="btn py-2 px-4 small border-dark">
+            API
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </a>
+    </div>
+</div>

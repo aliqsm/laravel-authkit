@@ -1,0 +1,234 @@
+<div data-title="احراز هویت">
+    <div class="border-bottom pb-4 mb-5">
+        <h1 class="fw-bold">احراز هویت</h1>
+    </div>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">ورود با حساب Google</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit قابلیت ورود و ثبت‌نام با حساب Google را فراهم می‌کند و در پشت صحنه برای پیاده‌سازی این قابلیت از پکیج <a href="https://laravel.com/docs/socialite" target="_blank" rel="noopener">Laravel Socialite</a>
+            استفاده می‌کند. Socialite فرایند احراز هویت از طریق سرویس‌های خارجی را ساده می‌کند.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">راه‌اندازی</h6>
+        <p class="text-secondary lh-lg">
+            ابتدا وارد <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a> شوید و یک پروژه ایجاد کنید. سپس از بخش OAuth، اطلاعات موردنیاز شامل Client ID و Client Secret را
+            دریافت کرده و آدرس Callback پروژه خود را ثبت کنید.
+        </p>
+
+        <p class="text-secondary lh-lg">
+            سپس تنظیمات زیر را در فایل <code>config/services.php</code> قرار دهید:
+        </p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect' => env('GOOGLE_REDIRECT_URI'),
+],</code></pre>
+
+        <p class="text-secondary lh-lg">
+            مقادیر دریافت‌شده را در فایل <code>.env</code> وارد کنید:
+        </p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+GOOGLE_REDIRECT_URI=https://example.com/oauth/google/callback</code></pre>
+
+        <p class="text-secondary lh-lg">
+            آدرس <code>GOOGLE_REDIRECT_URI</code> باید با آدرس Callback ثبت‌شده در Google Cloud Console یکسان باشد.
+        </p>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">مسیرهای احراز هویت</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit از مسیرهای زیر برای ورود، ثبت‌نام و احراز هویت کاربران در حالت Web استفاده می‌کند. این مسیرها به‌صورت خودکار و بر اساس مقدار <code dir="ltr">app_mode</code> در فایل پیکربندی ثبت می‌شوند.
+        </p>
+        <h6 class="fw-bold mt-4 mb-3">ورود و ثبت‌نام</h6>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/login</code></td>
+                        <td><code>login.form</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/login</code></td>
+                        <td><code>login</code></td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/register</code></td>
+                        <td><code>register.form</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/register</code></td>
+                        <td><code>register</code></td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/oauth/google/redirect</code></td>
+                        <td><code>oauth.google.redirect</code></td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/oauth/google/callback</code></td>
+                        <td><code>oauth.google.callback</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/logout</code></td>
+                        <td><code>logout</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="fw-bold mt-4 mb-3">بازیابی رمز عبور</h6>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/forgot-password</code></td>
+                        <td><code>password.request</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/forgot-password</code></td>
+                        <td><code>password.email</code></td>
+                    </tr>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/reset-password/{token}</code></td>
+                        <td><code>password.reset</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/reset-password</code></td>
+                        <td><code>password.update</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h6 class="fw-bold mt-4 mb-3">احراز هویت دومرحله‌ای</h6>
+
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle" dir="ltr">
+                <thead class="table-light">
+                    <tr>
+                        <th>Method</th>
+                        <th>Url</th>
+                        <th>Route Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>GET</td>
+                        <td><code>/2fa/challenge</code></td>
+                        <td><code>two-factor.challenge</code></td>
+                    </tr>
+                    <tr>
+                        <td>POST</td>
+                        <td><code>/2fa/challenge</code></td>
+                        <td><code>two-factor.verify</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p class="text-secondary lh-lg mt-3">
+            ثبت‌نام، ورود با Google، بازیابی رمز عبور و احراز هویت دومرحله‌ای به فعال بودن قابلیت مربوطه در تنظیمات AuthKit وابسته هستند.
+        </p>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">فعال‌سازی و مدیریت قابلیت‌ها</h4>
+        <p class="text-secondary lh-lg">
+            از طریق بخش <code>features</code> در فایل <code>config/authkit.php</code> می‌توانید قابلیت‌های مختلف AuthKit را متناسب با نیاز پروژه فعال یا غیرفعال کنید. مقدار <code>true</code> قابلیت را فعال و مقدار
+            <code>false</code> آن را غیرفعال می‌کند.
+        </p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'features' => [
+    'registration' => true,
+    'google_login' => true,
+    'two_factor_authentication' => true,
+    'update_profile_information' => true,
+    'change_password' => true,
+    'security_activities' => true,
+    'password_reset' => true,
+],</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">معرفی قابلیت‌ها</h6>
+        <ul class="text-secondary lh-lg">
+            <li class="mb-2">
+                <code>registration</code> — فعال‌سازی ثبت‌نام کاربران با استفاده از فرم ثبت‌نام.
+            </li>
+            <li class="mb-2">
+                <code>google_login</code> — فعال‌سازی ورود و ثبت‌نام کاربران از طریق حساب Google.
+            </li>
+            <li class="mb-2">
+                <code>two_factor_authentication</code> — فعال‌سازی احراز هویت دومرحله‌ای.
+            </li>
+            <li class="mb-2">
+                <code>update_profile_information</code> — فعال‌سازی امکان مشاهده و ویرایش اطلاعات پروفایل کاربر.
+            </li>
+            <li class="mb-2">
+                <code>change_password</code> — فعال‌سازی امکان تغییر رمز عبور حساب کاربری.
+            </li>
+            <li class="mb-2">
+                <code>security_activities</code> — فعال‌سازی ثبت و مشاهده فعالیت‌های امنیتی حساب کاربری.
+            </li>
+            <li class="mb-2">
+                <code>password_reset</code> — فعال‌سازی فرایند بازیابی رمز عبور از طریق لینک ارسال‌شده به ایمیل.
+            </li>
+        </ul>
+
+        <div class="alert alert-warning mt-4" role="alert">
+            <h6 class="fw-bold mb-2">هشدار درباره غیرفعال‌سازی احراز هویت دومرحله‌ای</h6>
+            <p class="mb-0 lh-lg">
+                اگر کاربری قبلاً احراز هویت دومرحله‌ای را برای حساب خود فعال کرده باشد، با غیرفعال کردن <code>two_factor_authentication</code>، مسیرهای مربوط به تأیید دومرحله‌ای ثبت نمی‌شوند. در نتیجه، کاربرانی که احراز
+                هویت دومرحله‌ای آن‌ها فعال است ممکن است دیگر نتوانند وارد حساب خود شوند. بنابراین، پیش از غیرفعال کردن این قابلیت، وضعیت احراز هویت دومرحله‌ای کاربران را بررسی و آن را برای حساب‌های فعال غیرفعال کنید.
+            </p>
+        </div>
+    </section>
+
+
+
+    <div class="border-top mt-5 pt-4 d-flex justify-content-between">
+        <a href="?page=configuration" data-page="configuration" class="btn py-2 px-4 small border-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+            پیکر بندی
+        </a>
+        <a href="?page=account-security" data-page="account-security" class="btn py-2 px-4 small border-dark">
+            مدیریت حساب و امنیت
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </a>
+    </div>
+</div>

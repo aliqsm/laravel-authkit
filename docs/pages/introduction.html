@@ -1,0 +1,73 @@
+<div data-title="معرفی">
+    <div class="border-bottom pb-4 mb-5">
+        <h1 class="fw-bold">Laravel AuthKit</h1>
+    </div>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">معرفی</h4>
+        <p class="text-secondary lh-lg">
+            Laravel AuthKit مجموعه‌ای از ابزارها و قابلیت‌های آماده برای مدیریت احراز هویت و حساب‌های کاربری در Laravel است. این پکیج بخش‌های مختلف احراز هویت را در یک ساختار منسجم گردآوری کرده است تا بتوانید به‌سادگی
+            امکاناتی مانند ثبت‌نام، ورود، بازیابی رمز عبور و تأیید دومرحله‌ای را به پروژه خود اضافه کنید.
+        </p>
+        <p class="text-secondary lh-lg">
+            تمام منطق مربوط به احراز هویت، کنترلرها، اعتبارسنجی درخواست‌ها و مدیریت پاسخ‌ها درون پکیج پیاده‌سازی شده‌اند. بنابراین نیازی نیست این بخش‌ها را در هر پروژه از ابتدا بنویسید یا فایل‌های داخلی پکیج را به پروژه
+            خود منتقل کنید.
+        </p>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">حالت‌های اجرا</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit از دو حالت Web و API پشتیبانی می‌کند و می‌توانید متناسب با ساختار پروژه خود یکی از آن‌ها را انتخاب کنید. در هر دو حالت، <strong class="text-dark">احراز هویت با Laravel Sanctum و بر پایه Session و
+                Cookie</strong> انجام می‌شود؛ تفاوت اصلی در نحوه ارائه رابط کاربری و پاسخ به درخواست‌ها است.
+        </p>
+
+        <h6 class="fw-bold mt-4">Web</h6>
+        <p class="text-secondary lh-lg">
+            اگر رابط کاربری پروژه شما با Laravel و Blade توسعه داده شده است، در حالت Web می‌توانید از صفحات آماده AuthKit برای احراز هویت و مدیریت حساب کاربری استفاده کنید.
+        </p>
+
+        <h6 class="fw-bold mt-4">API</h6>
+        <p class="text-secondary lh-lg">
+            اگر پروژه شما با فناوری‌هایی مانند React یا Vue توسعه داده شده است، AuthKit صفحات آماده ارائه نمی‌دهد و Endpointهای موردنیاز را در اختیار برنامه‌نویس قرار می‌دهد. درخواست‌ها به این Endpointها ارسال می‌شوند و
+            پاسخ‌ها در قالب JSON بازگردانده می‌شوند.
+        </p>
+        <p class="text-secondary lh-lg">
+            <strong class="text-dark">توجه:</strong> احراز هویت در حالت API نیز بر پایه Session و Cookie انجام می‌شود و از توکن‌های احراز هویت پشتیبانی نمی‌کند.
+        </p>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">قابلیت‌ها</h4>
+        <ul class="text-secondary lh-lg">
+            <li>ثبت‌نام، ورود</li>
+            <li>ورود و ثبت‌نام با حساب Google</li>
+            <li>تأیید آدرس ایمیل</li>
+            <li>فراموشی، بازیابی و تغییر رمز عبور</li>
+            <li>احراز هویت دومرحله‌ای</li>
+            <li>مدیریت نشست‌های فعال</li>
+            <li>ثبت فعالیت‌های امنیتی</li>
+            <li>ارسال ایمیل رویدادهای امنیتی</li>
+        </ul>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">پیش‌نیازها</h4>
+        <ul class="text-secondary lh-lg">
+            <li>PHP 8.2 یا بالاتر</li>
+            <li>لاراول 12 یا 13</li>
+            <li>Composer</li>
+        </ul>
+    </section>
+
+    <div class="border-top mt-5 pt-4 d-flex justify-content-end">
+        <a href="?page=installation" data-page="installation" class="btn py-2 px-4 small border-dark">
+            نصب و راه‌اندازی
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </a>
+    </div>
+</div>

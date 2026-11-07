@@ -1,0 +1,1992 @@
+<div data-title="API">
+
+    <div class="border-bottom pb-4 mb-5">
+        <h1 class="fw-bold">API</h1>
+    </div>
+
+    <section class="mb-5">
+        <p class="text-secondary lh-lg">
+            AuthKit در حالت <code>API</code>، امکانات احراز هویت و مدیریت حساب کاربری را از طریق Endpointهای مستقل در اختیار <code>Frontend</code> قرار می‌دهد. پاسخ این Endpointها به‌صورت <code>JSON</code> است و احراز
+            هویت درخواست‌ها با استفاده از <code>Laravel Sanctum</code> و بر پایه <code>Session</code> و <code>Cookie</code> انجام می‌شود.
+        </p>
+
+        <p class="text-secondary lh-lg">
+            در این روش نیازی به تولید و ذخیره <code>Access Token</code> در <code>Frontend</code> نیست. پس از ورود کاربر، مرورگر <code>Cookie</code> نشست را در درخواست‌های بعدی به‌صورت خودکار ارسال می‌کند.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">راه‌اندازی API و احراز هویت با Sanctum</h4>
+
+        <h6 class="fw-bold mt-4 mb-3">۱. فعال‌سازی حالت API</h6>
+        <p class="text-secondary lh-lg">
+            ابتدا در فایل <code>config/authkit.php</code> مقدار <code>app_mode</code> را روی <code>api</code> قرار دهید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'app_mode' => 'api',</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">۲. فعال‌سازی Stateful API</h6>
+        <p class="text-secondary lh-lg">
+            در فایل <code>bootstrap/app.php</code>، متد <code>statefulApi()</code> را به تنظیمات Middleware اضافه کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>->withMiddleware(function (Middleware $middleware): void {
+    $middleware->statefulApi();
+})</code></pre>
+        <p class="text-secondary lh-lg">
+            این تنظیم به Sanctum اجازه می‌دهد درخواست‌های ارسالی از دامنه‌های مورد اعتماد <code>Frontend</code> را به‌صورت <code>Stateful</code> پردازش کرده و برای احراز هویت آن‌ها از <code>Session</code> و
+            <code>Cookie</code> استفاده کند.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">۳. تنظیم متغیرهای محیطی</h6>
+        <p class="text-secondary lh-lg">
+            در فایل <code>.env</code> مقادیر زیر را متناسب با دامنه‌های پروژه تنظیم کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>SESSION_DRIVER=database
+SESSION_DOMAIN=.example.com
+SESSION_SECURE_COOKIE=true
+SESSION_SAME_SITE=lax
+
+SANCTUM_STATEFUL_DOMAINS=app.example.com</code></pre>
+
+        <ul class="text-secondary lh-lg">
+            <li class="mb-2"><code>SESSION_DRIVER</code> — در این مثال، نشست‌ها در پایگاه داده ذخیره می‌شوند.</li>
+            <li class="mb-2"><code>SESSION_DOMAIN</code> — دامنه‌ای که Cookie نشست برای آن معتبر است.</li>
+            <li class="mb-2"><code>SESSION_SECURE_COOKIE</code> — در صورت فعال بودن، Cookie فقط از طریق HTTPS ارسال می‌شود.</li>
+            <li class="mb-2"><code>SESSION_SAME_SITE</code> — سیاست ارسال Cookie در درخواست‌های بین‌سایتی را مشخص می‌کند.</li>
+            <li class="mb-2"><code>SANCTUM_STATEFUL_DOMAINS</code> — دامنه Frontendهایی که مجاز به استفاده از احراز هویت Stateful هستند. پورت نیز در صورت استفاده باید مشخص شود.</li>
+        </ul>
+
+        <p class="text-secondary lh-lg">
+            در این مثال، فرض شده Frontend روی <code>app.example.com</code> و API روی <code>api.example.com</code> قرار دارد. تنظیمات Cookie باید با دامنه‌ها و نحوه استقرار پروژه هماهنگ باشند.
+        </p>
+
+        
+        <h6 class="fw-bold mt-4 mb-3">۴. تنظیم CORS</h6>
+<p class="text-secondary lh-lg">
+    ابتدا بررسی کنید فایل <code>config/cors.php</code> در پروژه وجود داشته باشد. اگر این فایل وجود ندارد، می‌توانید تنظیمات پیش‌فرض CORS لاراول را منتشر کنید:
+</p>
+<pre class="bg-dark text-light rounded-3 p-3"><code>php artisan config:publish cors</code></pre>
+
+<p class="text-secondary lh-lg">
+    سپس در فایل <code>config/cors.php</code>، دامنه Frontend را در فهرست Originهای مجاز قرار دهید و ارسال Credentialها را فعال کنید:
+</p>
+<pre class="bg-dark text-light rounded-3 p-3"><code>'supports_credentials' => true,
+
+'allowed_origins' => [
+    'https://app.example.com',
+],</code></pre>
+
+<p class="text-secondary lh-lg">
+    فعال بودن <code>supports_credentials</code> برای ارسال و دریافت Cookie در درخواست‌های Cross-Origin ضروری است.
+</p>
+
+
+        <h6 class="fw-bold mt-4 mb-3">۵. تنظیم Frontend</h6>
+        <p class="text-secondary lh-lg">
+            برای ارسال خودکار Cookieهای <code>Session</code> و <code>CSRF</code> و مدیریت هدر مربوط به آن، تنظیمات Axios را به شکل زیر انجام دهید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>axios.defaults.baseURL = 'https://api.example.com';
+axios.defaults.withCredentials = true;
+axios.defaults.withXSRFToken = true;</code></pre>
+
+        <p class="text-secondary lh-lg">
+            پیش از ارسال درخواست‌های تغییردهنده وضعیت، مانند ورود و ثبت‌نام، ابتدا Cookie مربوط به <code>CSRF</code> را از لاراول دریافت کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>await axios.get('/sanctum/csrf-cookie');</code></pre>
+
+        <p class="text-secondary lh-lg">
+            پس از دریافت Cookie مربوط به CSRF، می‌توانید درخواست ورود را ارسال کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>await axios.post('/api/login', {
+    email: 'user@example.com',
+    password: 'password',
+});</code></pre>
+
+        <p class="text-secondary lh-lg">
+            مرورگر در درخواست‌های بعدی، Cookieهای <code>Session</code> و <code>CSRF</code> را به‌صورت خودکار ارسال می‌کند. همچنین Axios با استفاده از تنظیمات بالا، هدر <code>CSRF</code> را مدیریت می‌کند. در صورت منقضی
+            شدن نشست یا بروز خطای <code>CSRF</code>، باید مجدداً Endpoint دریافت Cookie مربوط به CSRF را فراخوانی کنید.
+        </p>
+
+    </section>
+
+
+<div class="alert alert-warning mt-4" role="alert">
+    <h6 class="fw-bold mb-2">نکته:</h6>
+    <p class="mb-0 lh-lg">
+        برخی قابلیت‌های AuthKit، از جمله ارسال ایمیل‌ها و اعلان‌های امنیتی، از سیستم صف (Queue) لاراول استفاده می‌کنند. برای پردازش این عملیات، باید یک Queue Worker فعال باشد. برای اطلاعات بیشتر به بخش <a href="?page=installation" data-page="installation" class="alert-link">نصب و راه‌اندازی</a> مراجعه کنید.
+    </p>
+</div>
+
+
+
+    <section class="my-5 pt-4">
+        <h4 class="fw-bold mb-3">مستندات Endpointها</h4>
+        <p class="text-secondary lh-lg">
+            در ادامه، Endpointهای ارائه‌شده توسط AuthKit بر اساس قابلیت دسته‌بندی شده‌اند. برای هر Endpoint، متد HTTP، آدرس، سطح دسترسی، ورودی‌های موردنیاز و ساختار پاسخ توضیح داده می‌شود.
+        </p>
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- ------------------------------------- -->
+    <!-- Authentication -->
+    <!-- ------------------------------------- -->
+    <section class="mb-5">
+
+        <h4 class="fw-bold mb-3">احراز هویت</h4>
+
+        <p class="text-secondary lh-lg">
+            در این بخش، Endpointهای مربوط به ورود، ثبت‌نام، خروج از حساب و احراز هویت با حساب گوگل معرفی شده‌اند.
+        </p>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Login -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-4 mb-3">۱. ورود به حساب</h5>
+
+        <p class="text-secondary lh-lg">
+            برای ورود، ایمیل و رمز عبور کاربر ارسال می‌شوند. در صورت فعال بودن احراز هویت دومرحله‌ای، پاسخ مشخص می‌کند که کاربر باید ابتدا مرحله تأیید دومرحله‌ای را انجام دهد.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/login</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Guest</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">Request Body</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>email</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>ایمیل معتبر، حداکثر ۲۵۵ کاراکتر</td>
+                </tr>
+                <tr>
+                    <td><code>password</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>رمز عبور، حداکثر ۲۵۵ کاراکتر</td>
+                </tr>
+                <tr>
+                    <td><code>remember</code></td>
+                    <td>boolean</td>
+                    <td>خیر</td>
+                    <td>فعال‌سازی ورود ماندگار</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            ایمیل پیش از اعتبارسنجی به حروف کوچک تبدیل و فاصله‌های ابتدا و انتهای آن حذف می‌شود.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "email": "user@example.com",
+    "password": "Password123",
+    "remember": true
+}</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق (ورود عادی)</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "درحال ورود...",
+    "data": {
+        "next_step": "dashboard"
+    }
+}</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق (در صورت نیاز به تأیید دومرحله‌ای)</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "درحال ورود...",
+    "data": {
+        "next_step": "two-factor-challenge-form"
+    }
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+        <h6 class="fw-bold mt-4 mb-3">خطاهای احتمالی</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>422</code></td>
+                    <td>ایمیل یا رمز عبور واردشده صحیح نیست.</td>
+                </tr>
+                <tr>
+                    <td><code>429</code></td>
+                    <td>تعداد تلاش‌های ورود از حد مجاز بیشتر شده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Register -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">۲. ثبت‌نام</h5>
+
+        <p class="text-secondary lh-lg">
+            برای ایجاد حساب کاربری، نام، ایمیل و رمز عبور به همراه تکرار آن ارسال می‌شوند. پس از ثبت‌نام موفق، کاربر باید ایمیل خود را تأیید کند.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/register</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Guest</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">Request Body</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>name</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>نام کاربر، حداقل ۳ و حداکثر ۲۵۵ کاراکتر</td>
+                </tr>
+                <tr>
+                    <td><code>email</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>ایمیل معتبر و یکتا</td>
+                </tr>
+                <tr>
+                    <td><code>password</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>رمز عبور مطابق قوانین اعتبارسنجی پکیج</td>
+                </tr>
+                <tr>
+                    <td><code>password_confirmation</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>تکرار رمز عبور</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            نام و ایمیل پیش از اعتبارسنجی پاک‌سازی می‌شوند؛ فاصله‌های ابتدا و انتهای آن‌ها حذف شده و ایمیل به حروف کوچک تبدیل می‌شود.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "name": "Ali",
+    "email": "user@example.com",
+    "password": "Password123!",
+    "password_confirmation": "Password123!"
+}</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "حساب کاربری شما با موفقیت ایجاد شد",
+    "data": {
+        "next_step": "email_verification"
+    }
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Google OAuth -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">۳. ورود و ثبت‌نام با گوگل</h5>
+
+        <p class="text-secondary lh-lg">
+            AuthKit برای ورود و ثبت‌نام با حساب گوگل از <code>Laravel Socialite</code> استفاده می‌کند. این فرایند در دو مرحله انجام می‌شود:
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مرحله اول: هدایت به گوگل</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/oauth/google/redirect</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Guest</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint کاربر را به صفحه ورود گوگل هدایت می‌کند. نیازی به ارسال پارامتر یا Request Body نیست.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مرحله دوم: بازگشت از گوگل</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/oauth/google/callback</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Guest</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint نتیجه احراز هویت گوگل را دریافت و کاربر را بر اساس نتیجه به یکی از آدرس‌های تعریف‌شده در تنظیمات <code>authkit.api_urls</code> هدایت می‌کند.
+        </p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>نتیجه</th>
+                    <th>مقصد</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>success</code></td>
+                    <td><code>oauth_success</code></td>
+                </tr>
+                <tr>
+                    <td><code>two_factor</code></td>
+                    <td><code>two_factor_challenge</code></td>
+                </tr>
+                <tr>
+                    <td><code>invalid_google_user</code></td>
+                    <td><code>oauth_failure?error=invalid_google_user</code></td>
+                </tr>
+                <tr>
+                    <td><code>oauth_failed</code></td>
+                    <td><code>oauth_failure?error=oauth_failed</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این دو Endpoint به‌جای پاسخ JSON، از Redirect استفاده می‌کنند.
+        </p>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Logout -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">۴. خروج از حساب</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint نشست احراز هویت فعلی کاربر را خاتمه می‌دهد.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/logout</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">Request Body</h6>
+
+        <p class="text-secondary lh-lg">
+            نیازی به ارسال پارامتر یا Request Body نیست.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "خروج از حساب موفقیت‌آمیز بود.",
+    "data": {
+        "redirect": null
+    }
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- ------------------------------------- -->
+    <!-- Password Reset -->
+    <!-- ------------------------------------- -->
+    <section class="mb-5">
+
+        <h4 class="fw-bold mb-3">فراموشی و بازیابی رمز عبور</h4>
+
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند با استفاده از ایمیل، لینک بازیابی رمز عبور دریافت کنند و از طریق آن رمز عبور جدیدی برای حساب خود تعیین کنند. همچنین کاربران واردشده می‌توانند برای دریافت لینک بازیابی، از ایمیل ثبت‌شده در
+            حساب خود استفاده کنند.
+        </p>
+
+        <!-- ------------------------------------- -->
+        <!-- Forgot Password -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-4 mb-3">درخواست لینک بازیابی رمز عبور</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint ایمیل کاربر را دریافت می‌کند و در صورت وجود حساب کاربری، لینک بازیابی رمز عبور را به ایمیل او ارسال می‌کند. برای جلوگیری از افشای وجود یا عدم وجود حساب کاربری، پاسخ در هر دو حالت یکسان است.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/forgot-password</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Guest</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">پارامترهای ورودی</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td dir="ltr">email</td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>ایمیل معتبر کاربر، حداکثر ۲۵۵ کاراکتر.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "email": "user@example.com"
+}</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "اگر حسابی با این ایمیل وجود داشته باشد، لینک بازیابی ارسال خواهد شد."
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+        <h6 class="fw-bold mt-4 mb-3">خطاهای احتمالی</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>429</code></td>
+                    <td>تعداد درخواست‌های ارسال لینک بازیابی از حد مجاز بیشتر شده است.</td>
+                </tr>
+                <tr>
+                    <td><code>500</code></td>
+                    <td>خطایی هنگام ارسال لینک بازیابی رمز عبور رخ داده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Reset Password -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">بازیابی رمز عبور</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint توکن بازیابی ارسال‌شده به ایمیل کاربر را به همراه رمز عبور جدید دریافت می‌کند. اعتبار توکن توسط سیستم بازیابی رمز عبور لاراول بررسی می‌شود و در صورت معتبر بودن، رمز عبور حساب به‌روزرسانی خواهد
+            شد.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/reset-password</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Public</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">پارامترهای ورودی</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td dir="ltr">email</td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>ایمیل معتبر حساب کاربری.</td>
+                </tr>
+                <tr>
+                    <td dir="ltr">token</td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>توکن بازیابی دریافت‌شده از طریق ایمیل.</td>
+                </tr>
+                <tr>
+                    <td dir="ltr">password</td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>رمز عبور جدید، حداکثر ۲۵۵ کاراکتر.</td>
+                </tr>
+                <tr>
+                    <td dir="ltr">password_confirmation</td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>تکرار رمز عبور جدید؛ باید با مقدار password یکسان باشد.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "email": "user@example.com",
+    "token": "reset-token",
+    "password": "NewPassword123",
+    "password_confirmation": "NewPassword123"
+}</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "گذرواژه شما با موفقیت تغییر کرد.",
+    "data": {
+        "password_reset": true
+    }
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+        <p class="text-secondary lh-lg">
+            پس از تغییر موفق رمز عبور، توکن Remember کاربر تغییر می‌کند و در صورت فعال بودن قابلیت فعالیت‌های امنیتی، رویداد تغییر رمز عبور ثبت شده و اعلان امنیتی برای کاربر ارسال می‌شود.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">خطاهای احتمالی</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>422</code></td>
+                    <td>ایمیل یا توکن بازیابی معتبر نیست.</td>
+                </tr>
+                <tr>
+                    <td><code>500</code></td>
+                    <td>خطایی هنگام تغییر رمز عبور رخ داده است.</td>
+                </tr>
+                <tr>
+                    <td><code>429</code></td>
+                    <td>تعداد درخواست‌های بازیابی رمز عبور از حد مجاز بیشتر شده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Authenticated Forgot Password -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">ارسال لینک بازیابی برای کاربر واردشده</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint برای کاربرانی در نظر گرفته شده است که وارد حساب خود شده‌اند و می‌خواهند لینک بازیابی رمز عبور را به ایمیل ثبت‌شده در حسابشان دریافت کنند. در این درخواست نیازی به ارسال ایمیل نیست؛ ایمیل از حساب
+            کاربر احراز هویت‌شده دریافت می‌شود.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/password/send-reset-link</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">پارامترهای ورودی</h6>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint به پارامتر ورودی نیاز ندارد و ایمیل کاربر از نشست احراز هویت‌شده دریافت می‌شود.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>POST /api/password/send-reset-link</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "اگر حسابی با این ایمیل وجود داشته باشد، لینک بازیابی ارسال خواهد شد."
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+        <h6 class="fw-bold mt-4 mb-3">خطاهای احتمالی</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>429</code></td>
+                    <td>تعداد درخواست‌های ارسال لینک بازیابی از حد مجاز بیشتر شده است.</td>
+                </tr>
+                <tr>
+                    <td><code>500</code></td>
+                    <td>خطایی هنگام ارسال لینک بازیابی رمز عبور رخ داده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Confirm Password -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">تأیید رمز عبور</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint برای تأیید مجدد هویت کاربر پیش از انجام عملیات حساس استفاده می‌شود. رمز عبور فعلی کاربر دریافت و با رمز ذخیره‌شده در حساب او مقایسه می‌شود. در صورت موفقیت، وضعیت تأیید رمز عبور در نشست کاربر ثبت
+            خواهد شد.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/confirm-password</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">پارامترهای ورودی</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td dir="ltr">password</td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>رمز عبور فعلی کاربر.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "password": "CurrentPassword123"
+}</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "تأیید هویت با موفقیت انجام شد.",
+    "data": {
+        "password_confirmed": true
+    }
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+    <!-- ------------------------------------- -->
+    <!-- Email Verification -->
+    <!-- ------------------------------------- -->
+    <section class="mb-5">
+
+        <h4 class="fw-bold mb-3">تأیید ایمیل</h4>
+
+        <p class="text-secondary lh-lg">
+            AuthKit امکان بررسی وضعیت تأیید ایمیل، ارسال مجدد لینک تأیید و تأیید آدرس ایمیل از طریق لینک امضاشده را فراهم می‌کند. این قابلیت برای کاربران احراز هویت‌شده در دسترس است؛ لینک تأیید نیز از طریق ایمیل ثبت‌شده
+            در حساب کاربری ارسال می‌شود.
+        </p>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Email Verification Status -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-4 mb-3">بررسی وضعیت تأیید ایمیل</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint وضعیت تأیید ایمیل کاربر واردشده را بررسی کرده و نتیجه را در فیلد <code>email_verified</code> برمی‌گرداند.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/email/verify</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">پارامترهای ورودی</h6>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint به پارامتر ورودی نیاز ندارد.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>GET /api/email/verify</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <p class="text-secondary">در صورت تأیید بودن ایمیل:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "ایمیل حساب شما قبلاً تأیید شده است.",
+    "data": {
+        "email_verified": true
+    }
+}</code></pre>
+
+        <p class="text-secondary">در صورت تأیید نبودن ایمیل:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "ایمیل حساب شما هنوز تأیید نشده است.",
+    "data": {
+        "email_verified": false
+    }
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Resend Verification Email -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">ارسال مجدد ایمیل تأیید</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint لینک تأیید ایمیل را مجدداً برای کاربر واردشده ارسال می‌کند. اگر ایمیل کاربر قبلاً تأیید شده باشد، اعلان جدیدی ارسال نمی‌شود.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/email/verification-notification</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">پارامترهای ورودی</h6>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint به پارامتر ورودی نیاز ندارد و ایمیل کاربر از حساب احراز هویت‌شده دریافت می‌شود.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>POST /api/email/verification-notification</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">پاسخ موفق</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "اگر حساب شما هنوز تأیید نشده باشد، لینک تأیید ارسال می‌شود."
+}</code></pre>
+
+        <p class="text-secondary small">HTTP Status: 200 OK</p>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Verify Email -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">تأیید آدرس ایمیل</h5>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint از طریق لینکی که به ایمیل کاربر ارسال شده است فراخوانی می‌شود. شناسه کاربر و هش ایمیل در آدرس قرار دارند و اعتبار لینک با استفاده از امضای دیجیتال و اعتبارسنجی درخواست بررسی می‌شود.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/email/verify/{id}/{hash}</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h6 class="fw-bold mt-4 mb-3">پارامترهای مسیر</h6>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td dir="ltr">id</td>
+                    <td>Integer</td>
+                    <td>بله</td>
+                    <td>شناسه کاربر.</td>
+                </tr>
+                <tr>
+                    <td dir="ltr">hash</td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>هش آدرس ایمیل کاربر که در لینک تأیید قرار دارد.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint به پارامترهای Query جداگانه نیاز ندارد؛ لینک تأیید باید همان لینک امضاشده‌ای باشد که برای کاربر ارسال شده است.
+        </p>
+
+        <h6 class="fw-bold mt-4 mb-3">مثال</h6>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>GET /api/email/verify/1/{hash}?expires={timestamp}&amp;signature={signature}</code></pre>
+
+        <h6 class="fw-bold mt-4 mb-3">رفتار پس از تأیید</h6>
+
+        <p class="text-secondary lh-lg">
+            پس از تأیید ایمیل، کاربر به آدرسی هدایت می‌شود که در گزینه <code>email_verification</code> در بخش <code>api_urls</code> فایل <code>config/authkit.php</code> تنظیم شده است. پارامتر <code>status</code> نیز
+            نتیجه عملیات تأیید را مشخص می‌کند:
+        </p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>مقدار</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td dir="ltr">success</td>
+                    <td>ایمیل کاربر در این درخواست با موفقیت تأیید شده است.</td>
+                </tr>
+                <tr>
+                    <td dir="ltr">already</td>
+                    <td>ایمیل کاربر پیش از این تأیید شده بوده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            برای مثال، در صورت تأیید موفق، آدرس مقصد به شکل زیر خواهد بود:
+        </p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>https://app.example.com/email/verification?status=success</code></pre>
+
+        <p class="text-secondary lh-lg">
+            در صورت استفاده از لینک نامعتبر، منقضی‌شده یا متعلق به کاربر دیگر، درخواست توسط اعتبارسنجی لاراول رد می‌شود.
+        </p>
+
+    </section>
+
+
+
+
+
+
+
+    <!-- ------------------------------------- -->
+    <!-- Two Factor Authentication -->
+    <!-- ------------------------------------- -->
+    <section class="mb-5">
+
+        <h4 class="fw-bold mb-3">تأیید هویت دومرحله‌ای</h4>
+
+        <p class="text-secondary lh-lg">
+            AuthKit امکان فعال‌سازی تأیید هویت دومرحله‌ای، ورود با کد یک‌بارمصرف و مدیریت کدهای بازیابی را فراهم می‌کند.
+            برای مدیریت تنظیمات این قابلیت، کاربر باید وارد حساب خود شده و تأیید رمز عبور را انجام داده باشد.
+        </p>
+
+        <h5 class="fw-bold mt-4 mb-3">۱. تأیید هویت هنگام ورود</h5>
+
+        <!-- GET Challenge -->
+
+        <h6 class="fw-bold mt-4">بررسی وضعیت Challenge</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/2fa/challenge</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Guest</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint وضعیت درخواست تأیید دومرحله‌ای را در Session بررسی می‌کند. در صورت معتبر بودن درخواست، پاسخ زیر برگردانده می‌شود:
+        </p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "درخواست تأیید دومرحله‌ای معتبر است.",
+    "data": {
+        "two_factor_challenge": true
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            در صورت پایان مهلت Challenge، اطلاعات مربوط به آن از Session حذف شده و پاسخ با وضعیت <code>401</code> برگردانده می‌شود.
+        </p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "مهلت تأیید دومرحله‌ای به پایان رسیده است. لطفاً دوباره وارد حساب خود شوید."
+}</code></pre>
+
+        <h6 class="fw-bold mt-4">تأیید کد دومرحله‌ای</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/2fa/challenge</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Guest</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint کد واردشده را بررسی می‌کند. کاربر می‌تواند از کد یک‌بارمصرف برنامه احراز هویت یا یکی از کدهای بازیابی استفاده کند.
+        </p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>code</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>کد یک‌بارمصرف یا کد بازیابی</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary">مثال درخواست:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "code": "123456"
+}</code></pre>
+
+        <p class="text-secondary">پاسخ موفق:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "ورود دومرحله‌ای با موفقیت انجام شد.",
+    "data": {
+        "authenticated": true
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            پس از تأیید موفق، کاربر وارد حساب خود می‌شود و اطلاعات Challenge از Session حذف می‌شوند. در صورت استفاده از کد بازیابی، آن کد نیز از فهرست کدهای قابل استفاده حذف خواهد شد.
+        </p>
+
+        <p class="text-secondary">خطاهای احتمالی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>422</code></td>
+                    <td>کد واردشده نامعتبر است یا درخواست Challenge اعتبار ندارد یا منقضی شده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            مهلت اعتبار درخواست Challenge از طریق گزینه <code>challenge_expire_minutes</code> در بخش <code>two_factor</code> فایل <code>config/authkit.php</code> قابل تنظیم است.
+        </p>
+
+        <h5 class="fw-bold mt-5 mb-3">۲. مدیریت تأیید هویت دومرحله‌ای</h5>
+
+        <p class="text-secondary lh-lg">
+            تمام Endpointهای این بخش نیازمند احراز هویت هستند و Middleware مربوط به <code>password.confirm</code> نیز برای آن‌ها اعمال می‌شود.
+        </p>
+
+        <!-- GET 2FA -->
+
+        <h6 class="fw-bold mt-4">دریافت وضعیت و اطلاعات راه‌اندازی</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/2fa</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint وضعیت تأیید هویت دومرحله‌ای حساب را بررسی می‌کند. اگر این قابلیت فعال نباشد، اطلاعات لازم برای راه‌اندازی، شامل Secret و آدرس QR، در اختیار کاربر قرار می‌گیرد.
+        </p>
+
+        <p class="text-secondary">نمونه پاسخ در صورت غیرفعال بودن:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "اطلاعات راه‌اندازی تأیید دومرحله‌ای دریافت شد.",
+    "data": {
+        "enabled": false,
+        "secret": "...",
+        "qr_url": "otpauth://..."
+    }
+}</code></pre>
+
+        <p class="text-secondary">نمونه پاسخ در صورت فعال بودن:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "تأیید هویت دومرحله‌ای فعال است.",
+    "data": {
+        "enabled": true
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            اطلاعات راه‌اندازی به‌صورت موقت در Session نگهداری می‌شوند و پس از پایان مهلت تعیین‌شده قابل استفاده نخواهند بود.
+        </p>
+
+        <p class="text-secondary">خطاهای احتمالی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>422</code></td>
+                    <td>فرآیند راه‌اندازی تأیید دومرحله‌ای منقضی شده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- POST Enable -->
+
+        <h6 class="fw-bold mt-4">فعال‌سازی تأیید دومرحله‌ای</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/2fa/enable</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            کاربر پس از افزودن حساب خود به برنامه احراز هویت، کد شش‌رقمی تولیدشده را ارسال می‌کند. در صورت معتبر بودن کد، تأیید دومرحله‌ای فعال شده و کدهای بازیابی تولید می‌شوند.
+        </p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>code</code></td>
+                    <td>string</td>
+                    <td>بله</td>
+                    <td>کد شش‌رقمی برنامه احراز هویت</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary">مثال درخواست:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "code": "123456"
+}</code></pre>
+
+        <p class="text-secondary">پاسخ موفق:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "تأیید هویت دومرحله‌ای با موفقیت فعال شد.",
+    "data": {
+        "enabled": true,
+        "recovery_codes": [
+            "ABCD1234...",
+            "EFGH5678..."
+        ]
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            کدهای بازیابی به‌صورت هش‌شده ذخیره می‌شوند و فقط هنگام تولید در اختیار کاربر قرار می‌گیرند. کاربر باید آن‌ها را در محل امنی نگهداری کند.
+        </p>
+
+        <p class="text-secondary">خطاهای احتمالی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>422</code></td>
+                    <td>کد واردشده نامعتبر است.</td>
+                </tr>
+                <tr>
+                    <td><code>422</code></td>
+                    <td>تأیید هویت دومرحله‌ای از قبل برای حساب فعال است.</td>
+                </tr>
+                <tr>
+                    <td><code>422</code></td>
+                    <td>مهلت راه‌اندازی تأیید دومرحله‌ای به پایان رسیده است.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- POST Disable -->
+
+        <h6 class="fw-bold mt-4">غیرفعال‌سازی تأیید دومرحله‌ای</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/2fa/disable</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint تأیید دومرحله‌ای را غیرفعال کرده و Secret و کدهای بازیابی ذخیره‌شده را حذف می‌کند. همچنین توکن Remember کاربر تغییر می‌کند و در صورت استفاده از درایور دیتابیس برای Session، نشست‌های دیگر کاربر
+            نیز نامعتبر می‌شوند.
+        </p>
+
+        <p class="text-secondary">پاسخ موفق:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "تأیید هویت دومرحله‌ای با موفقیت غیرفعال شد.",
+    "data": {
+        "enabled": false
+    }
+}</code></pre>
+
+        <p class="text-secondary">خطاهای احتمالی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>403</code></td>
+                    <td>تأیید هویت دومرحله‌ای برای حساب فعال نیست.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- POST Regenerate -->
+
+        <h6 class="fw-bold mt-4">تولید مجدد کدهای بازیابی</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/2fa/regenerate</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint مجموعه جدیدی از کدهای بازیابی تولید می‌کند. پس از تولید کدهای جدید، کدهای قبلی دیگر قابل استفاده نخواهند بود.
+        </p>
+
+        <p class="text-secondary">پاسخ موفق:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "کدهای بازیابی با موفقیت تولید شدند.",
+    "data": {
+        "recovery_codes": [
+            "ABCD1234...",
+            "EFGH5678..."
+        ]
+    }
+}</code></pre>
+
+        <p class="text-secondary">خطاهای احتمالی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>403</code></td>
+                    <td>تأیید هویت دومرحله‌ای برای حساب فعال نیست.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5 class="fw-bold mt-5 mb-3">۳. تنظیمات و ملاحظات</h5>
+
+        <p class="text-secondary lh-lg">
+            مقادیر مربوط به مهلت Challenge، مهلت راه‌اندازی و تعداد و طول کدهای بازیابی از طریق بخش <code>two_factor</code> فایل <code>config/authkit.php</code> قابل تنظیم هستند.
+        </p>
+
+        <p class="text-secondary lh-lg">
+            در صورت فعال بودن قابلیت فعالیت‌های امنیتی، رویدادهای مرتبط با فعال‌سازی، غیرفعال‌سازی و مدیریت کدهای بازیابی ثبت شده و اعلان‌های امنیتی مربوطه ارسال می‌شوند.
+        </p>
+
+    </section>
+
+
+
+
+
+
+
+
+
+    <!-- ------------------------------------- -->
+    <!-- Account Management -->
+    <!-- ------------------------------------- -->
+    <section class="mb-5">
+
+        <h4 class="fw-bold mb-3">مدیریت حساب و امنیت</h4>
+
+        <p class="text-secondary lh-lg">
+            در این بخش، Endpointهای مربوط به مدیریت اطلاعات حساب، تغییر رمز عبور، مشاهده نشست‌های فعال، خروج از سایر نشست‌ها و مشاهده فعالیت‌های امنیتی معرفی شده‌اند.
+        </p>
+
+
+        <!-- ------------------------------------- -->
+        <!-- Profile -->
+        <!-- ------------------------------------- -->
+
+        <h5 class="fw-bold mt-5 mb-3">مدیریت پروفایل</h5>
+
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند اطلاعات پروفایل خود را دریافت کرده و نام حساب کاربری خود را ویرایش کنند.
+        </p>
+
+
+        <!-- Get Profile -->
+        <h6 class="fw-bold mt-4">۱. دریافت اطلاعات پروفایل</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/profile</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated + Verified</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            اطلاعات کاربر واردشده را در فیلد <code>data.user</code> برمی‌گرداند.
+        </p>
+
+        <p class="fw-bold mb-2">مثال پاسخ:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "data": {
+        "user": {
+            "id": 1,
+            "name": "Ali",
+            "email": "user@example.com"
+        }
+    }
+}</code></pre>
+
+
+        <!-- Update Profile -->
+        <h6 class="fw-bold mt-5">۲. ویرایش پروفایل</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>PUT</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/profile</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated + Verified</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            برای ویرایش پروفایل، نام جدید کاربر ارسال می‌شود.
+        </p>
+
+        <p class="fw-bold mb-2">پارامترهای ورودی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>name</code></td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>نام کاربر، حداقل ۳ و حداکثر ۲۵۵ کاراکتر</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="fw-bold mb-2">مثال درخواست:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "name": "Ali Ahmadi"
+}</code></pre>
+
+        <p class="fw-bold mb-2">مثال پاسخ:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "اطلاعات حساب با موفقیت به‌روزرسانی شد.",
+    "user": {
+        "name": "Ali Ahmadi"
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            در صورت نامعتبر بودن اطلاعات ورودی، پاسخ اعتبارسنجی با وضعیت <code>422</code> برگردانده می‌شود.
+        </p>
+
+
+
+
+
+
+
+
+
+        <!-- ------------------------------------- -->
+        <!-- Change Password -->
+        <!-- ------------------------------------- -->
+        <h5 class="fw-bold mt-5 mb-3">تغییر رمز عبور</h5>
+
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند با وارد کردن رمز عبور فعلی و رمز عبور جدید، گذرواژه حساب خود را تغییر دهند.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>PUT</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/password</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated + Verified</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="fw-bold mb-2">پارامترهای ورودی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>current_password</code></td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>رمز عبور فعلی کاربر</td>
+                </tr>
+                <tr>
+                    <td><code>new_password</code></td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>رمز عبور جدید؛ حداقل ۸ کاراکتر، شامل حروف کوچک و بزرگ و عدد</td>
+                </tr>
+                <tr>
+                    <td><code>new_password_confirmation</code></td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>تکرار رمز عبور جدید برای تأیید</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="fw-bold mb-2">مثال درخواست:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "current_password": "OldPassword123",
+    "new_password": "NewPassword123",
+    "new_password_confirmation": "NewPassword123"
+}</code></pre>
+
+        <p class="fw-bold mb-2">مثال پاسخ موفق:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "رمز عبور با موفقیت تغییر یافت.",
+    "data": {
+        "password_changed": true
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            پس از تغییر موفق رمز عبور، Remember Token کاربر تغییر می‌کند و در صورت استفاده از درایور دیتابیس برای نشست‌ها، سایر نشست‌های کاربر حذف می‌شوند. همچنین در صورت فعال بودن قابلیت فعالیت‌های امنیتی، اعلان تغییر
+            رمز عبور برای کاربر ارسال می‌شود.
+        </p>
+
+        <p class="text-secondary lh-lg">
+            در صورت اشتباه بودن رمز عبور فعلی، نامعتبر بودن رمز عبور جدید یا یکسان بودن رمز جدید با رمز فعلی، خطای اعتبارسنجی با وضعیت <code>422</code> برگردانده می‌شود.
+        </p>
+
+
+
+
+
+
+
+
+
+        <!-- ------------------------------------- -->
+        <!-- Sessions -->
+        <!-- ------------------------------------- -->
+        <h5 class="fw-bold mt-5 mb-3">مدیریت نشست‌های فعال</h5>
+
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند نشست‌های فعال حساب خود را مشاهده کرده و سایر نشست‌ها را از حساب خارج کنند. اطلاعات نشست‌ها از جدول <code>sessions</code> دریافت می‌شود.
+        </p>
+
+
+        <!-- Get Sessions -->
+        <h6 class="fw-bold mt-4">۱. دریافت نشست‌های فعال</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/sessions</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated + Verified</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            فهرست نشست‌های کاربر را به همراه نوع دستگاه، زمان آخرین فعالیت و وضعیت نشست فعلی برمی‌گرداند.
+        </p>
+
+        <p class="fw-bold mb-2">ساختار اطلاعات هر نشست:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>فیلد</th>
+                    <th>نوع</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>id</code></td>
+                    <td>String</td>
+                    <td>شناسه نشست</td>
+                </tr>
+                <tr>
+                    <td><code>device</code></td>
+                    <td>String</td>
+                    <td>نوع دستگاه یا سیستم‌عامل شناسایی‌شده</td>
+                </tr>
+                <tr>
+                    <td><code>last_activity</code></td>
+                    <td>Integer</td>
+                    <td>زمان آخرین فعالیت نشست</td>
+                </tr>
+                <tr>
+                    <td><code>isCurrent</code></td>
+                    <td>Boolean</td>
+                    <td>مشخص می‌کند نشست مربوط به دستگاه فعلی است یا خیر</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="fw-bold mb-2">مثال پاسخ:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "data": {
+        "sessions": [
+            {
+                "id": "session-id-1",
+                "device": "Windows",
+                "last_activity": 1794000000,
+                "isCurrent": true
+            },
+            {
+                "id": "session-id-2",
+                "device": "Android",
+                "last_activity": 1793990000,
+                "isCurrent": false
+            }
+        ]
+    }
+}</code></pre>
+
+
+        <!-- Logout Other Sessions -->
+        <h6 class="fw-bold mt-5">۲. خروج از سایر نشست‌ها</h6>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>POST</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/sessions/terminate-others</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated + Verified</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            برای خروج از سایر دستگاه‌ها، کاربر باید رمز عبور فعلی خود را وارد کند. نشست فعلی حفظ می‌شود و سایر نشست‌ها از حساب خارج خواهند شد.
+        </p>
+
+        <p class="fw-bold mb-2">پارامترهای ورودی:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>پارامتر</th>
+                    <th>نوع</th>
+                    <th>الزامی</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>password</code></td>
+                    <td>String</td>
+                    <td>بله</td>
+                    <td>رمز عبور فعلی کاربر</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="fw-bold mb-2">مثال درخواست:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "password": "CurrentPassword123"
+}</code></pre>
+
+        <p class="fw-bold mb-2">مثال پاسخ:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "message": "تمام نشست‌های دیگر با موفقیت خارج شدند.",
+    "data": {
+        "refresh": true
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            پس از اجرای موفق عملیات، نشست فعلی مجدداً ایجاد می‌شود و مقدار <code>refresh</code> نشان می‌دهد که کلاینت باید وضعیت یا اطلاعات نشست خود را به‌روزرسانی کند.
+        </p>
+
+
+
+
+
+
+
+
+
+        <!-- ------------------------------------- -->
+        <!-- Security Activities -->
+        <!-- ------------------------------------- -->
+        <h5 class="fw-bold mt-5 mb-3">فعالیت‌های امنیتی</h5>
+
+        <p class="text-secondary lh-lg">
+            کاربران می‌توانند آخرین رویدادهای امنیتی حساب خود را مشاهده کنند. این اطلاعات از اعلان‌های ثبت‌شده در سیستم لاراول دریافت می‌شوند.
+        </p>
+
+        <table class="table table-bordered align-middle" dir="ltr">
+            <tbody>
+                <tr>
+                    <th>Method</th>
+                    <td>GET</td>
+                </tr>
+                <tr>
+                    <th>URL</th>
+                    <td>/api/security-activities</td>
+                </tr>
+                <tr>
+                    <th>Access</th>
+                    <td>Authenticated + Verified</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="text-secondary lh-lg">
+            این Endpoint حداکثر ۲۰ فعالیت امنیتی اخیر کاربر را به ترتیب جدیدترین رویداد برمی‌گرداند.
+        </p>
+
+        <p class="fw-bold mb-2">ساختار اطلاعات هر فعالیت:</p>
+
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>فیلد</th>
+                    <th>نوع</th>
+                    <th>توضیحات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>id</code></td>
+                    <td>String</td>
+                    <td>شناسه اعلان</td>
+                </tr>
+                <tr>
+                    <td><code>data</code></td>
+                    <td>Object</td>
+                    <td>اطلاعات مربوط به رویداد امنیتی</td>
+                </tr>
+                <tr>
+                    <td><code>read_at</code></td>
+                    <td>Date / Null</td>
+                    <td>زمان خوانده‌شدن اعلان؛ در صورت خوانده‌نشدن مقدار آن null است</td>
+                </tr>
+                <tr>
+                    <td><code>created_at</code></td>
+                    <td>Date</td>
+                    <td>زمان ثبت رویداد</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="fw-bold mb-2">مثال پاسخ:</p>
+
+        <pre class="bg-dark text-light rounded-3 p-3"><code>{
+    "data": {
+        "activities": [
+            {
+                "id": "notification-id",
+                "data": {
+                    "event": "password_changed",
+                    "ip": "192.0.2.1",
+                    "user_agent": "Mozilla/5.0",
+                    "time": "2026-11-07T18:00:00.000000Z"
+                },
+                "read_at": null,
+                "created_at": "2026-11-07T18:00:00.000000Z"
+            }
+        ]
+    }
+}</code></pre>
+
+        <p class="text-secondary lh-lg">
+            نمایش این Endpoint به فعال بودن گزینه <code>security_activities</code> در بخش <code>features</code> فایل تنظیمات AuthKit وابسته است.
+        </p>
+
+    </section>
+
+
+
+    <div class="border-top mt-5 pt-4 d-flex justify-content-between">
+        <a href="?page=account-security" data-page="account-security" class="btn py-2 px-4 small border-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+            مدیریت حساب و امنیت
+        </a>
+    </div>
+
+</div>

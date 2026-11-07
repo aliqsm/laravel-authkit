@@ -1,0 +1,249 @@
+/* ------------------------------------- */
+/* Font */
+/* ------------------------------------- */
+
+@font-face {
+    font-family: 'Shabnam';
+    src: url('./assets/fonts/shabnam/Shabnam-Light.woff2') format('woff2');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Shabnam';
+    src: url('./assets/fonts/shabnam/Shabnam-Medium.woff2') format('woff2');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Shabnam';
+    src: url('./assets/fonts/shabnam/Shabnam-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Shabnam', sans-serif;
+}
+
+
+
+
+/* ------------------------------------- */
+/* Main Layout */
+/* ------------------------------------- */
+
+main {
+    min-width: 0;
+    width: 0;
+}
+
+.topbar {
+    min-height: 64px;
+    gap: 12px;
+}
+
+/* ------------------------------------- */
+/* Sidebar */
+/* ------------------------------------- */
+
+.sidebar {
+    width: 270px;
+    min-width: 270px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+}
+
+.documentation-content {
+    max-width: 850px;
+    width: 100%;
+}
+
+.sidebar .nav-link {
+    color: #555;
+    font-size: 14px;
+    padding: 10px 12px;
+}
+
+.sidebar .nav-link:hover {
+    background: #e9ecef;
+}
+
+.sidebar .nav-link.active {
+    background: #e7edff;
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+/* ------------------------------------- */
+/* Mobile Sidebar */
+/* ------------------------------------- */
+
+.sidebar-overlay {
+    display: none;
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 1050;
+        width: 280px;
+        max-width: 85vw;
+        height: 100dvh;
+        transform: translateX(100%);
+        transition: transform 0.25s ease;
+    }
+
+    .sidebar.show {
+        transform: translateX(0);
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1040;
+    }
+
+    .topbar {
+        padding-inline: 14px !important;
+    }
+
+    main > .container {
+        padding-inline: 18px;
+    }
+}
+
+@media (max-width: 400px) {
+    .topbar {
+        padding-inline: 10px !important;
+    }
+
+    .topbar .gap-3 {
+        gap: 8px !important;
+    }
+
+    main > .container {
+        padding-inline: 12px;
+    }
+}
+
+
+
+
+pre {
+    direction: ltr;
+    text-align: left;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+pre code {
+    font-family: Consolas, monospace;
+}
+
+
+
+
+
+
+/* ------------------------------------- */
+/* Dark Theme */
+/* ------------------------------------- */
+
+[data-bs-theme="dark"] body {
+    background-color: #121212;
+    color: #e5e5e5;
+}
+
+[data-bs-theme="dark"] .sidebar {
+    background-color: #1b1b1b !important;
+    border-color: #333 !important;
+}
+
+[data-bs-theme="dark"] .sidebar h5,
+[data-bs-theme="dark"] .sidebar h6,
+[data-bs-theme="dark"] .sidebar small {
+    color: #e5e5e5 !important;
+}
+
+[data-bs-theme="dark"] header {
+    background-color: #1b1b1b;
+    border-color: #333 !important;
+}
+
+[data-bs-theme="dark"] header a {
+    color: #e5e5e5 !important;
+}
+
+[data-bs-theme="dark"] .sidebar .nav-link {
+    color: #bdbdbd;
+}
+
+[data-bs-theme="dark"] .sidebar .nav-link:hover {
+    background-color: #292929;
+}
+
+[data-bs-theme="dark"] .sidebar .nav-link.active {
+    background-color: #263b60;
+    color: #8ab4ff;
+}
+
+[data-bs-theme="dark"] .sidebar .border-bottom,
+[data-bs-theme="dark"] .sidebar .border-top {
+    border-color: #333 !important;
+}
+
+[data-bs-theme="dark"] .text-secondary {
+    color: #aaa !important;
+}
+
+[data-bs-theme="dark"] .table {
+    --bs-table-bg: #1b1b1b;
+    --bs-table-color: #e5e5e5;
+    --bs-table-border-color: #383838;
+}
+
+[data-bs-theme="dark"] .table-light {
+    --bs-table-bg: #292929;
+    --bs-table-color: #e5e5e5;
+}
+
+[data-bs-theme="dark"] .table-light tr,
+[data-bs-theme="dark"] .table-light th,
+[data-bs-theme="dark"] .table-light td {
+    border-color: #484848 !important;
+}
+
+[data-bs-theme="dark"] .btn-light {
+    background-color: #292929;
+    border-color: #444;
+    color: #eee;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary {
+    color: #ccc;
+    border-color: #666;
+}
+
+[data-bs-theme="dark"] .btn-outline-secondary:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+[data-bs-theme="dark"] .alert-danger {
+    --bs-alert-bg: #351d20;
+    --bs-alert-color: #f1aeb5;
+    --bs-alert-border-color: #66343a;
+}
+
+[data-bs-theme="dark"] .sidebar-overlay.show {
+    background: rgba(0, 0, 0, 0.65);
+}

@@ -1,0 +1,146 @@
+<div data-title="نصب و راه‌اندازی">
+    <div class="border-bottom pb-4 mb-5">
+        <h1 class="fw-bold">نصب و راه‌اندازی</h1>
+    </div>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">پیش‌نیازها</h4>
+        <p class="text-secondary lh-lg">
+            پیش از نصب، مطمئن شوید محیط توسعه شما شرایط زیر را دارد:
+        </p>
+        <ul class="text-secondary lh-lg">
+            <li>PHP 8.2 یا بالاتر</li>
+            <li>Laravel 12 یا 13</li>
+            <li>Composer</li>
+        </ul>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">۱. نصب پکیج</h4>
+        <p class="text-secondary lh-lg">
+            برای نصب AuthKit، دستور زیر را در ترمینال و در مسیر پروژه Laravel خود اجرا کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>composer require aliqsm/laravel-authkit</code></pre>
+        <p class="text-secondary lh-lg">
+            پس از نصب، سرویس‌پرووایدر پکیج به‌صورت خودکار توسط Laravel شناسایی می‌شود.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">۲. انتشار فایل تنظیمات</h4>
+        <p class="text-secondary lh-lg">
+            برای انتشار فایل تنظیمات AuthKit در پروژه خود، دستور زیر را اجرا کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan vendor:publish --tag=authkit-config</code></pre>
+        <p class="text-secondary lh-lg">
+            فایل تنظیمات در مسیر <code>config/authkit.php</code> ایجاد می‌شود.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">۳. انتخاب حالت اجرا</h4>
+        <p class="text-secondary lh-lg">
+            در فایل <code>config/authkit.php</code>، مقدار <code>app_mode</code> را بر اساس نوع رابط کاربری پروژه تنظیم کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'app_mode' => 'web',</code></pre>
+        <ul class="text-secondary lh-lg">
+            <li><code>web</code>: برای استفاده از صفحات آماده Blade و احراز هویت در محیط وب.</li>
+            <li><code>api</code>: برای اتصال رابط کاربری مستقل مانند React یا Vue به Backend از طریق API.</li>
+        </ul>
+        <p class="text-secondary lh-lg">
+            با انتخاب حالت مناسب، فقط Routeهای موردنیاز همان حالت در پروژه شما فعال می‌شوند.
+        </p>
+    </section>
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">۴. اتصال مدل User</h4>
+        <p class="text-secondary lh-lg">
+            برای استفاده از قابلیت‌های AuthKit، کافی است Trait پکیج را به مدل User پروژه خود اضافه کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>use Aliqsm\LaravelAuthkit\Traits\HasAuthKit;
+
+class User extends Authenticatable
+{
+    use HasAuthKit;
+}</code></pre>
+        <p class="text-secondary lh-lg">
+            این Trait متدها و ویژگی‌های موردنیاز برای عملکرد صحیح AuthKit را به مدل کاربر پروژه اضافه می‌کند.
+        </p>
+    </section>
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">۵. انتشار فایل‌های Build</h4>
+        <p class="text-secondary lh-lg">
+            از آنجا که AuthKit دارای صفحات آماده با رابط کاربری اختصاصی است، برای نمایش صحیح استایل‌ها و عملکرد بخش‌های تعاملی این صفحات در حالت <code>web</code>، باید فایل‌های Build پکیج را در پروژه خود منتشر کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan vendor:publish --tag=authkit-build</code></pre>
+        <p class="text-secondary lh-lg">
+            توجه داشته باشید که این فایل‌ها نسخه نهایی و کامپایل‌شده CSS و JavaScript هستند و با فایل‌های خام و قابل ویرایش پکیج تفاوت دارند. در حالت <code>api</code> نیازی به اجرای این دستور نیست.
+        </p>
+    </section>
+
+
+
+    <section class="mb-5">
+        <h4 class="fw-bold mb-3">۶. اجرای Migrationها</h4>
+        <p class="text-secondary lh-lg">
+            AuthKit برای ذخیره اعلان‌های کاربران از جدول <code>notifications</code> لاراول استفاده می‌کند. اگر جدول <code>notifications</code> از قبل در پروژه شما وجود دارد، کافی است دستور زیر را اجرا کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan migrate</code></pre>
+        <p class="text-secondary lh-lg">
+            در غیر این صورت:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan make:notifications-table
+php artisan migrate</code></pre>
+    </section>
+
+
+<section class="mb-5">
+    <h4 class="fw-bold mb-3">۷. تنظیم و اجرای صف (Queue)</h4>
+
+    <p class="text-secondary lh-lg">
+        AuthKit برای ارسال ایمیل‌ها و اعلان‌های امنیتی از سیستم صف (Queue) لاراول استفاده می‌کند. برای پردازش این عملیات، باید اتصال صف را در فایل <code>.env</code> تنظیم کرده و یک Queue Worker فعال داشته باشید.
+    </p>
+
+    <p class="text-secondary lh-lg">
+        برای مثال، می‌توانید از اتصال پایگاه داده استفاده کنید:
+    </p>
+
+    <pre class="bg-dark text-light rounded-3 p-3"><code>QUEUE_CONNECTION=database</code></pre>
+
+    <p class="text-secondary lh-lg">
+        در صورت استفاده از اتصال Database، ابتدا جدول موردنیاز صف را ایجاد کنید:
+    </p>
+
+    <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan make:queue-table
+php artisan migrate</code></pre>
+
+    <p class="text-secondary lh-lg">
+        سپس برای پردازش کارهای قرارگرفته در صف، دستور زیر را در یک ترمینال فعال اجرا کنید:
+    </p>
+
+    <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan queue:work</code></pre>
+
+    <p class="text-secondary lh-lg">
+        در محیط Production نیز باید Queue Worker به‌صورت دائمی و با استفاده از ابزاری مانند Supervisor اجرا و مدیریت شود.
+    </p>
+</section>
+
+
+
+    <div class="border-top mt-5 pt-4 d-flex justify-content-between">
+        <a href="?page=introduction" data-page="introduction" class="btn py-2 px-4 small border-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+            معرفی
+        </a>
+        <a href="?page=configuration" data-page="configuration" class="btn py-2 px-4 small border-dark">
+            پیکربندی
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </a>
+    </div>
+</div>

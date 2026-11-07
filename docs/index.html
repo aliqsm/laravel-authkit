@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laravel AuthKit Documentation</title>
+    <link rel="stylesheet" href="assets/libraries/bootstrap/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+
+    <div class="d-flex min-vh-100">
+
+        <!-- -------------------------------------- -->
+        <!-- Sidebar + Overlay -->
+        <!-- -------------------------------------- -->
+
+        <div id="sidebarOverlay" class="sidebar-overlay"></div>
+        <aside id="sidebar" class="sidebar d-flex flex-column flex-shrink-0 border-start bg-light">
+
+            <div class="d-flex align-items-center justify-content-between p-4 border-bottom">
+                <h2 class="w-100 fs-5 mb-0 text-end">Laravel AuthKit Doc</h2>
+            </div>
+
+
+            <nav class="flex-grow-1 overflow-auto p-3">
+
+                <!-- -------------------------------------- -->
+                <!-- Getting Started -->
+                <!-- -------------------------------------- -->
+                <h6 class="text-dark fw-bold d-block px-2 mb-2">شروع کار</h6>
+                <div class="ps-2">
+                    <a href="?page=introduction" data-page="introduction" class="nav-link rounded-2 mb-1">معرفی</a>
+                    <a href="?page=installation" data-page="installation" class="nav-link rounded-2 mb-1">نصب و راه‌اندازی</a>
+                    <a href="?page=configuration" data-page="configuration" class="nav-link rounded-2 mb-1">پیکربندی</a>
+                </div>
+
+
+                <!-- -------------------------------------- -->
+                <!-- Features -->
+                <!-- -------------------------------------- -->
+                <h6 class="text-dark fw-bold d-block px-2 mb-2" style="margin-top: 2rem;">قابلیت‌ها</h6>
+                <div class="ps-2">
+                    <a href="?page=authentication" data-page="authentication" class="nav-link rounded-2 mb-1">احراز هویت</a>
+                    <a href="?page=account-security" data-page="account-security" class="nav-link rounded-2 mb-1">مدیریت حساب و امنیت</a>
+                </div>
+
+
+
+                <!-- -------------------------------------- -->
+                <!-- Api -->
+                <!-- -------------------------------------- -->
+                <h6 class="text-dark fw-bold d-block px-2 mb-2" style="margin-top: 2rem;">API</h6>
+                <div class="ps-2">
+                    <a href="?page=api" data-page="api" class="nav-link rounded-2 mb-1">Api</a>
+                </div>
+
+            </nav>
+
+            <div class="border-top p-3 d-flex justify-content-between align-items-center">
+                <small class="text-dark">Laravel AuthKit</small>
+                <a href="https://github.com/aliqsm/laravel-authkit" target="_blank" rel="noopener noreferrer" class="text-decoration-none small">GitHub ↗</a>
+            </div>
+
+        </aside>
+
+
+
+
+
+        <!-- -------------------------------------- -->
+        <!-- Main -->
+        <!-- -------------------------------------- -->
+        <main class="flex-grow-1 min-vw-0">
+
+            <!-- -------------------------------------- -->
+            <!-- Topbar -->
+            <!-- -------------------------------------- -->
+            <header class="topbar d-flex align-items-center justify-content-between border-bottom px-4 py-3">
+                <div class="d-flex align-items-center gap-3 flex-grow-1 min-w-0">
+                    <button id="menuToggle" class="btn border-0 d-lg-none p-1 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                    <div class="small text-secondary text-truncate">
+                        مستندات <span class="mx-2">/</span> <span id="page-title">معرفی</span>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center gap-3 flex-shrink-0">
+                    <button id="themeToggle" class="btn btn-sm border-0 d-flex align-items-center justify-content-center p-2" aria-label="تغییر تم">
+                        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.463.402.807a6.5 6.5 0 0 0 8.268 8.268c.344-.215.829-.003.803.397z" />
+                        </svg>
+                        <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="d-none">
+                            <circle cx="12" cy="12" r="4" />
+                            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M6.35 17.65l-1.42 1.42M19.07 4.93l-1.42 1.42" />
+                        </svg>
+                    </button>
+                    <a href="https://github.com/aliqsm/laravel-authkit" target="_blank" rel="noopener noreferrer" class="text-decoration-none text-dark small fw-semibold d-none d-sm-inline">
+                        GitHub ↗
+                    </a>
+                </div>
+            </header>
+
+
+            <!-- -------------------------------------- -->
+            <!-- Dynamic Content -->
+            <!-- -------------------------------------- -->
+            <div class="container py-5">
+                <div id="page-content" class="mx-auto documentation-content"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="assets/libraries/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

@@ -71,7 +71,7 @@
                 <p class="fs-13 text-secondary lh-lg mb-0">نشست‌های فعال حساب را بررسی کنید و در صورت مشاهده دستگاه ناشناس، آن را خاتمه دهید.</p>
             </div>
 
-            <a href="{{ route('dashboard.sessions.index') }}" class="btn btn-outline-dark rounded-3 fs-13 fw-medium px-20 py-12 py-md-2 col-12 col-md-auto flex-shrink-0">
+            <a href="{{ route('sessions.index') }}" class="btn btn-outline-dark rounded-3 fs-13 fw-medium px-20 py-12 py-md-2 col-12 col-md-auto flex-shrink-0">
                 مدیریت نشست‌ها
             </a>
         </div>
@@ -92,7 +92,7 @@
                     <p class="fs-13 text-secondary lh-lg mb-0">سوابق ورود به حساب، تغییر رمز عبور و سایر فعالیت‌های امنیتی را مشاهده کنید.</p>
                 </div>
 
-                <a href="{{ route('dashboard.security-activities.index') }}" class="btn btn-outline-dark rounded-3 fs-13 fw-medium px-20 py-12 py-md-2 col-12 col-md-auto flex-shrink-0">
+                <a href="{{ route('security-activities.index') }}" class="btn btn-outline-dark rounded-3 fs-13 fw-medium px-20 py-12 py-md-2 col-12 col-md-auto flex-shrink-0">
                     مشاهده فعالیت‌ها
                 </a>
             </div>

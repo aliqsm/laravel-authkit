@@ -5,7 +5,7 @@ namespace Aliqsm\LaravelAuthkit\Http\Requests\Password;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class UpdatePasswordRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest
 {
     public function authorize(): bool
     {
