@@ -28,8 +28,6 @@ body {
 }
 
 
-
-
 /* ------------------------------------- */
 /* Main Layout */
 /* ------------------------------------- */
@@ -44,6 +42,12 @@ main {
     gap: 12px;
 }
 
+.documentation-content {
+    max-width: 850px;
+    width: 100%;
+}
+
+
 /* ------------------------------------- */
 /* Sidebar */
 /* ------------------------------------- */
@@ -54,28 +58,31 @@ main {
     height: 100vh;
     position: sticky;
     top: 0;
-}
-
-.documentation-content {
-    max-width: 850px;
-    width: 100%;
+    background-color: #f8f9fa;
 }
 
 .sidebar .nav-link {
     color: #555;
     font-size: 14px;
     padding: 10px 12px;
+    border-radius: 8px !important;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .sidebar .nav-link:hover {
-    background: #e9ecef;
+    background-color: #e9ecef;
+    color: #212529;
+    transition: all 0.1s;
 }
 
 .sidebar .nav-link.active {
-    background: #e7edff;
-    color: #0d6efd;
-    font-weight: 600;
+    background-color: #e9ecef;
+    color: #212529;
+    font-weight: 700;
+    border-right: 3px solid #3f8cce;
 }
+
+
 
 /* ------------------------------------- */
 /* Mobile Sidebar */
@@ -115,7 +122,7 @@ main {
         padding-inline: 14px !important;
     }
 
-    main > .container {
+    main>.container {
         padding-inline: 18px;
     }
 }
@@ -129,13 +136,15 @@ main {
         gap: 8px !important;
     }
 
-    main > .container {
+    main>.container {
         padding-inline: 12px;
     }
 }
 
 
-
+/* ------------------------------------- */
+/* Code Blocks */
+/* ------------------------------------- */
 
 pre {
     direction: ltr;
@@ -150,10 +159,6 @@ pre code {
 }
 
 
-
-
-
-
 /* ------------------------------------- */
 /* Dark Theme */
 /* ------------------------------------- */
@@ -163,16 +168,47 @@ pre code {
     color: #e5e5e5;
 }
 
+
+/* ------------------------------------- */
+/* Dark Sidebar */
+/* ------------------------------------- */
+
 [data-bs-theme="dark"] .sidebar {
-    background-color: #1b1b1b !important;
-    border-color: #333 !important;
+    background-color: #181a1b !important;
+    border-color: #303336 !important;
 }
 
 [data-bs-theme="dark"] .sidebar h5,
 [data-bs-theme="dark"] .sidebar h6,
 [data-bs-theme="dark"] .sidebar small {
-    color: #e5e5e5 !important;
+    color: #858b91 !important;
 }
+
+[data-bs-theme="dark"] .sidebar .nav-link {
+    color: #b5b9bd;
+}
+
+[data-bs-theme="dark"] .sidebar .nav-link:hover {
+    background-color: #25282a;
+    color: #f1f1f1;
+}
+
+[data-bs-theme="dark"] .sidebar .nav-link.active {
+    background-color: #292d30;
+    color: #f1f1f1;
+    border-right: 3px solid #3f8cce;
+    font-weight: 700;
+}
+
+[data-bs-theme="dark"] .sidebar .border-bottom,
+[data-bs-theme="dark"] .sidebar .border-top {
+    border-color: #303336 !important;
+}
+
+
+/* ------------------------------------- */
+/* Dark Header */
+/* ------------------------------------- */
 
 [data-bs-theme="dark"] header {
     background-color: #1b1b1b;
@@ -183,27 +219,19 @@ pre code {
     color: #e5e5e5 !important;
 }
 
-[data-bs-theme="dark"] .sidebar .nav-link {
-    color: #bdbdbd;
-}
 
-[data-bs-theme="dark"] .sidebar .nav-link:hover {
-    background-color: #292929;
-}
-
-[data-bs-theme="dark"] .sidebar .nav-link.active {
-    background-color: #263b60;
-    color: #8ab4ff;
-}
-
-[data-bs-theme="dark"] .sidebar .border-bottom,
-[data-bs-theme="dark"] .sidebar .border-top {
-    border-color: #333 !important;
-}
+/* ------------------------------------- */
+/* Dark Text */
+/* ------------------------------------- */
 
 [data-bs-theme="dark"] .text-secondary {
     color: #aaa !important;
 }
+
+
+/* ------------------------------------- */
+/* Dark Tables */
+/* ------------------------------------- */
 
 [data-bs-theme="dark"] .table {
     --bs-table-bg: #1b1b1b;
@@ -222,6 +250,11 @@ pre code {
     border-color: #484848 !important;
 }
 
+
+/* ------------------------------------- */
+/* Dark Buttons */
+/* ------------------------------------- */
+
 [data-bs-theme="dark"] .btn-light {
     background-color: #292929;
     border-color: #444;
@@ -238,11 +271,21 @@ pre code {
     color: #fff;
 }
 
+
+/* ------------------------------------- */
+/* Dark Alerts */
+/* ------------------------------------- */
+
 [data-bs-theme="dark"] .alert-danger {
     --bs-alert-bg: #351d20;
     --bs-alert-color: #f1aeb5;
     --bs-alert-border-color: #66343a;
 }
+
+
+/* ------------------------------------- */
+/* Dark Overlay */
+/* ------------------------------------- */
 
 [data-bs-theme="dark"] .sidebar-overlay.show {
     background: rgba(0, 0, 0, 0.65);

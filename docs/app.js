@@ -25,7 +25,20 @@ async function loadPage(page, updateHistory = true) {
             link.classList.toggle('active', link.dataset.page === page);
         });
 
-        window.scrollTo(0, 0);
+        if (location.hash) {
+            requestAnimationFrame(() => {
+                const target = document.querySelector(location.hash);
+                if (target) {
+                    const top = target.getBoundingClientRect().top + window.scrollY - 30;
+                    window.scrollTo({
+                        top,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        } else {
+            window.scrollTo(0, 0);
+        }
 
     } catch {
         content.innerHTML = `

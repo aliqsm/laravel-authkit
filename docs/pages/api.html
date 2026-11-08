@@ -59,25 +59,25 @@ SANCTUM_STATEFUL_DOMAINS=app.example.com</code></pre>
             در این مثال، فرض شده Frontend روی <code>app.example.com</code> و API روی <code>api.example.com</code> قرار دارد. تنظیمات Cookie باید با دامنه‌ها و نحوه استقرار پروژه هماهنگ باشند.
         </p>
 
-        
-        <h6 class="fw-bold mt-4 mb-3">۴. تنظیم CORS</h6>
-<p class="text-secondary lh-lg">
-    ابتدا بررسی کنید فایل <code>config/cors.php</code> در پروژه وجود داشته باشد. اگر این فایل وجود ندارد، می‌توانید تنظیمات پیش‌فرض CORS لاراول را منتشر کنید:
-</p>
-<pre class="bg-dark text-light rounded-3 p-3"><code>php artisan config:publish cors</code></pre>
 
-<p class="text-secondary lh-lg">
-    سپس در فایل <code>config/cors.php</code>، دامنه Frontend را در فهرست Originهای مجاز قرار دهید و ارسال Credentialها را فعال کنید:
-</p>
-<pre class="bg-dark text-light rounded-3 p-3"><code>'supports_credentials' => true,
+        <h6 class="fw-bold mt-4 mb-3">۴. تنظیم CORS</h6>
+        <p class="text-secondary lh-lg">
+            ابتدا بررسی کنید فایل <code>config/cors.php</code> در پروژه وجود داشته باشد. اگر این فایل وجود ندارد، می‌توانید تنظیمات پیش‌فرض CORS لاراول را منتشر کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>php artisan config:publish cors</code></pre>
+
+        <p class="text-secondary lh-lg">
+            سپس در فایل <code>config/cors.php</code>، دامنه Frontend را در فهرست Originهای مجاز قرار دهید و ارسال Credentialها را فعال کنید:
+        </p>
+        <pre class="bg-dark text-light rounded-3 p-3"><code>'supports_credentials' => true,
 
 'allowed_origins' => [
     'https://app.example.com',
 ],</code></pre>
 
-<p class="text-secondary lh-lg">
-    فعال بودن <code>supports_credentials</code> برای ارسال و دریافت Cookie در درخواست‌های Cross-Origin ضروری است.
-</p>
+        <p class="text-secondary lh-lg">
+            فعال بودن <code>supports_credentials</code> برای ارسال و دریافت Cookie در درخواست‌های Cross-Origin ضروری است.
+        </p>
 
 
         <h6 class="fw-bold mt-4 mb-3">۵. تنظیم Frontend</h6>
@@ -109,22 +109,69 @@ axios.defaults.withXSRFToken = true;</code></pre>
     </section>
 
 
-<div class="alert alert-warning mt-4" role="alert">
-    <h6 class="fw-bold mb-2">نکته:</h6>
-    <p class="mb-0 lh-lg">
-        برخی قابلیت‌های AuthKit، از جمله ارسال ایمیل‌ها و اعلان‌های امنیتی، از سیستم صف (Queue) لاراول استفاده می‌کنند. برای پردازش این عملیات، باید یک Queue Worker فعال باشد. برای اطلاعات بیشتر به بخش <a href="?page=installation" data-page="installation" class="alert-link">نصب و راه‌اندازی</a> مراجعه کنید.
-    </p>
-</div>
-
-
-
-    <section class="my-5 pt-4">
-        <h4 class="fw-bold mb-3">مستندات Endpointها</h4>
-        <p class="text-secondary lh-lg">
-            در ادامه، Endpointهای ارائه‌شده توسط AuthKit بر اساس قابلیت دسته‌بندی شده‌اند. برای هر Endpoint، متد HTTP، آدرس، سطح دسترسی، ورودی‌های موردنیاز و ساختار پاسخ توضیح داده می‌شود.
+    <div class="alert alert-warning mt-4" role="alert">
+        <h6 class="fw-bold mb-2">نکته:</h6>
+        <p class="mb-0 lh-lg">
+            برخی قابلیت‌های AuthKit، از جمله ارسال ایمیل‌ها و اعلان‌های امنیتی، از سیستم صف (Queue) لاراول استفاده می‌کنند. برای پردازش این عملیات، باید یک Queue Worker فعال باشد. برای اطلاعات بیشتر به بخش <a
+                href="?page=installation" data-page="installation" class="alert-link">نصب و راه‌اندازی</a> مراجعه کنید.
         </p>
-    </section>
+    </div>
 
+
+
+    <section class="mb-5 pt-4">
+        <h4 class="fw-bold mb-3">مستندات Endpointها</h4>
+
+        <div class="d-flex flex-column gap-3">
+            <div>
+                <a href="#authentication" class="fw-bold fs-5 text-body text-decoration-none">۱. احراز هویت</a>
+                <ul class="mt-2">
+                    <li><a href="#login">ورود به حساب</a></li>
+                    <li><a href="#register">ثبت‌نام</a></li>
+                    <li><a href="#google-auth">ورود و ثبت‌نام با گوگل</a></li>
+                    <li><a href="#logout">خروج از حساب</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <a href="#password-reset" class="fw-bold fs-5 text-body text-decoration-none">۲. فراموشی و بازیابی رمز عبور</a>
+                <ul class="mt-2">
+                    <li><a href="#forgot-password">درخواست لینک بازیابی رمز عبور</a></li>
+                    <li><a href="#reset-password">بازیابی رمز عبور</a></li>
+                    <li><a href="#authenticated-reset">ارسال لینک بازیابی برای کاربر واردشده</a></li>
+                    <li><a href="#confirm-password">تأیید رمز عبور</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <a href="#email-verification" class="fw-bold fs-5 text-body text-decoration-none">۳. تأیید ایمیل</a>
+                <ul class="mt-2">
+                    <li><a href="#email-status">بررسی وضعیت تأیید ایمیل</a></li>
+                    <li><a href="#resend-verification">ارسال مجدد ایمیل تأیید</a></li>
+                    <li><a href="#verify-email">تأیید آدرس ایمیل</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <a href="#two-factor" class="fw-bold fs-5 text-body text-decoration-none">۴. تأیید هویت دومرحله‌ای</a>
+                <ul class="mt-2">
+                    <li><a href="#two-factor-challenge">تأیید هویت هنگام ورود</a></li>
+                    <li><a href="#two-factor-management">مدیریت تأیید هویت دومرحله‌ای</a></li>
+                    <li><a href="#two-factor-settings">تنظیمات و ملاحظات</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <a href="#account-management" class="fw-bold fs-5 text-body text-decoration-none">۵. مدیریت حساب و امنیت</a>
+                <ul class="mt-2">
+                    <li><a href="#profile">مدیریت پروفایل</a></li>
+                    <li><a href="#change-password">تغییر رمز عبور</a></li>
+                    <li><a href="#sessions">مدیریت نشست‌های فعال</a></li>
+                    <li><a href="#security-activities">فعالیت‌های امنیتی</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
 
 
@@ -136,9 +183,9 @@ axios.defaults.withXSRFToken = true;</code></pre>
     <!-- ------------------------------------- -->
     <!-- Authentication -->
     <!-- ------------------------------------- -->
-    <section class="mb-5">
+    <section id="authentication" class="mb-5">
 
-        <h4 class="fw-bold mb-3">احراز هویت</h4>
+        <h3 class="fw-bold mb-3">۱. احراز هویت</h3>
 
         <p class="text-secondary lh-lg">
             در این بخش، Endpointهای مربوط به ورود، ثبت‌نام، خروج از حساب و احراز هویت با حساب گوگل معرفی شده‌اند.
@@ -149,7 +196,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- Login -->
         <!-- ------------------------------------- -->
 
-        <h5 class="fw-bold mt-4 mb-3">۱. ورود به حساب</h5>
+        <h5 id="login" class="fw-bold mt-4 mb-3">۱. ورود به حساب</h5>
 
         <p class="text-secondary lh-lg">
             برای ورود، ایمیل و رمز عبور کاربر ارسال می‌شوند. در صورت فعال بودن احراز هویت دومرحله‌ای، پاسخ مشخص می‌کند که کاربر باید ابتدا مرحله تأیید دومرحله‌ای را انجام دهد.
@@ -262,8 +309,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- ------------------------------------- -->
         <!-- Register -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">۲. ثبت‌نام</h5>
+        <h5 id="register" class="fw-bold mt-5 mb-3">۲. ثبت‌نام</h5>
 
         <p class="text-secondary lh-lg">
             برای ایجاد حساب کاربری، نام، ایمیل و رمز عبور به همراه تکرار آن ارسال می‌شوند. پس از ثبت‌نام موفق، کاربر باید ایمیل خود را تأیید کند.
@@ -353,8 +399,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- ------------------------------------- -->
         <!-- Google OAuth -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">۳. ورود و ثبت‌نام با گوگل</h5>
+        <h5 id="google-auth" class="fw-bold mt-5 mb-3">۳. ورود و ثبت‌نام با گوگل</h5>
 
         <p class="text-secondary lh-lg">
             AuthKit برای ورود و ثبت‌نام با حساب گوگل از <code>Laravel Socialite</code> استفاده می‌کند. این فرایند در دو مرحله انجام می‌شود:
@@ -441,8 +486,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- ------------------------------------- -->
         <!-- Logout -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">۴. خروج از حساب</h5>
+        <h5 id="logout" class="fw-bold mt-5 mb-3">۴. خروج از حساب</h5>
 
         <p class="text-secondary lh-lg">
             این Endpoint نشست احراز هویت فعلی کاربر را خاتمه می‌دهد.
@@ -495,20 +539,19 @@ axios.defaults.withXSRFToken = true;</code></pre>
     <!-- ------------------------------------- -->
     <!-- Password Reset -->
     <!-- ------------------------------------- -->
-    <section class="mb-5">
+    <section id="password-reset" class="mb-5">
 
-        <h4 class="fw-bold mb-3">فراموشی و بازیابی رمز عبور</h4>
-
+        <h3 class="fw-bold mb-3">۲. فراموشی و بازیابی رمز عبور</h3>
         <p class="text-secondary lh-lg">
             کاربران می‌توانند با استفاده از ایمیل، لینک بازیابی رمز عبور دریافت کنند و از طریق آن رمز عبور جدیدی برای حساب خود تعیین کنند. همچنین کاربران واردشده می‌توانند برای دریافت لینک بازیابی، از ایمیل ثبت‌شده در
             حساب خود استفاده کنند.
         </p>
 
+
         <!-- ------------------------------------- -->
         <!-- Forgot Password -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-4 mb-3">درخواست لینک بازیابی رمز عبور</h5>
+        <h5 id="forgot-password" class="fw-bold mt-4 mb-3">۱. درخواست لینک بازیابی رمز عبور</h5>
 
         <p class="text-secondary lh-lg">
             این Endpoint ایمیل کاربر را دریافت می‌کند و در صورت وجود حساب کاربری، لینک بازیابی رمز عبور را به ایمیل او ارسال می‌کند. برای جلوگیری از افشای وجود یا عدم وجود حساب کاربری، پاسخ در هر دو حالت یکسان است.
@@ -592,8 +635,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- Reset Password -->
         <!-- ------------------------------------- -->
 
-        <h5 class="fw-bold mt-5 mb-3">بازیابی رمز عبور</h5>
-
+        <h5 id="reset-password" class="fw-bold mt-5 mb-3">۲. بازیابی رمز عبور</h5>
         <p class="text-secondary lh-lg">
             این Endpoint توکن بازیابی ارسال‌شده به ایمیل کاربر را به همراه رمز عبور جدید دریافت می‌کند. اعتبار توکن توسط سیستم بازیابی رمز عبور لاراول بررسی می‌شود و در صورت معتبر بودن، رمز عبور حساب به‌روزرسانی خواهد
             شد.
@@ -705,12 +747,11 @@ axios.defaults.withXSRFToken = true;</code></pre>
         </table>
 
 
+
         <!-- ------------------------------------- -->
         <!-- Authenticated Forgot Password -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">ارسال لینک بازیابی برای کاربر واردشده</h5>
-
+        <h5 id="authenticated-reset" class="fw-bold mt-5 mb-3">۳. ارسال لینک بازیابی برای کاربر واردشده</h5>
         <p class="text-secondary lh-lg">
             این Endpoint برای کاربرانی در نظر گرفته شده است که وارد حساب خود شده‌اند و می‌خواهند لینک بازیابی رمز عبور را به ایمیل ثبت‌شده در حسابشان دریافت کنند. در این درخواست نیازی به ارسال ایمیل نیست؛ ایمیل از حساب
             کاربر احراز هویت‌شده دریافت می‌شود.
@@ -773,12 +814,11 @@ axios.defaults.withXSRFToken = true;</code></pre>
         </table>
 
 
+
         <!-- ------------------------------------- -->
         <!-- Confirm Password -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">تأیید رمز عبور</h5>
-
+        <h5 id="confirm-password" class="fw-bold mt-5 mb-3">۴. تأیید رمز عبور</h5>
         <p class="text-secondary lh-lg">
             این Endpoint برای تأیید مجدد هویت کاربر پیش از انجام عملیات حساس استفاده می‌شود. رمز عبور فعلی کاربر دریافت و با رمز ذخیره‌شده در حساب او مقایسه می‌شود. در صورت موفقیت، وضعیت تأیید رمز عبور در نشست کاربر ثبت
             خواهد شد.
@@ -853,10 +893,9 @@ axios.defaults.withXSRFToken = true;</code></pre>
     <!-- ------------------------------------- -->
     <!-- Email Verification -->
     <!-- ------------------------------------- -->
-    <section class="mb-5">
+    <section id="email-verification" class="mb-5">
 
-        <h4 class="fw-bold mb-3">تأیید ایمیل</h4>
-
+        <h3 id="email-verification" class="fw-bold mt-4 mb-3">۳. تأیید ایمیل</h3>
         <p class="text-secondary lh-lg">
             AuthKit امکان بررسی وضعیت تأیید ایمیل، ارسال مجدد لینک تأیید و تأیید آدرس ایمیل از طریق لینک امضاشده را فراهم می‌کند. این قابلیت برای کاربران احراز هویت‌شده در دسترس است؛ لینک تأیید نیز از طریق ایمیل ثبت‌شده
             در حساب کاربری ارسال می‌شود.
@@ -866,9 +905,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- ------------------------------------- -->
         <!-- Email Verification Status -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-4 mb-3">بررسی وضعیت تأیید ایمیل</h5>
-
+        <h5 id="email-status" class="fw-bold mt-4 mb-3">۱. بررسی وضعیت تأیید ایمیل</h5>
         <p class="text-secondary lh-lg">
             این Endpoint وضعیت تأیید ایمیل کاربر واردشده را بررسی کرده و نتیجه را در فیلد <code>email_verified</code> برمی‌گرداند.
         </p>
@@ -926,9 +963,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- ------------------------------------- -->
         <!-- Resend Verification Email -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">ارسال مجدد ایمیل تأیید</h5>
-
+        <h5 id="resend-verification" class="fw-bold mt-5 mb-3">۲. ارسال مجدد ایمیل تأیید</h5>
         <p class="text-secondary lh-lg">
             این Endpoint لینک تأیید ایمیل را مجدداً برای کاربر واردشده ارسال می‌کند. اگر ایمیل کاربر قبلاً تأیید شده باشد، اعلان جدیدی ارسال نمی‌شود.
         </p>
@@ -969,12 +1004,11 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <p class="text-secondary small">HTTP Status: 200 OK</p>
 
 
+
         <!-- ------------------------------------- -->
         <!-- Verify Email -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">تأیید آدرس ایمیل</h5>
-
+        <h5 id="verify-email" class="fw-bold mt-5 mb-3">۳. تأیید آدرس ایمیل</h5>
         <p class="text-secondary lh-lg">
             این Endpoint از طریق لینکی که به ایمیل کاربر ارسال شده است فراخوانی می‌شود. شناسه کاربر و هش ایمیل در آدرس قرار دارند و اعتبار لینک با استفاده از امضای دیجیتال و اعتبارسنجی درخواست بررسی می‌شود.
         </p>
@@ -1078,16 +1112,16 @@ axios.defaults.withXSRFToken = true;</code></pre>
     <!-- ------------------------------------- -->
     <!-- Two Factor Authentication -->
     <!-- ------------------------------------- -->
-    <section class="mb-5">
+    <section id="two-factor" class="mb-5">
 
-        <h4 class="fw-bold mb-3">تأیید هویت دومرحله‌ای</h4>
+        <h3 class="fw-bold mb-3">۴. تأیید هویت دومرحله‌ای</h3>
 
         <p class="text-secondary lh-lg">
             AuthKit امکان فعال‌سازی تأیید هویت دومرحله‌ای، ورود با کد یک‌بارمصرف و مدیریت کدهای بازیابی را فراهم می‌کند.
             برای مدیریت تنظیمات این قابلیت، کاربر باید وارد حساب خود شده و تأیید رمز عبور را انجام داده باشد.
         </p>
 
-        <h5 class="fw-bold mt-4 mb-3">۱. تأیید هویت هنگام ورود</h5>
+        <h5 id="two-factor-challenge" class="fw-bold mt-4 mb-3">۱. تأیید هویت هنگام ورود</h5>
 
         <!-- GET Challenge -->
 
@@ -1211,8 +1245,10 @@ axios.defaults.withXSRFToken = true;</code></pre>
             مهلت اعتبار درخواست Challenge از طریق گزینه <code>challenge_expire_minutes</code> در بخش <code>two_factor</code> فایل <code>config/authkit.php</code> قابل تنظیم است.
         </p>
 
-        <h5 class="fw-bold mt-5 mb-3">۲. مدیریت تأیید هویت دومرحله‌ای</h5>
 
+
+
+        <h5 id="two-factor-management" class="fw-bold mt-5 mb-3">۲. مدیریت تأیید هویت دومرحله‌ای</h5>
         <p class="text-secondary lh-lg">
             تمام Endpointهای این بخش نیازمند احراز هویت هستند و Middleware مربوط به <code>password.confirm</code> نیز برای آن‌ها اعمال می‌شود.
         </p>
@@ -1481,8 +1517,9 @@ axios.defaults.withXSRFToken = true;</code></pre>
             </tbody>
         </table>
 
-        <h5 class="fw-bold mt-5 mb-3">۳. تنظیمات و ملاحظات</h5>
 
+
+        <h5 id="two-factor-settings" class="fw-bold mt-5 mb-3">۳. تنظیمات و ملاحظات</h5>
         <p class="text-secondary lh-lg">
             مقادیر مربوط به مهلت Challenge، مهلت راه‌اندازی و تعداد و طول کدهای بازیابی از طریق بخش <code>two_factor</code> فایل <code>config/authkit.php</code> قابل تنظیم هستند.
         </p>
@@ -1504,9 +1541,9 @@ axios.defaults.withXSRFToken = true;</code></pre>
     <!-- ------------------------------------- -->
     <!-- Account Management -->
     <!-- ------------------------------------- -->
-    <section class="mb-5">
+    <section id="account-management" class="mb-5">
 
-        <h4 class="fw-bold mb-3">مدیریت حساب و امنیت</h4>
+        <h3 class="fw-bold mb-3">۵. مدیریت حساب و امنیت</h3>
 
         <p class="text-secondary lh-lg">
             در این بخش، Endpointهای مربوط به مدیریت اطلاعات حساب، تغییر رمز عبور، مشاهده نشست‌های فعال، خروج از سایر نشست‌ها و مشاهده فعالیت‌های امنیتی معرفی شده‌اند.
@@ -1516,9 +1553,7 @@ axios.defaults.withXSRFToken = true;</code></pre>
         <!-- ------------------------------------- -->
         <!-- Profile -->
         <!-- ------------------------------------- -->
-
-        <h5 class="fw-bold mt-5 mb-3">مدیریت پروفایل</h5>
-
+        <h5 id="profile" class="fw-bold mt-5 mb-3">۱. مدیریت پروفایل</h5>
         <p class="text-secondary lh-lg">
             کاربران می‌توانند اطلاعات پروفایل خود را دریافت کرده و نام حساب کاربری خود را ویرایش کنند.
         </p>
@@ -1628,16 +1663,10 @@ axios.defaults.withXSRFToken = true;</code></pre>
 
 
 
-
-
-
-
-
         <!-- ------------------------------------- -->
         <!-- Change Password -->
         <!-- ------------------------------------- -->
-        <h5 class="fw-bold mt-5 mb-3">تغییر رمز عبور</h5>
-
+        <h5 id="change-password" class="fw-bold mt-5 mb-3">۲. تغییر رمز عبور</h5>
         <p class="text-secondary lh-lg">
             کاربران می‌توانند با وارد کردن رمز عبور فعلی و رمز عبور جدید، گذرواژه حساب خود را تغییر دهند.
         </p>
@@ -1720,16 +1749,10 @@ axios.defaults.withXSRFToken = true;</code></pre>
 
 
 
-
-
-
-
-
-
         <!-- ------------------------------------- -->
         <!-- Sessions -->
         <!-- ------------------------------------- -->
-        <h5 class="fw-bold mt-5 mb-3">مدیریت نشست‌های فعال</h5>
+        <h5 id="sessions" class="fw-bold mt-5 mb-3">۳. مدیریت نشست‌های فعال</h5>
 
         <p class="text-secondary lh-lg">
             کاربران می‌توانند نشست‌های فعال حساب خود را مشاهده کرده و سایر نشست‌ها را از حساب خارج کنند. اطلاعات نشست‌ها از جدول <code>sessions</code> دریافت می‌شود.
@@ -1882,16 +1905,10 @@ axios.defaults.withXSRFToken = true;</code></pre>
 
 
 
-
-
-
-
-
-
         <!-- ------------------------------------- -->
         <!-- Security Activities -->
         <!-- ------------------------------------- -->
-        <h5 class="fw-bold mt-5 mb-3">فعالیت‌های امنیتی</h5>
+        <h5 id="security-activities" class="fw-bold mt-5 mb-3">۴. فعالیت‌های امنیتی</h5>
 
         <p class="text-secondary lh-lg">
             کاربران می‌توانند آخرین رویدادهای امنیتی حساب خود را مشاهده کنند. این اطلاعات از اعلان‌های ثبت‌شده در سیستم لاراول دریافت می‌شوند.
