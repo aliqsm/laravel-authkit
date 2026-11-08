@@ -159,6 +159,44 @@ pre code {
 }
 
 
+
+/* ------------------------------------- */
+/* API Horizontal Overflow Fix */
+/* ------------------------------------- */
+
+[data-title="API"] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+[data-title="API"] table {
+    width: 100%;
+    max-width: 100%;
+    table-layout: fixed;
+}
+
+[data-title="API"] th,
+[data-title="API"] td {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+[data-title="API"] pre {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+main,
+.documentation-content {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+
+
 /* ------------------------------------- */
 /* Dark Theme */
 /* ------------------------------------- */
