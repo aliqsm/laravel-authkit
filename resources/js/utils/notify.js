@@ -3,7 +3,7 @@ const notify = {
     // -------------------------------------
     // 1. Container
     // -------------------------------------
-    show(type, title, text = '', duration = 40000) {
+    show(type, title, text = '', duration = 4000) {
         let container = document.querySelector('.app-alerts');
 
         if (!container) {
